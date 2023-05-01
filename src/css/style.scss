@@ -1,0 +1,143 @@
+* {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@import '_variables';
+@import'_loader';
+
+nav {
+    background-color: $gavoNav;
+    display: flex;
+
+    .logo {
+        color: rgba(43, 65, 92, 1);
+        font-size: 4rem;
+
+    }
+
+    .btn-login {
+        
+
+        background-color: #2B415C !important;
+        padding: 0.2rem 3.5rem;
+
+        &:hover {
+            filter: brightness(60%);
+            transition: all ease-in 1s;
+            
+        }
+    }
+
+
+    
+    .btn-home {
+        background-color: #CCCCCC;
+        padding: 0.2rem 3.5rem;
+        color: #2B415C;
+
+        &:hover {
+            filter: brightness(80%);
+            transition: all ease-in 1s;
+
+            transition: all ease-in;
+        }
+    }
+
+    .nav-links {
+        margin: auto 1.7rem;
+        display: flex;
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+
+    z-index: 100000
+}
+
+.login-banner {
+    height: 100%;
+    width: 90%;
+
+    background-image: url("../img/Rectangle\ 5.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+}
+
+.containerbg {
+    background: linear-gradient(34.17deg, #2B415C 0%, #ADD8DC 94.36%);
+}
+
+.btn-login {
+        
+
+    background-color: #2B415C !important;
+    padding: 0.2rem 3.5rem;
+
+    &:hover {
+        filter: brightness(60%);
+        transition: all ease-in 1s;
+        
+    }
+}
+
+.optional-login {
+    color: rgba(0, 0, 0, 1);
+    font-weight: 700;
+
+    .google-signIn {
+        border: 1px solid rgba(66, 66, 69, 1);
+        color: #000000;
+        text-decoration: "none";
+        background-color: white !important;
+    }
+
+
+}
+
+
+.forgot-psswd {
+    color: $loginBlue;
+    // margin-left: 15rem !important;
+    font-size: 1.05rem;
+}
+
+
+.forgotPsswd-form{
+    height:65% !important;
+    position:fixed;
+    border-radius: 1.2rem;
+    top:10%;
+    bottom:0;
+    left:0;
+    right:0;
+  box-shadow: 0rem 0.5rem 0.5rem rgba(0, 0, 0, 0.25) ;
+    border: 0.5rem solid #E9E9E9;
+   
+}
+.btn-cancel {
+        
+
+    background-color: white !important;
+    padding: 0.2rem 3.5rem;
+    border:0.1rem solid $loginBlue !important;
+    color:$loginBlue;
+
+    &:hover {
+        filter: brightness(60%);
+        transition: all ease-in 0.5s;
+        color:white
+        
+    }
+}
+
+footer {
+    background: $linearGradientBlue;
+    color: $loginBlue;
+    color:#FFFFFF
+}
