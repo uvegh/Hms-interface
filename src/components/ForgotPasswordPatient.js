@@ -2,24 +2,23 @@ import axios from 'axios'
 import React, { useContext, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { HmsContext } from '../context/HmsContext'
-import PinInput from 'react-pin-input'
 
 
-function ForgotPassword() {
+function ForgotPasswordPatient() {
 
     const baseUrl = "https://gavohms.onrender.com"
     const [isLoading, setIsloading] = useState(false)
     const [validate, setValidate] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false)
     const [showPsswdVerification, setshowPsswdVerification] = useState(false)
-    const {  setCurrentEmpId} = useContext(HmsContext)
+    const { currentEmpId, setCurrentEmpId, setCurrentPatientId, currentPatientId } = useContext(HmsContext)
     const [loginData, setLoginData] = useState({
         email: ""
 
     })
     const [email, setEmail] = useState("")
     const [codeData, setCodeData] = useState({
-        code:""
+        code: ""
     })
 
     const navigate = useNavigate()
@@ -35,30 +34,31 @@ function ForgotPassword() {
             return
         }
         console.log(loginData);
-
-   
-        let response = (await axios.post(`${baseUrl}/forgotPassword`, loginData)).data
-
-         console.log(response)
-
-        if (response?.code === 200) {
-            console.log(response)
+        let response = (await (axios.post(`${baseUrl}/forgotPassword/patient`, loginData)).catch((err) => {
+            console.log(err)
+            setIsloading(false)
+            setshowPsswdVerification(false)
+            setErrorMessage("failed to login")
+        }))
+        console.log(response);
+        if (response?.status == "200") {
             setIsloading(false)
             setValidate(false)
-            console.log(response?.data._id);
-     
+            //cb()
+
+
             handleEmailHider()
 
             setshowPsswdVerification(true)
-            // setLoginData({
-            //     email: "",
+            setLoginData({
+                email: "",
 
-            // })
+            })
             setErrorMessage("")
-             setCurrentEmpId(response?.data?._id)
-            
+
+
         }
-        else {
+        if (response?.data?.code == "404") {
             setErrorMessage("This email has no account ")
             setIsloading(false)
             setValidate(false)
@@ -72,34 +72,36 @@ function ForgotPassword() {
     }
 
     const handleEmailHider = async () => {
-        let visiblept1 = loginData.email.substring(0, 2)
+        let visiblept1 = loginData.email.substring(0, 3)
         console.log("visi", visiblept1);
-        let re = new RegExp(visiblept1, "g")// 
+        let re = new RegExp(visiblept1, "g")
         console.log(re);
-        console.log((loginData.email).replace(re, "**"))
-        setEmail((loginData.email).replace(re, "**"))
+        console.log((loginData.email).replace(re, "***"))
+        setEmail((loginData.email).replace(re, "***"))
     }
 
     const handleCodeVerification = async () => {
 
+
+
         setIsloading(true)
-        if (!codeData||!codeData.length==6) {
+        if (!codeData || !codeData.length == 6) {
             console.log(codeData);
             setIsloading(false)
             setValidate(true)
             return
         }
-       
-        
-console.log(codeData,"codedata");
-           let response = (await (axios.post(`${baseUrl}/forgotPassword/compare`, codeData))).data
-    
-     
+
+
+        console.log(codeData, "codedata");
+        let response = (await (axios.post(`${baseUrl}/forgotPassword/compare/patient`, codeData))).data
+
+
         console.log(response);
         if (response?.code == "200") {
             setIsloading(false)
-        
-            console.log(response);
+            setCurrentEmpId(response?.id)
+            console.log(setCurrentEmpId);
             alert("verification complete")
             navigate("/resetpassword")
             setErrorMessage("")
@@ -132,14 +134,11 @@ console.log(codeData,"codedata");
 
 
 
-            <div className="container-fluid position-relative vh-100  forgotPsswd-container " style={{ minHeight: "100%" }}>
+            <div className="container-fluid position-relative vh-100 forgotPsswd-container " style={{ minHeight: "100%" }}>
 
-     
                 {showPsswdVerification == true ? (
-
-                    <form className=' rounded-5 forgotPsswd-form border border-1  col-lg-4 col-md-11 col-sm-12  m-auto mt-5' >
-                       
-                        <div className='col-lg-10 col-md-10 col-sm-12 m-auto mt-5'>
+                    <form className=' rounded-5 forgotPsswd-form border border-1  col-4  m-auto mt-5' >
+                        <div className='col-10 m-auto mt-5'>
                             <label htmlFor="exampleFormControlInput1" className="form-label fw-bolder fs-2 " style={{
                                 color: "#2B415C"
                             }}>Forgot password?</label>
@@ -147,23 +146,23 @@ console.log(codeData,"codedata");
                                 color: "#2B415C",
                                 fontSize: "0.9rem"
                             }}>Enter the 6-digit verification code sent to  {email}</p>
-<div className="text-center ">
-<PinInput length={6} type='numeric' autoSelect={true} 
-                      onComplete={(code,index)=>{
-setCodeData({
-    code:code
-})
-                      }}
-                   
-                      />
-</div>
 
+                            <div className="text-center ">
+                                <PinInput length={6} type='numeric' autoSelect={true}
+                                    onComplete={(code, index) => {
+                                        setCodeData({
+                                            code: code
+                                        })
+                                    }}
+
+                                />
+                            </div>
                             <div className='text-center mt-2 container-fluid'>
                                 <p className='text-danger ms-auto'>{errorMessage}</p>
                             </div>
-                            <p className='text-center mt-2 col-lg-10 col-md-10 col-sm-10' style={{ color: "#2B415C" }}> Didn’t get a code? <Link
+                            <p className='text-center mt-2 col-lg-10' style={{ color: "#2B415C" }}> Didn’t get a code? <Link
                                 onClick={() => {
-                                    handleEmailVerification()
+                                    handleEmailVerification(handleEmailHider)
                                 }}
 
                             > here</Link> Click  to resend</p>
@@ -197,8 +196,7 @@ setCodeData({
                         </div>
 
                     </form>) :
-                    (<form className='container-fluid rounded-5  forgotPsswd-form border border-1  col-lg-4 col-md-11 col-sm-12   m-auto mt-5' >
-                
+                    (<form className=' rounded-5 forgotPsswd-form border border-1  col-4  m-auto mt-5' >
                         <div className='col-10 m-auto mt-5'>
                             <label htmlFor="exampleFormControlInput1" className="form-label fw-bolder fs-2 " style={{
                                 color: "#2B415C"
@@ -261,4 +259,4 @@ setCodeData({
     )
 }
 
-export default ForgotPassword
+export default ForgotPasswordPatient

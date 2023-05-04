@@ -59,18 +59,34 @@ nav {
     z-index: 100000
 }
 
-.login-banner {
-    height: 100%;
-    width: 90%;
-
-    background-image: url("../img/Rectangle\ 5.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-
-}
 
 .containerbg {
+    .login-banner {
+        height: 100%;
+        width: 90%;
+    
+     
+       
+    
+    }
+    
+
     background: linear-gradient(34.17deg, #2B415C 0%, #ADD8DC 94.36%);
+    background-image: url("../img/loginBg.png");
+    height:100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+   
+    .join-us-banner{
+        border-radius: 4.7em 0em 0em 4.7em;
+        margin-top: 7em;
+    }
+    .login-area{
+
+        border-radius: 0em 4.7em 4.7em 0em;
+        margin-top: 7em;
+    }
 }
 
 .btn-login {
@@ -129,11 +145,39 @@ nav {
     color:$loginBlue;
 
     &:hover {
-        filter: brightness(60%);
+    
+       background-color:$loginBlue !important;
         transition: all ease-in 0.5s;
         color:white
         
     }
+}
+
+//
+.pincode-input-container
+{
+  .pincode-input-text
+  {
+    padding:0 !important;
+    margin:0 0.59rem  !important;
+    text-align:center;
+font-weight: 700;
+    background: transparent;
+    width: 50px;
+    height: 50px;
+    border: 0.674283px solid #CECCCC;
+    color:#2B415C;
+    border-radius: 0.2rem;
+  }
+  .pincode-input-text:focus
+  {
+    outline:auto;
+    box-shadow:#2B415C;
+  }
+}
+
+#signInGoogle{
+    text-align: center;
 }
 
 footer {
@@ -141,3 +185,4 @@ footer {
     color: $loginBlue;
     color:#FFFFFF
 }
+

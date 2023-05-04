@@ -1,12 +1,18 @@
+
+.loader { 
+top: 45%;
+position:absolute;
+left:45%
+}
 .lds-spinner {
-  left: 50%;
-     transform: translateX(-50%);
+ 
+    //  transform: translateX(-50%)  translateY(50%);
       color: official;
     display: inline-block;
     position: relative;
     width: 80px;
     height: 80px;
-    text-align: center;
+    // text-align: center;
   }
   .lds-spinner div {
     transform-origin: 40px 40px;

@@ -8,7 +8,7 @@ function LoginNav() {
     <>
     
   
-        <nav className='p-2 fixed-top mb-5'>
+        <nav className='p-2 fixed-top container-fluid '>
           <main className='navbar container p-3 '>
             <img className='logo ms-2' src={logo} alt="" />
           </main>

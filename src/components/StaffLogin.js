@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import logo from "../img/ORBIS.png"
 import { Link } from 'react-router-dom'
 import bgImg1 from "../img/Rectangle 5.png"
 import appleLogo from "../img/apple-logo 1.png"
 import googleIcon from "../img/google-icon-logo-png-transparent 1.png"
 import axios from 'axios'
-const baseUrl = "https://gavohms.onrender.com"
+import { GoogleLogin } from '@react-oauth/google'
+import jwt_decode from 'jwt-decode'
+import { HmsContext } from '../context/HmsContext'
+
 function StaffLogin() {
+  const baseUrl = "https://gavohms.onrender.com"
   const [isLoading, setIsloading] = useState(false)
   const [validate, setValidate] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
@@ -16,6 +20,7 @@ function StaffLogin() {
   })
 
 
+  const {staffGoogleObj,setStaffGoogleObj}=useContext(HmsContext)
   const handleLogin = async () => {
 
     setIsloading(true)
@@ -34,7 +39,7 @@ function StaffLogin() {
         console.log(err)
         alert("failed to login")
         setIsloading(false)
-        
+
       }))
 
 
@@ -55,7 +60,50 @@ function StaffLogin() {
       setErrorMessage("invalid credentials")
     }
   }
+  let userDets = {}
+  async function handleCallbackResponse(response) {
+    setIsloading(true)
+    console.log("encoded response", response.credential);
+    userDets = jwt_decode(response.credential)
+   
+    setStaffGoogleObj(userDets)
+    verifyGoogleLogin()
+  }
 
+  const verifyGoogleLogin = async () => {
+
+    if (userDets?.email_verified == true) {
+      let findUser = await (axios.get(`${baseUrl}/employee?email=${userDets?.email}`)).catch((err) => {
+        setIsloading(false)
+        console.log(err)
+      })
+   
+  
+      if ((findUser?.data?.employees?.data)?.length==0) {
+        setIsloading(false)
+        alert("failed to login ")
+        return
+      }
+      alert("login successful")
+      setIsloading(false)
+    }
+    else {
+      setIsloading(false)
+      setErrorMessage("invalid email")
+    }
+  }
+  //global google
+  useEffect(() => {
+    google.accounts.id.initialize({
+      client_id: "357757074966-ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com",
+      callback: handleCallbackResponse
+    })
+  }, [])
+  google.accounts.id.renderButton(
+
+    document.getElementById("signInGoogle"),
+    { size: "large" }
+  )
 
   return (
     <>
@@ -63,66 +111,61 @@ function StaffLogin() {
       {
         isLoading && (
           <div className="container-fluid overlay">
-
-            <div className="lds-spinner text-center m-auto"><div></div><div></div><div></div><div></div>
-              <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-
+            <div className='loader m-auto'>
+              <div className="lds-spinner text-center m-auto"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
           </div>
         )
       }
-
-      <div className='' >
-      
-
-        <div className="containerbg pt-5 pb-5">
-          <main className="login-banner m-auto vh-100  d-block justify-content-between " >
-            <div className="row ">
-              <div className="col-4 me-5 mt-5">
+<div className="containerbg pb-5 container-fluid">
+          <main className="login-banner m-auto    " >
+            <div className="row" style={{height:"100%"}}>
+              <section className="col-lg-6 col-md-6 col-sm-12 join-us-banner"
+              style={{
+                background: "rgba(255, 255, 255, 0.23)"}}
+              >
                 <section className=''>
                   <p className='fw-bolder mt-5 pt-5 ps-5' style={{ color: "#E9E9E9", fontSize: "5rem" }}>join us</p>
 
                   <p className='ps-5' style={{ color: "#FFFFFF", fontWeight: "600" }}>Let Orbis help streamline your hospital operations <br /> with ease</p>
                 </section>
-              </div>
+              </section>
 
 
 
 
-              <div className=" col m-auto" style={{ width: "97% !important" }}>
-                <section className='bg-white vh-100 m-auto ' style={{ height: "100%", borderRadius: "0rem 2rem 2rem 0rem" }}>
+           
+                <section className='bg-white col-lg-6 col-md-6 col-sm-12    login-area '>
                   <header style={{ color: " #2B415C" }}>
                     <h3 className='pt-5 text-center'>Login to your staff account</h3>
                   </header>
                   <form className=' rounded-1 border border-1 p-3 col-9 m-auto mt-5' >
                     <div className='col-9 m-auto'>
-                      <label for="exampleFormControlInput1" className="form-label fw-bolder " style={{
+                      <label htmlFor="exampleFormControlInput1" className="form-label fw-bolder " style={{
                         color: "#000000"
                       }}>Email</label>
                       <div className="form-floating mb-3">
-                        <input type="email"
-                          name="email"
-                          value={loginData.email}
+                        <input
                           onChange={(e) => {
                             setLoginData({
                               ...loginData, email: e.target.value
 
                             })
                           }}
-                          className={validate==true&&!loginData.email?(" form-control border border-danger "):("form-control")} id="floatingInput" placeholder="name@example.com" />
-                        <label for="floatingInput">Email address</label>
+                          type="email"   className=  {validate==true&&!loginData.email?(" form-control border border-danger "):("form-control")}  id="floatingInput" placeholder="name@example.com" />
+                        <label htmlFor="floatingInput">Email address</label>
                       </div>
                       {/* {validate == true && !loginData.email ? (<p className='text-danger'>*empty</p>) : (null)} */}
+                    
                     </div>
 
 
                     <div className='col-9 m-auto'>
-                      <label for="exampleFormControlInput1" className="form-label fw-bolder " style={{
+                      <label htmlFor="exampleFormControlInput1" className="form-label fw-bolder " style={{
                         color: "#000000"
                       }}>Password</label>
                       <div className="form-floating mb-3">
                         <input type="password"
-                          name="password"
-                          value={loginData.password}
                           onChange={(e) => {
                             setLoginData({
                               ...loginData, password: e.target.value
@@ -130,13 +173,12 @@ function StaffLogin() {
 
                           }}
                           className=  {validate==true&&!loginData.password?(" form-control border border-danger "):("form-control")}  id="floatingInput" placeholder="****" />
-                        <label for="floatingInput">Password</label>
-                        <Link to="/forgotpassword"
-                         className='d-flex justify-content-end forgot-psswd text-decoration-none '>forgot password?</Link>
+                        <label htmlFor="floatingInput">Password</label>
                       </div>
-                      {/* {validate == true && !loginData.password ? (<p className='text-danger'>*empty</p>) : (null)} */}
-                      
-                      <p className='text-danger'> {errorMessage}</p>
+                     <Link to="/forgotpassword"
+                     className='d-flex justify-content-end forgot-psswd text-decoration-none '>forgot password?</Link>
+                   {/* {validate == true && !loginData.password ? (<p className='text-danger'></p>) : (null)} <br/> */}
+                   <p className='text-danger'> {errorMessage}</p>
                     </div>
 
                     <div className='text-end'>
@@ -153,16 +195,15 @@ function StaffLogin() {
                     </div>
 
                   </form>
-                  <div className="optional-login col-9  text-center d-block m-auto mt-5">
+                  <div className="optional-login col-9  text-center  m-auto mt-5">
                     <div>
-                      <button className='rounded-3 btn btn-primary p-2   google-signIn col-12 p-2  text-decoration-none text-center'>
-                        <img src={
-                          googleIcon} alt="" /> Login with Google
-                      </button>
+                       <div className='col-12'>
+                        <div className='rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center' id='signInGoogle'></div>
+                      </div>
                     </div>
                     <br />
 
-                    <div className=''>
+                    <div className='mt-3 mb-5'>
                       <button className='rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center'>
                         <img src={
                           appleLogo} className='img-fluid' /> Login with Apple
@@ -171,15 +212,13 @@ function StaffLogin() {
                   </div>
 
                 </section>
-              </div>
+              
             </div>
 
 
 
           </main>
         </div>
-
-      </div>
 
 
     </>
