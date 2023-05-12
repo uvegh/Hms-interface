@@ -1,5 +1,14 @@
-* {
+*,
+::after,
+::before {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
 }
 
 .loader {
@@ -101,13 +110,654 @@
     opacity: 0;
   }
 }
+address,
+abbr {
+  margin: 0;
+}
+
+.doctor__dashboard {
+  width: 100%;
+  max-width: 1440px;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: 35% auto;
+  position: relative;
+  top: 70px;
+  margin: auto;
+  margin-bottom: 70px;
+}
+.doctor__dashboard .doctor_sidebar {
+  background-color: #2b415c;
+  padding-left: 80px;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box {
+  width: 325px;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .clinic_name {
+  width: 100%;
+  height: 106px;
+  background-color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 15px;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .clinic_name .organization_image {
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .clinic_name .organization_image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: center;
+     object-fit: center;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .clinic_name .organization_name {
+  color: #ffffff;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .clinic_name .organization_name h2 {
+  line-height: 29px;
+  font-size: 24px;
+  font-weight: 400;
+  cursor: pointer;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .clinic_name .organization_name h2 span {
+  color: #add8dc;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .sidebar_link_btns {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn {
+  height: 56px;
+  width: 100%;
+  padding-left: 10px;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn:hover,
+.doctor__dashboard .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn :active {
+  background-color: #526479;
+  border-radius: 2px;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn div {
+  font-size: 18px;
+  color: #ffffff;
+  line-height: 21px;
+  padding-top: 17px;
+  cursor: pointer;
+}
+.doctor__dashboard .doctor_daily_info {
+  height: 100%;
+  padding: 20px 80px 33px 45px;
+  background-color: #f6f6f6;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header .present_section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 32px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header .present_section h2 {
+  color: #2b415c;
+  line-height: 38px;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin: 0;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header .present_section .patient_page {
+  font-size: 28px;
+  line-height: 33px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header .present_section .patient_page:nth-child(2) {
+  color: #add8dc;
+  line-height: 14px;
+  font-size: 14px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header .present_section .patient_page:nth-child(3) {
+  color: #add8dc;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header .profile_avi_box {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header .profile_avi_box .profile_avi {
+  width: 64px;
+  height: 64px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header .profile_avi_box .profile_avi img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header .profile_avi_box .profile_name p {
+  line-height: 21px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #2b415c;
+  margin: 0;
+}
+.doctor__dashboard .doctor_daily_info .doctors_header .profile_avi_box .profile_name span {
+  display: block;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: #2b415c;
+  font-style: italic;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content {
+  display: grid;
+  grid-template-columns: 268px 630px !important;
+  grid-template-rows: 320px;
+  grid-gap: 24px 20px !important;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap,
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_details {
+  background-color: #ffffff;
+  box-shadow: 0 0 4px #cccccc;
+  border-radius: 5px;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap {
+  padding: 19px 19px 17px;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary {
+  display: grid;
+  place-items: center;
+  color: #2b415c;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary .patient_image {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary .patient_image img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary .patient_name {
+  margin-bottom: 8px;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary .patient_name h1 {
+  font-size: 24px;
+  line-height: 28px;
+  color: #2b415c;
+  font-weight: 600;
+  margin: 0;
+  text-transform: capitalize;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary .card_no {
+  line-height: 16px;
+  font-size: 14px;
+  font-weight: 400;
+  color: inherit;
+  margin-bottom: 10px;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary_contd {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary_contd .info {
+  margin: 12px 0;
+  text-align: left;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary_contd .info h3,
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary_contd .info p {
+  color: #2b415c;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  margin-bottom: 6px;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary_contd .info p {
+  font-weight: 400;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .btns button {
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: capitalize;
+  display: block;
+  line-height: 19px;
+  text-align: center;
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 0 2px #2b415c;
+  background-color: #2b415c;
+  color: #ffffff;
+  padding: 3px 0;
+  cursor: pointer;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .btns button:last-child {
+  margin-top: 12px;
+  background-color: #ffffff;
+  color: inherit;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_details {
+  padding: 21px;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_details .patient_detail_summary_contd1 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 51px;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_details .patient_detail_summary_contd1 .info {
+  padding: 24px 0;
+  border-bottom: 1px solid #e1dcdc;
+  text-align: left;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_details .patient_detail_summary_contd1 .info h3,
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_details .patient_detail_summary_contd1 .info p {
+  color: #2b415c;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  margin-bottom: 6px;
+  text-transform: capitalize;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_details .patient_detail_summary_contd1 .info p {
+  font-weight: 400;
+  margin: 0;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_details .patient_detail_summary_contd1 .info p .state {
+  display: block;
+  margin-top: 3px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 320px;
+  gap: 32px 48px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .doctors_info_wrap {
+  display: grid;
+  grid-template-columns: repeat(2, 184px);
+  gap: 26px 28px;
+  padding: 8px 15px 23px;
+  background-color: #ffffff;
+  box-shadow: 0 0 4px #cccccc;
+  border-radius: 5px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .doctors_info_wrap .overview {
+  grid-column: 1/-1;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .doctors_info_wrap .overview h2 {
+  line-height: 21px;
+  font-size: 18px;
+  color: #2b415c;
+  margin: 0;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .doctors_info_wrap .overview .week_select p {
+  line-height: 21px;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  color: #2b415c;
+  margin: 0;
+  cursor: pointer;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .doctors_info_wrap .tab {
+  height: 108px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #add8dc;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .doctors_info_wrap .tab .icons {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .doctors_info_wrap .tab p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 14px;
+  color: #2b415c;
+  font-weight: 400;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .doctors_info_wrap .tab .counts {
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 600;
+  color: #2b415c;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender {
+  background-color: #ffffff;
+  box-shadow: 0 0 4px #cccccc;
+  border-radius: 5px;
+  padding: 0 20px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  line-height: 1.125em;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar--doubleView {
+  width: 700px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar--doubleView .react-calendar__viewContainer {
+  display: flex;
+  margin: -0.5em;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar--doubleView .react-calendar__viewContainer > * {
+  width: 50%;
+  margin: 0.5em;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar,
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar *,
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar *:before,
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar *:after {
+  box-sizing: border-box;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar button {
+  margin: 0;
+  border: 0;
+  outline: none;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar button:enabled:hover {
+  cursor: pointer;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__navigation {
+  display: flex;
+  height: 44px;
+  margin-bottom: 1em;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__navigation button {
+  min-width: 44px;
+  background: none;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__navigation button:disabled {
+  background-color: #f0f0f0;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__navigation button:enabled:hover,
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__navigation button:enabled:focus {
+  background-color: #e6e6e6;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.75em;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__month-view__weekdays__weekday {
+  padding: 0.5em;
+  color: #2b415c;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__month-view__weekNumbers .react-calendar__tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75em;
+  font-weight: bold;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__month-view__days__day {
+  color: #2b415c;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__month-view__days__day--weekend {
+  color: #d10000;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__month-view__days__day--neighboringMonth {
+  color: #757575;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__year-view .react-calendar__tile,
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__decade-view .react-calendar__tile,
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__century-view .react-calendar__tile {
+  padding: 1.5em 0.5em;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile {
+  max-width: 100%;
+  padding: 10px 6.6667px;
+  background: none;
+  text-align: center;
+  line-height: 16px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile:disabled {
+  background-color: #f0f0f0;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile:enabled:hover,
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile:enabled:focus {
+  background-color: #e6e6e6;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile--now {
+  background: #2b415c;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile--now:enabled:hover,
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile--now:enabled:focus {
+  background: #2b415c;
+  border-radius: 50%;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile--hasActive {
+  background: #76baff;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile--hasActive:enabled:hover,
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile--hasActive:enabled:focus {
+  background: #a9d4ff;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile--active {
+  background: #2b415c;
+  color: white;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile--active:enabled:hover,
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar__tile--active:enabled:focus {
+  background: #2b415c;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .calender .react-calendar--selectRange .react-calendar__tile--hover {
+  background-color: #e6e6e6;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table {
+  grid-column: 1/-1;
+  width: 917px;
+  padding: 11px 13px;
+  height: 373px;
+  overflow: hidden;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2509803922);
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table::-webkit-scrollbar {
+  display: none;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 27px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_list p {
+  color: #2b415c;
+  margin: 0;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_list .left {
+  font-size: 18px;
+  line-height: 21px;
+  font-weight: 600;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_list .right {
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_table_holder table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_table_holder thead {
+  background-color: #2b415c;
+  border-radius: 5px;
+  text-align: left;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_table_holder th {
+  border: 1px solid #2b415c;
+  padding: 9px 37px;
+  text-transform: capitalize;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 21px;
+  font-weight: 500;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_table_holder tbody > tr:nth-child(even) {
+  background-color: #e9e9e9;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_table_holder td {
+  padding: 9px 37px;
+  text-transform: capitalize;
+  color: #2b415c;
+  line-height: 16px;
+  font-size: 14px;
+  font-weight: 400;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_table_holder td:last-of-type {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_table_holder td:last-of-type button {
+  border: 1px solid #2b415c;
+  border-radius: 5px;
+  padding: 4px 11px;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  background-color: inherit;
+  color: #2b415c;
+  cursor: pointer;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .appointment_table .appointment_table_holder td:last-of-type button:last-child {
+  color: #df4937;
+  border-color: #df4937;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .patient_appointment_table .appointment_list .right {
+  border: 1px solid #2b415c;
+  padding: 4px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .patient_appointment_table .patient_appointment_table_holder td {
+  padding: 9px 20px;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .patient_appointment_table .patient_appointment_table_holder td button {
+  color: #2b415c !important;
+  box-sizing: 0 0 2px #2b415c !important;
+  border: 1px solid #2b415c !important;
+  padding: 4px 38px !important;
+}
+
+.notFound-container {
+  position: relative;
+  height: 100vh;
+  background-color: "black";
+  margin-top: 2rem;
+}
+.notFound-container .notfound {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 560px;
+  width: 100%;
+  padding-left: 160px;
+  line-height: 1.1;
+}
+.notFound-container .notfound h1 {
+  font-family: "Nunito", sans-serif;
+  font-size: 65px;
+  font-weight: 700;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  color: #151723;
+  text-transform: uppercase;
+}
+.notFound-container .notfound h2 {
+  font-family: "Nunito", sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+  margin: 0;
+  text-transform: uppercase;
+  color: #151723;
+}
+.notFound-container .notfound p {
+  font-family: "Nunito", sans-serif;
+  color: #999fa5;
+  font-weight: 400;
+}
+.notFound-container .notfound a {
+  font-family: "Nunito", sans-serif;
+  display: inline-block;
+  font-weight: 700;
+  border-radius: 40px;
+  text-decoration: none;
+  color: #388dbc;
+}
+.notFound-container .notfound .notfound-404 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-block;
+  width: 140px;
+  height: 140px;
+  background-image: url("../img/emoji.png");
+  background-size: cover;
+}
+
+.notfound .notfound-404:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: scale(2.4);
+  border-radius: 50%;
+  background-color: #f2f5f8;
+  z-index: -1;
+}
+
+@media only screen and (max-width: 767px) {
+  .notfound {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 110px;
+  }
+  .notfound .notfound-404 {
+    width: 110px;
+    height: 110px;
+  }
+}
 nav {
   background-color: #E1DCDC;
   display: flex;
+  height: 8rem;
+  padding: 0 60px 0 60px !important;
+  height: 70px;
 }
 nav .logo {
   color: rgb(43, 65, 92);
-  font-size: 4rem;
+  font-size: 20px;
 }
 nav .btn-login {
   background-color: #2B415C !important;
@@ -144,22 +794,23 @@ nav .nav-links {
 .containerbg {
   background: linear-gradient(34.17deg, #2B415C 0%, #ADD8DC 94.36%);
   background-image: url("../img/loginBg.png");
-  height: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  padding-bottom: 30px;
 }
 .containerbg .login-banner {
   height: 100%;
   width: 90%;
+  height: 100vh;
 }
 .containerbg .join-us-banner {
   border-radius: 4.7em 0em 0em 4.7em;
-  margin-top: 7em;
+  margin-top: 6em;
 }
 .containerbg .login-area {
   border-radius: 0em 4.7em 4.7em 0em;
-  margin-top: 7em;
+  margin-top: 6em;
 }
 
 .btn-login {
@@ -233,8 +884,15 @@ nav .nav-links {
   text-align: center;
 }
 
+@supports (-ms-ime-align: auto) {
+  .login-banner {
+    margin-bottom: 200px;
+  }
+}
 footer {
   background: linear-gradient(0deg, rgba(43, 65, 92, 0.64), rgba(43, 65, 92, 0.64)), linear-gradient(269.65deg, rgba(43, 65, 92, 0.5) 49.69%, rgba(173, 216, 220, 0.5) 100%);
   color: #2B415C;
   color: #FFFFFF;
+  height: 80px !important;
+  padding-top: 4px;
 }/*# sourceMappingURL=style.css.map */

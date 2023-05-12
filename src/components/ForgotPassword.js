@@ -12,7 +12,7 @@ function ForgotPassword() {
     const [validate, setValidate] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false)
     const [showPsswdVerification, setshowPsswdVerification] = useState(false)
-    const {  setCurrentEmpId} = useContext(HmsContext)
+    const {  setCurrentEmpId,currentEmpId} = useContext(HmsContext)
     const [loginData, setLoginData] = useState({
         email: ""
 
@@ -55,7 +55,7 @@ function ForgotPassword() {
 
             // })
             setErrorMessage("")
-             setCurrentEmpId(response?.data?._id)
+             setCurrentEmpId(response)
             
         }
         else {
@@ -110,11 +110,42 @@ console.log(codeData,"codedata");
         }
     }
 
-    // const inputRefs=useRef([])
-    // const handleKeyPres=(index)=>{
-    // const nextIndex=clamp(0,6-1,index+1)
-    // inputRefs.current[nextIndex].focus()
-    // }
+    const handleResendCode=async()=>{
+  setIsloading(true)
+         let response = (await axios.post(`${baseUrl}/forgotPassword`, {email:currentEmpId?.data?.email})).data
+
+         console.log(response)
+
+        if (response?.code === 200) {
+            setIsloading(false)
+            console.log(response)
+            setIsloading(false)
+            setValidate(false)
+            console.log(response);
+     alert("codeSent")
+            handleEmailHider()
+
+            setshowPsswdVerification(true)
+            // setLoginData({
+            //     email: "",
+
+            // })
+            setErrorMessage("")
+             setCurrentEmpId(response)
+            
+            
+        }
+        else {
+            setIsloading(false)
+            setErrorMessage("This email has no account ")
+            setIsloading(false)
+            setValidate(false)
+            setErrorMessage("Invalid email")
+            setshowPsswdVerification(false)
+        }
+}
+
+
 
     return (
         <>
@@ -163,7 +194,7 @@ setCodeData({
                             </div>
                             <p className='text-center mt-2 col-lg-10 col-md-10 col-sm-10' style={{ color: "#2B415C" }}> Didn’t get a code? <Link
                                 onClick={() => {
-                                    handleEmailVerification()
+                                    handleResendCode()
                                 }}
 
                             > here</Link> Click  to resend</p>

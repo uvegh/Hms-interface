@@ -9,7 +9,7 @@ function ResetPassword() {
   const [validate, setValidate] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const { currentEmpId,setCurrentEmpId } = useContext(HmsContext)
-  const [match, setMatch] = useState(false)
+  const [match, setMatch] = useState(true)
   // setCurrentEmpId("i323232")
 console.log("employee id reset psswd",currentEmpId);
   const [loginData, setLoginData] = useState({
@@ -35,13 +35,13 @@ console.log("employee id reset psswd",currentEmpId);
     }
 
     
-    if (loginData.password1 == loginData.password2) {
+    if (loginData.password1 === loginData.password2) {
       setIsloading(false)
       setMatch(true)
       setfinalPsswd(loginData.password2)
 
 
-      let  response = (await (axios.put(`${baseUrl}/employee/${currentEmpId}/pwd`, finalPsswd)).catch((err) => {
+      let  response = (await (axios.put(`${baseUrl}/employee/${currentEmpId?.data?._id}/pwd`, finalPsswd)).catch((err) => {
           console.log(err)
           setIsloading(false)
           setErrorMessage("failed to login")
@@ -55,7 +55,7 @@ console.log("employee id reset psswd",currentEmpId);
         setValidate(false)
 
         alert("password has been reset")
-        navigate("/login")
+        navigate("/stafflogin")
         setLoginData({
           password1: "",
           password2: ""
@@ -79,6 +79,8 @@ setIsloading(false)
 
 
   }
+
+ 
 
   return (
     <>
@@ -140,7 +142,7 @@ setIsloading(false)
 
               </div>
               {/* {validate == true && !loginData.password ? (<p className='text-danger'>*empty</p>) : (null)} */}
-              {match == false ? (<p className='text-danger'>passwords do not match </p>) : (null)}
+              {match === false ? (<p className='text-danger'>passwords do not match </p>) : (null)}
 {errorMessage}
             </div>
 

@@ -1,0 +1,684 @@
+// Doctors section styling
+address,
+abbr {
+  margin: 0;
+}
+
+.doctor__dashboard {
+  width: 100%;
+  max-width: 1440px;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: 35% auto;
+  position: relative;
+  top: 70px;
+  margin: auto;
+  margin-bottom: 70px;
+
+  .doctor_sidebar {
+    background-color: #2b415c;
+    padding-left: 80px;
+
+    .links_display_box {
+      width: 325px;
+
+      .clinic_name {
+        width: 100%;
+        height: 106px;
+        background-color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-top: 15px;
+
+        .organization_image {
+          width: 90px;
+          height: 90px;
+          cursor: pointer;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: center;
+          }
+        }
+
+        .organization_name {
+          color: #ffffff;
+
+          h2 {
+            line-height: 29px;
+            font-size: 24px;
+            font-weight: 400;
+            cursor: pointer;
+
+            span {
+              color: #add8dc;
+            }
+          }
+        }
+      }
+
+      .sidebar_link_btns {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        .sidebar_btn {
+          height: 56px;
+          width: 100%;
+          padding-left: 10px;
+a{
+  text-decoration: none;
+  color:white
+}
+          &:hover,
+          :active {
+            background-color: #526479;
+            border-radius: 2px;
+          }
+
+          div {
+            font-size: 18px;
+            color: #ffffff;
+            line-height: 21px;
+            padding-top: 17px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .doctor_daily_info {
+    height: 100%;
+    padding: 20px 80px 33px 45px;
+    background-color: #f6f6f6;
+
+    .doctors_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .present_section {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 32px;
+
+        h2 {
+          color: #2b415c;
+          line-height: 38px;
+          font-weight: 600;
+          text-transform: capitalize;
+          margin: 0;
+        }
+        .patient_page{
+          font-size: 28px;
+          line-height: 33px;
+          &:nth-child(2){
+            color:#add8dc;
+            line-height: 14px;
+            font-size: 14px;
+          }
+          &:nth-child(3){
+            color:#add8dc;
+          }
+        }
+
+      }
+
+      .profile_avi_box {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+
+        .profile_avi {
+          width: 64px;
+          height: 64px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+          }
+        }
+
+        .profile_name {
+          p {
+            line-height: 21px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #2b415c;
+            margin: 0;
+          }
+
+          span {
+            display: block;
+            margin: 0;
+            font-size: 13px;
+            font-weight: 400;
+            color: #2b415c;
+            font-style: italic;
+          }
+        }
+      }
+    }
+
+    .patient_container_content {
+      display: grid;
+      grid-template-columns: 268px 630px !important;
+      grid-template-rows: 320px;
+      grid-gap: 24px 20px !important;
+
+      .patient_info_wrap,
+      .patient_details {
+        background-color: #ffffff;
+        box-shadow: 0 0 4px #cccccc;
+        border-radius: 5px;
+      }
+
+      .patient_info_wrap {
+        padding: 19px 19px 17px;
+
+        .patient_detail_summary {
+          display: grid;
+          place-items: center;
+          color: #2b415c;
+
+          .patient_image {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+
+            img {
+              width: 100%;
+              aspect-ratio: 1/1;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+          }
+
+          .patient_name {
+            margin-bottom: 8px;
+
+            h1 {
+              font-size: 24px;
+              line-height: 28px;
+              color: #2b415c;
+              font-weight: 600;
+              margin: 0;
+              text-transform: capitalize;
+            }
+          }
+
+          .card_no {
+            line-height: 16px;
+            font-size: 14px;
+            font-weight: 400;
+            color: inherit;
+            margin-bottom: 10px;
+          }
+        }
+
+
+        .patient_detail_summary_contd {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+
+          .info {
+            margin: 12px 0;
+            text-align: left;
+
+            h3,
+            p {
+              color: #2b415c;
+              font-size: 14px;
+              font-weight: 700;
+              line-height: 16px;
+              margin-bottom: 6px;
+            }
+
+            p {
+              font-weight: 400
+            }
+          }
+        }
+
+
+        .btns {
+          button {
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: capitalize;
+            display: block;
+            line-height: 19px;
+            text-align: center;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0 0 2px #2b415c;
+            background-color: #2b415c;
+            color: #ffffff;
+            padding: 3px 0;
+            cursor: pointer;
+
+            &:last-child {
+              margin-top: 12px;
+              background-color: #ffffff;
+              color: inherit;
+            }
+          }
+        }
+      }
+
+      .patient_details {
+        padding: 21px;
+
+        .patient_detail_summary_contd1 {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          // grid-template-rows: 102px;
+          gap: 51px;
+
+          .info {
+            padding: 24px 0;
+            border-bottom: 1px solid #e1dcdc;
+            text-align: left;
+
+            h3,
+            p {
+              color: #2b415c;
+              font-size: 14px;
+              font-weight: 700;
+              line-height: 16px;
+              margin-bottom: 6px;
+              text-transform: capitalize;
+            }
+
+            p {
+              font-weight: 400;
+              margin: 0;
+
+              .state {
+                display: block;
+                margin-top: 3px;
+              }
+            }
+
+          }
+
+
+        }
+      }
+    }
+
+    .doctors_container_content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 320px;
+      gap: 32px 48px;
+
+      .doctors_info_wrap {
+        display: grid;
+        grid-template-columns: repeat(2, 184px);
+        gap: 26px 28px;
+        padding: 8px 15px 23px;
+        background-color: #ffffff;
+        box-shadow: 0 0 4px #cccccc;
+        border-radius: 5px;
+
+        .overview {
+          grid-column: 1/-1;
+          height: fit-content;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          h2 {
+            line-height: 21px;
+            font-size: 18px;
+            color: #2b415c;
+            margin: 0;
+          }
+
+          .week_select {
+            p {
+              line-height: 21px;
+              font-size: 18px;
+              font-style: italic;
+              font-weight: 400;
+              color: #2b415c;
+              margin: 0;
+              cursor: pointer;
+            }
+          }
+        }
+
+        .tab {
+          height: 108px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          background-color: #add8dc;
+          border-radius: 8px;
+          cursor: pointer;
+
+          .icons {
+            font-size: 30px;
+            margin-bottom: 5px;
+          }
+
+          p {
+            margin: 0;
+            font-size: 12px;
+            line-height: 14px;
+            color: #2b415c;
+            font-weight: 400;
+          }
+
+          .counts {
+            font-size: 16px;
+            line-height: 19px;
+            font-weight: 600;
+            color: #2b415c;
+          }
+        }
+      }
+
+      .calender {
+        background-color: #ffffff;
+        box-shadow: 0 0 4px #cccccc;
+        border-radius: 5px;
+        padding: 0 20px;
+
+        // hhhhhhhhhhh
+        .react-calendar {
+          width: 100%;
+          max-width: 100%;
+          height: 100%;
+          line-height: 1.125em;
+        }
+
+        .react-calendar--doubleView {
+          width: 700px;
+        }
+
+        .react-calendar--doubleView .react-calendar__viewContainer {
+          display: flex;
+          margin: -0.5em;
+        }
+
+        .react-calendar--doubleView .react-calendar__viewContainer>* {
+          width: 50%;
+          margin: 0.5em;
+        }
+
+        .react-calendar,
+        .react-calendar *,
+        .react-calendar *:before,
+        .react-calendar *:after {
+          -moz-box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+        }
+
+        .react-calendar button {
+          margin: 0;
+          border: 0;
+          outline: none;
+        }
+
+        .react-calendar button:enabled:hover {
+          cursor: pointer;
+        }
+
+        .react-calendar__navigation {
+          display: flex;
+          height: 44px;
+          margin-bottom: 1em;
+        }
+
+        .react-calendar__navigation button {
+          min-width: 44px;
+          background: none;
+        }
+
+        .react-calendar__navigation button:disabled {
+          background-color: #f0f0f0;
+        }
+
+        .react-calendar__navigation button:enabled:hover,
+        .react-calendar__navigation button:enabled:focus {
+          background-color: #e6e6e6;
+        }
+
+        .react-calendar__month-view__weekdays {
+          text-align: center;
+          text-transform: uppercase;
+          font-weight: bold;
+          font-size: 0.75em;
+        }
+
+        .react-calendar__month-view__weekdays__weekday {
+          padding: 0.5em;
+          color: #2b415c;
+        }
+
+        .react-calendar__month-view__weekNumbers .react-calendar__tile {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.75em;
+          font-weight: bold;
+        }
+
+        .react-calendar__month-view__days__day {
+          color: #2b415c;
+        }
+
+        .react-calendar__month-view__days__day--weekend {
+          color: #d10000;
+        }
+
+        .react-calendar__month-view__days__day--neighboringMonth {
+          color: #757575;
+        }
+
+        .react-calendar__year-view .react-calendar__tile,
+        .react-calendar__decade-view .react-calendar__tile,
+        .react-calendar__century-view .react-calendar__tile {
+          padding: 1.5em 0.5em;
+        }
+
+        .react-calendar__tile {
+          max-width: 100%;
+          padding: 10px 6.6667px;
+          background: none;
+          text-align: center;
+          line-height: 16px;
+        }
+
+        .react-calendar__tile:disabled {
+          background-color: #f0f0f0;
+        }
+
+        .react-calendar__tile:enabled:hover,
+        .react-calendar__tile:enabled:focus {
+          background-color: #e6e6e6;
+        }
+
+        .react-calendar__tile--now {
+          background: #2b415c;
+        }
+
+        .react-calendar__tile--now:enabled:hover,
+        .react-calendar__tile--now:enabled:focus {
+          background: #2b415c;
+          border-radius: 50%;
+        }
+
+        .react-calendar__tile--hasActive {
+          background: #76baff;
+        }
+
+        .react-calendar__tile--hasActive:enabled:hover,
+        .react-calendar__tile--hasActive:enabled:focus {
+          background: #a9d4ff;
+        }
+
+        .react-calendar__tile--active {
+          background: #2b415c;
+          color: white;
+        }
+
+        .react-calendar__tile--active:enabled:hover,
+        .react-calendar__tile--active:enabled:focus {
+          background: #2b415c;
+        }
+
+        .react-calendar--selectRange .react-calendar__tile--hover {
+          background-color: #e6e6e6;
+        }
+
+        // hhhhhhhhhh
+      }
+
+      .appointment_table {
+        grid-column: 1/-1;
+        width: 917px;
+        padding: 11px 13px;
+        height: 373px;
+        overflow: hidden;
+        overflow-y: scroll;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        box-shadow: 0 0 4px #00000040;
+        background-color: #ffffff;
+        border-radius: 5px;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        .appointment_list {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 27px;
+
+          p {
+            color: #2b415c;
+            margin: 0;
+          }
+
+          .left {
+            font-size: 18px;
+            line-height: 21px;
+            font-weight: 600;
+          }
+
+          .right {
+            font-size: 16px;
+            line-height: 19px;
+            font-weight: 400;
+            text-decoration: underline;
+            cursor: pointer;
+          }
+        }
+
+
+        .appointment_table_holder {
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+          }
+
+          thead {
+            background-color: #2b415c;
+            border-radius: 5px;
+            text-align: left;
+          }
+
+          th {
+            border: 1px solid #2b415c;
+            padding: 9px 37px;
+            text-transform: capitalize;
+            color: #ffffff;
+            font-size: 18px;
+            line-height: 21px;
+            font-weight: 500;
+          }
+
+          tbody>tr:nth-child(even) {
+            background-color: #e9e9e9;
+          }
+
+
+          td {
+            padding: 9px 37px;
+            text-transform: capitalize;
+            color: #2b415c;
+            line-height: 16px;
+            font-size: 14px;
+            font-weight: 400;
+
+            &:last-of-type {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+
+              button {
+                border: 1px solid #2b415c;
+                border-radius: 5px;
+                padding: 4px 11px;
+                font-size: 14px;
+                line-height: 16px;
+                font-weight: 400;
+                background-color: inherit;
+                color: #2b415c;
+                cursor: pointer;
+
+                &:last-child {
+                  color: #df4937;
+                  border-color: #df4937;
+                }
+              }
+            }
+          }
+        }
+
+
+
+
+      }
+
+      .patient_appointment_table {
+        .appointment_list {
+          .right {
+            border: 1px solid #2b415c;
+            padding: 4px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+          }
+        }
+
+        .patient_appointment_table_holder td {
+          padding: 9px 20px;
+
+          button {
+            color: #2b415c !important;
+            box-sizing: 0 0 2px #2b415c !important;
+            border: 1px solid #2b415c !important;
+            padding: 4px 38px !important;
+          }
+        }
+      }
+    }
+  }
+}

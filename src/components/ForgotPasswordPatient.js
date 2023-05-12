@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useContext, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { HmsContext } from '../context/HmsContext'
+import PinInput from 'react-pin-input'
 
 
 function ForgotPasswordPatient() {
