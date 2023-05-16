@@ -5,13 +5,22 @@ abbr {
   text-decoration: none;
 }
 
+.ht-100 {
+  grid-template-rows: 664px !important;
+}
+
+.ht-inherit {
+  height: inherit !important;
+}
+
 .doctor__dashboard {
   width: 100%;
-  // max-width: 1440px;
-  height: fit-content;
+  max-width: 1440px;
+  // height: fit-content;
+  height: 864px;
   display: grid;
-  // grid-template-columns: 405px 1035px;
-  grid-template-columns: 28.125% 71.875%;
+  grid-template-columns: 405px 1035px;
+  // grid-template-columns: 28.125% 71.875%;
   position: relative;
   top: 70px;
   margin: auto;
@@ -72,11 +81,13 @@ abbr {
           padding-left: 10px;
           display: flex;
           align-items: center;
-a{
-  text-decoration: none;
-  color:white;
-  
-}
+
+          a {
+            text-decoration: none;
+            color: white;
+
+          }
+
           &:hover,
           :active {
             background-color: #526479;
@@ -118,16 +129,19 @@ a{
           text-transform: capitalize;
           margin: 0;
         }
-        .patient_page{
+
+        .patient_page {
           font-size: 28px;
           line-height: 33px;
-          &:nth-child(2){
-            color:#add8dc;
+
+          &:nth-child(2) {
+            color: #add8dc;
             line-height: 14px;
             font-size: 14px;
           }
-          &:nth-child(3){
-            color:#add8dc;
+
+          &:nth-child(3) {
+            color: #add8dc;
           }
         }
 
@@ -170,6 +184,51 @@ a{
           }
         }
       }
+    }
+
+    // Search box parameters
+    .patient_search_box {
+      .search_box {
+        display: flex;
+        align-items: center;
+        width: 560px;
+        position: relative;
+        margin-bottom: 16px;
+
+        input {
+          width: 560px;
+          padding: 5px 10px;
+          line-height: 21px;
+          font-size: 18px;
+          border-radius: 5px;
+          border: 1px solid #2b415ca3;
+          border-radius: 5px;
+          color: #00000040;
+          caret-color: red;
+
+          &:focus,
+          :active {
+            outline: none;
+          }
+        }
+
+        button {
+          position: absolute;
+          right: 0;
+          top: 1px;
+          width: 124px;
+          font-weight: 400;
+          color: #ffffff;
+          background-color: #2b415c;
+          line-height: 21px;
+          padding: 5px 10px;
+          font-size: 18px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+      }
+
     }
 
     .patient_container_content {
@@ -657,10 +716,6 @@ a{
             }
           }
         }
-
-
-
-
       }
 
       .patient_appointment_table {
@@ -671,6 +726,10 @@ a{
             border-radius: 5px;
             text-decoration: none;
           }
+        }
+
+        .patient_appointment_table_holder th {
+          padding: 9px 20px;
         }
 
         .patient_appointment_table_holder td {
