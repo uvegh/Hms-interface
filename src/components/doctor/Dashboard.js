@@ -10,13 +10,14 @@ import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 
 function Dashboard () {
-  const {currentEmpId,handleGetDiagnosis,diagnosis,setDiagnosis,handleGetAppointment,appointments}=useContext(HmsContext)
+  const {currentEmpId,handleGetDiagnosis,diagnosis,setDiagnosis,handleGetAppointment,appointments,prescriptionsDeployed, getPrescriptionsDeployed,isLoggedIn}=useContext(HmsContext)
   const baseUrl = 'https://gavohms.onrender.com'
   
   
   useEffect(()=>{
     handleGetDiagnosis()
     handleGetAppointment()
+    getPrescriptionsDeployed()
 },[])
   
 
@@ -125,7 +126,7 @@ alert("failed to delete")
               </div>
               <div className='tab'>
                 <TbPrescription className='icons' />
-                <p className='counts'>5</p>
+                <p className='counts'>{prescriptionsDeployed?.length}</p>
                 <p>Prescriptions deployed</p>
               </div>
             </div>

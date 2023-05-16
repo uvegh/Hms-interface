@@ -66,9 +66,10 @@ export default function App() {
                     // </DoctorProtected>
                   }
                 />
+                  <Route path="diagnosis" element={<DoctorDiagnosis />} />
               </Route>
               {/* doctor disgnosis route here */}
-              <Route path="/diagnosis" element={<DoctorDiagnosis />} />
+            
               <Route path="/admin" element={<AdminLayout />}></Route>
               <Route path="/super" element={<SuperAdminLayout />}></Route>
 
