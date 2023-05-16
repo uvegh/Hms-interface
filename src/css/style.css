@@ -113,15 +113,15 @@ html {
 address,
 abbr {
   margin: 0;
+  text-decoration: none;
 }
 
 .doctor__dashboard {
   width: 100%;
-  max-width: 1440px;
   height: -moz-fit-content;
   height: fit-content;
   display: grid;
-  grid-template-columns: 35% auto;
+  grid-template-columns: 28.125% 71.875%;
   position: relative;
   top: 70px;
   margin: auto;
@@ -175,6 +175,12 @@ abbr {
   height: 56px;
   width: 100%;
   padding-left: 10px;
+  display: flex;
+  align-items: center;
+}
+.doctor__dashboard .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn a {
+  text-decoration: none;
+  color: white;
 }
 .doctor__dashboard .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn:hover,
 .doctor__dashboard .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn :active {
@@ -185,7 +191,6 @@ abbr {
   font-size: 18px;
   color: #ffffff;
   line-height: 21px;
-  padding-top: 17px;
   cursor: pointer;
 }
 .doctor__dashboard .doctor_daily_info {
@@ -258,7 +263,7 @@ abbr {
 }
 .doctor__dashboard .doctor_daily_info .patient_container_content {
   display: grid;
-  grid-template-columns: 268px 630px !important;
+  grid-template-columns: 29.19% 68.63% !important;
   grid-template-rows: 320px;
   grid-gap: 24px 20px !important;
 }
@@ -669,6 +674,26 @@ abbr {
   padding: 4px 38px !important;
 }
 
+.diagnosis {
+  height: 100vh;
+  padding: 90px 0px 30px 32px;
+}
+.diagnosis .topSection {
+  width: 16%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 400;
+}
+.diagnosis .topSection p {
+  color: #2B415C;
+  font-family: "Roboto";
+}
+.diagnosis .topSection p span {
+  color: #ADD8DC;
+}
+
 .notFound-container {
   position: relative;
   height: 100vh;
@@ -886,7 +911,7 @@ nav .nav-links {
 
 @supports (-ms-ime-align: auto) {
   .login-banner {
-    margin-bottom: 200px;
+    margin-bottom: 50px;
   }
 }
 footer {

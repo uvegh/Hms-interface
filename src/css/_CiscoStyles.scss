@@ -1,0 +1,22 @@
+
+.diagnosis {
+  height: 100vh;
+  padding: 90px 0px 30px 32px;
+
+  .topSection{
+    width: 16%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size:24px;
+    font-weight: 400;
+
+      p{
+        color:#2B415C;
+        font-family: "Roboto";
+          span{
+            color:#ADD8DC;
+          }
+      }
+  }
+}

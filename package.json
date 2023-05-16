@@ -1,7 +1,6 @@
 {
   "name": "react",
   "version": "1.0.0",
-  "proxy":"https://gavohms.onrender.com",
   "description": "React example starter project",
   "keywords": [
     "react",

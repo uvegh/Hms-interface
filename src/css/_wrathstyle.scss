@@ -2,14 +2,16 @@
 address,
 abbr {
   margin: 0;
+  text-decoration: none;
 }
 
 .doctor__dashboard {
   width: 100%;
-  max-width: 1440px;
+  // max-width: 1440px;
   height: fit-content;
   display: grid;
-  grid-template-columns: 35% auto;
+  // grid-template-columns: 405px 1035px;
+  grid-template-columns: 28.125% 71.875%;
   position: relative;
   top: 70px;
   margin: auto;
@@ -68,9 +70,12 @@ abbr {
           height: 56px;
           width: 100%;
           padding-left: 10px;
+          display: flex;
+          align-items: center;
 a{
   text-decoration: none;
-  color:white
+  color:white;
+  
 }
           &:hover,
           :active {
@@ -82,7 +87,6 @@ a{
             font-size: 18px;
             color: #ffffff;
             line-height: 21px;
-            padding-top: 17px;
             cursor: pointer;
           }
         }
@@ -170,7 +174,8 @@ a{
 
     .patient_container_content {
       display: grid;
-      grid-template-columns: 268px 630px !important;
+      // grid-template-columns: 268px 630px !important;
+      grid-template-columns: 29.19% 68.63% !important;
       grid-template-rows: 320px;
       grid-gap: 24px 20px !important;
 

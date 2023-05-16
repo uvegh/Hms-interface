@@ -81,7 +81,7 @@ console.log(response);
                 <img src={profile} alt='' />
               </div>
               <div className='profile_name'>
-                <p className='profile_name'>John Ahmed</p>
+                <p className='profile_name'> ` ${currentEmpId?.firstname} ${currentEmpId?.lastname}` </p>
                 <span className='profile_occupation'>Doctor</span>
               </div>
             </div>

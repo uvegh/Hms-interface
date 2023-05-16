@@ -24,13 +24,14 @@ import SuperAdminLayout from "./components/superAdmin/SuperAdminLayout";
 import PharmacistLayout from "./components/pharmacist/PharmacistLayout";
 import NurseLayout from "./components/nurse/NurseLayout";
 import LabLayout from "./components/lab/LabLayout";
+import DoctorDiagnosis from "./components/Doctor_diagnosis/Dd";
 
 export default function App() {
   return (
     <>
-          <HmsProvider>
-      <GoogleOAuthProvider clientId="357757074966-ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com">
-        <BrowserRouter>
+      <HmsProvider>
+        <GoogleOAuthProvider clientId="357757074966-ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com">
+          <BrowserRouter>
             <LoginNav />
 
             <Routes>
@@ -66,7 +67,8 @@ export default function App() {
                   }
                 />
               </Route>
-
+              {/* doctor disgnosis route here */}
+              <Route path="/diagnosis" element={<DoctorDiagnosis />} />
               <Route path="/admin" element={<AdminLayout />}></Route>
               <Route path="/super" element={<SuperAdminLayout />}></Route>
 
@@ -77,9 +79,9 @@ export default function App() {
               <Route path="/lab" element={<LabLayout />}></Route>
             </Routes>
             <Footer />
-        </BrowserRouter>
-      </GoogleOAuthProvider>
-          </HmsProvider>
+          </BrowserRouter>
+        </GoogleOAuthProvider>
+      </HmsProvider>
     </>
   );
 }

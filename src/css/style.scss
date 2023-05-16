@@ -1,3 +1,4 @@
+// @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;500&family=Montserrat:wght@500&family=Outfit:wght@400;700&family=Poppins&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
 *,
 ::after,
 ::before {
@@ -6,6 +7,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 
 // Resets
 
@@ -16,6 +18,7 @@ html {
 @import '_variables';
 @import'_loader';
 @import '_wrathstyle';
+@import '_CiscoStyles';
 @import'_notFound';
 
 

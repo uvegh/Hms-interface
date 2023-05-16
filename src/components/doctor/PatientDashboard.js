@@ -1,10 +1,8 @@
 import profile from "../../img/pexels-photo-6.jpg";
 import greater_than_icon from "../../img/greater-than.svg";
 import { Link } from "react-router-dom";
-import Stethoscope from '../../img/stethoscope.svg'
+import Stethoscope from "../../img/stethoscope.svg";
 function PatientDashboard() {
-
-
   return (
     <>
       <section className="doctor__dashboard">
@@ -22,8 +20,7 @@ function PatientDashboard() {
             </div>
             <ul className="sidebar_link_btns">
               <li className="sidebar_btn active">
-      
-                      <Link to="/doctor/dashboard"> Dashboard </Link>
+                <Link to="/doctor/dashboard"> Dashboard </Link>
               </li>
               <li className="sidebar_btn">
                 <Link to="/doctor/patient"> Patients </Link>
@@ -44,6 +41,9 @@ function PatientDashboard() {
           </div>
         </div>
         <div className="doctor_daily_info">
+          {/* search box to look for patient */}
+
+          {/* to show if patient is found */}
           <div className="doctors_header">
             <div className="present_section ">
               <h2 className="patient_page">Patient list</h2>
@@ -65,7 +65,7 @@ function PatientDashboard() {
             </div>
           </div>
           <div className="doctors_container_content patient_container_content">
-            <div className="patient_info_wrap">
+            {/* <div className="patient_info_wrap">
               <div className="patient_detail_summary">
                 <div className="patient_image">
                   <img src={profile} alt="" />
@@ -93,9 +93,9 @@ function PatientDashboard() {
                 <button className="add_diagnosis">add diagnosis</button>
                 <button className="add_presc">add prescription</button>
               </div>
-            </div>
+            </div> */}
             {/* Calendar setup */}
-            <div className="patient_details">
+            {/* <div className="patient_details">
               <div className="patient_detail_summary_contd1">
                 <div className="info">
                   <h3>Gender</h3>
@@ -145,7 +145,7 @@ function PatientDashboard() {
                   <p>O+</p>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* appointment table */}
             <div className="appointment_table patient_appointment_table">
               <div className="appointment_list">
