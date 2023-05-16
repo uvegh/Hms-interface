@@ -24,7 +24,7 @@ import SuperAdminLayout from "./components/superAdmin/SuperAdminLayout";
 import PharmacistLayout from "./components/pharmacist/PharmacistLayout";
 import NurseLayout from "./components/nurse/NurseLayout";
 import LabLayout from "./components/lab/LabLayout";
-import DoctorDiagnosis from "./components/Doctor_diagnosis/Dd";
+import DoctorDiagnosis from "./components/doctor/Dd";
 
 export default function App() {
   return (
