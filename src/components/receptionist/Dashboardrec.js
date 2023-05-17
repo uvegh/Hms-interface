@@ -11,15 +11,16 @@ function DashboardRec() {
   const baseUrl = "https://gavohms.onrender.com"
   const { currentEmpId } = useContext(HmsContext)
   const [addPatient, setAddPatient] = useState(false)
+  const [isLoading, setIsloading] = useState(false);
+  const [addedPatient,setAddedPatient]=useState({})
   const [newPatientData, setNewPatientData] = useState({
     first_name: "",
     last_name: "",
     email: "",
     gender: "",
-    phone: [
-      ""
-    ],
+    phone: "",
     d_o_b: "",
+    password:"1234",
     address: "",
     occupation:"",
     emergency_contact: {
@@ -35,21 +36,46 @@ function DashboardRec() {
   })
   const [validate,setValidate]=useState(false)
   const [phone,setPhone]=useState({
-    phone1:""
+
+    phone2:""
   })
 
   const handleNewPatient=async()=>{
-    newPatientData.phone.push(phone.phone1)
-    if(!newPatientData.first_name||!newPatientData.last_name||!newPatientData.email||!newPatientData.gender||newPatientData.phone?.length==0||!newPatientData.d_o_b||!newPatientData.address||!newPatientData.emergency_contact.first_name||!newPatientData.emergency_contact.last_name||!newPatientData.emergency_contact.email||newPatientData.emergency_contact.phone?.length==0){
+   setIsloading(true)
+
+    if(phone.phone2!=""||phone.phone2!=null){
+      // setIsloading(false)
+      newPatientData.emergency_contact.phone.push(phone.phone2)
+    }
+ 
+   
+    if(!newPatientData.first_name||!newPatientData.last_name||!newPatientData.email||!newPatientData.gender||newPatientData.phone?.length==0||!newPatientData.d_o_b||!newPatientData.address ||!newPatientData.occupation||!newPatientData.emergency_contact.first_name||!newPatientData.emergency_contact.last_name||!newPatientData.emergency_contact.email||newPatientData.emergency_contact.phone?.length==0){
 console.log(newPatientData)
     setValidate(true)
+    setIsloading(false)
     return
     }
     
+    console.log(newPatientData)
+let response= await (axios.post(`${baseUrl}/register/user`,newPatientData)).catch(err=>{
+  setIsloading(false)
+})
+console.log(response?.data?.data);
 
-let response= (await (axios.post(`${baseUrl}/register/user`,newPatientData))).data
-console.log(response);
-console.log(newPatientData);
+
+if(response?.status=="201"){
+  setIsloading(false)
+alert("new patient added")
+setValidate(false)
+setAddPatient(false)
+setAddedPatient(response?.data?.data)
+setPhone([""])
+}
+else {
+  alert("failed to add new patient")
+  setIsloading(false)
+}
+
   }
 
 
@@ -82,6 +108,8 @@ const handleChange=(e)=>{
   return (
     <>
 
+
+
       {addPatient && (
         <div className="overlay">
           <div className="container  add-patient-form">
@@ -101,7 +129,9 @@ const handleChange=(e)=>{
                   value={newPatientData.first_name}
                   onChange={handleChange}
 
-                   className="form-control" id="validationDefault01"  required />
+                   className=
+                   {validate==true&&!newPatientData.first_name?("form-control border border-danger"):("form-control")}
+                   id="validationDefault01"  required />
                 </div>
 
                 <div className="col-md-4">
@@ -110,7 +140,7 @@ const handleChange=(e)=>{
                   name='last_name'
                      onChange={handleChange}
                   value={newPatientData.last_name}
-                  className="form-control" id="validationDefault02"  required />
+                  className={validate==true&&!newPatientData.last_name?("form-control border border-danger"):("form-control")} id="validationDefault02"  required />
                 </div>
 
                 <div className="col-md-4">
@@ -119,7 +149,7 @@ const handleChange=(e)=>{
                    
                     <input type="email" 
                      onChange={handleChange}
-                    className="form-control" 
+                    className={validate==true&&!newPatientData.email?("form-control border border-danger"):("form-control")}
                     name='email'
                     value={newPatientData.email}
                      aria-describedby="inputGroupPrepend2" required />
@@ -131,14 +161,14 @@ const handleChange=(e)=>{
                   <input type="text"
                   name='address'
                    onChange={handleChange}
-                   className="form-control" 
+                   className={validate==true&&!newPatientData.address?("form-control border border-danger"):("form-control")}
                    value={newPatientData.address}
                    id="validationDefault03" required />
                 </div>
 
                 <div className="col-md-3">
                   <label for="validationDefault04" className="form-label">Gender</label>
-                  <select className="form-select" 
+                  <select className={validate==true&&!newPatientData.gender?("form-control border border-danger"):("form-control")}
                    onChange={handleChange}
                    name='gender'
                  value={newPatientData.gender}
@@ -151,12 +181,10 @@ const handleChange=(e)=>{
                 <div className="col-md-3">
                   <label for="validationDefault05" className="form-label">Phone</label>
                   <input type="tel"
-                  onChange={(e)=>{
-                    setPhone({...phone,phone1:e.target.value})
-                  }}
+                  onChange={handleChange}
                   name='phone'
-                 value={phone.phone1}
-                   className="form-control" id="validationDefault05" placeholder='000-000-000' required />
+                 value={newPatientData.phone}
+                 className={validate==true&&!newPatientData.phone?("form-control border border-danger"):("form-control")} id="validationDefault05" placeholder='000-000-000' required />
                 </div>
 
                 <div className="col-md-3">
@@ -165,16 +193,16 @@ const handleChange=(e)=>{
                  onChange={handleChange}
                  name='occupation'
                  value={newPatientData.occupation}
-                   className="form-control" id="validationDefault05" placeholder='000-000-000' required />
+                 className={validate==true&&!newPatientData.occupation?("form-control border border-danger"):("form-control")} id="validationDefault05" placeholder='' required />
                 </div>
 
                 <div className="col-md-3">
-                  <label for="validationDefault05" className="form-label">Occupation</label>
+                  <label for="validationDefault05" className="form-label">Date of Birth</label>
                   <input type="date"
                  onChange={handleChange}
                  name='d_o_b'
                  value={newPatientData.d_o_b}
-                   className="form-control" id="validationDefault05" placeholder='d_o_b' required />
+                 className={validate==true&&!newPatientData.d_o_b?("form-control border border-danger"):("form-control")} id="validationDefault05" placeholder='d_o_b' required />
                 </div>
                 
                 <h3>EMERGENCY CONTACT</h3>
@@ -218,19 +246,35 @@ const handleChange=(e)=>{
                 <div className="col-md-3">
                   <label for="validationDefault05" className="form-label">Phone</label>
                   <input type="tel"
-                      onChange={handleChange}
+                    
                    className="form-control" 
-                   value={newPatientData.emergency_contact.phone}
+                   onChange={(e)=>{
+                    setPhone({...phone,phone2:e.target.value})
+                  }}
+                   value={phone.phone2}
                    name='emergency_contact.phone'
                    placeholder='000-000-000' id="validationDefault05" required />
                 </div>
 
                 <div className="col-12 text-center">
-                  <button className="btn btn-primary border-0 col-7 mt-3 fs-5" style={{ backgroundColor: "#2B415C" }}
+                {isLoading==true?( <>
+                  <div className="text-center">
+  <div className="spinner-border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>
+</div>
+                </>):
+                ( <>
+                  <button type="button" className="btn btn-primary border-0 col-7 mt-3 fs-5" style={{ backgroundColor: "#2B415C" }}
                   
                   onClick={handleNewPatient}
                   >Submit
                   </button>
+
+                </>)
+
+                }
+                  
                 </div>
               </div>
             </form>
@@ -256,10 +300,10 @@ const handleChange=(e)=>{
             </div>
             <ul className='sidebar_link_btns'>
               <li className='sidebar_btn active'>
-                <Link to='/doctor/dashboard'> Dashboard </Link>
+                <Link to='/receptionist/dashboard'> Dashboard </Link>
               </li>
               <li className='sidebar_btn'>
-                <Link to='/doctor/patient'> Patients </Link>
+                <Link to='/receptionist/patient'> Patients </Link>
               </li>
 
               <li className='sidebar_btn'>
@@ -297,7 +341,7 @@ const handleChange=(e)=>{
                 </div>
               </div>
               {/* Search box for patient */}
-              <div className='organization_name text-center fs-1 mt-5'>
+              <div className='organization_name text-center fs-1 mt-5 pt-5'>
                 <h1>
                   <span >Health</span>Line Clinic
                 </h1>
@@ -317,6 +361,40 @@ const handleChange=(e)=>{
 
 
           </div>
+
+          <div className='doctors_container_content  mt-5'>
+                <div className='appointment_table patient_appointment_table ht-inherit mt-5'>
+                  <div className=' appointment_table_holder patient_appointment_table_holder '>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Patient name</th>
+                          <th>card no</th>
+                          <th>unit</th>
+                          <th>gender</th>
+                          <th>status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{addedPatient?.first_name} {addedPatient?.first_name} </td>
+                          <td>
+                            <span>#</span>{addedPatient?.card_no}
+                          </td>
+                          <td>Gynaecology</td>
+                          <td>{addedPatient?.gender} </td>
+                          <td>{ !addedPatient?.status?("outpatient"):(
+
+                            <p> {!addedPatient?.status}</p>
+                          )} </td>
+                        </tr>
+                        
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
         </div>
       </section>
 
