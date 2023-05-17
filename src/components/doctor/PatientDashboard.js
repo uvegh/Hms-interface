@@ -2,7 +2,11 @@ import profile from '../../img/pexels-photo-6.jpg'
 import greater_than_icon from '../../img/greater-than.svg'
 import { Link } from 'react-router-dom'
 import Stethoscope from '../../img/stethoscope.svg'
+import { useContext } from 'react'
+import { HmsContext } from '../../context/HmsContext'
 function PatientDashboard () {
+   const {currentEmpId,isLoggedIn}=useContext(HmsContext)
+
   return (
     <>
       <section className='doctor__dashboard'>
@@ -53,7 +57,7 @@ function PatientDashboard () {
                     <img src={profile} alt='' />
                   </div>
                   <div className='profile_name'>
-                    <p className='profile_name'>John Ahmed</p>
+                    <p className='profile_name'>{` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
                     <span className='profile_occupation'>Doctor</span>
                   </div>
                 </div>
