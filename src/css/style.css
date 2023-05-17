@@ -116,12 +116,20 @@ abbr {
   text-decoration: none;
 }
 
+.ht-100 {
+  grid-template-rows: 664px !important;
+}
+
+.ht-inherit {
+  height: inherit !important;
+}
+
 .doctor__dashboard {
   width: 100%;
-  height: -moz-fit-content;
-  height: fit-content;
+  max-width: 1440px;
+  height: 864px;
   display: grid;
-  grid-template-columns: 28.125% 71.875%;
+  grid-template-columns: 405px 1035px;
   position: relative;
   top: 70px;
   margin: auto;
@@ -260,6 +268,43 @@ abbr {
   font-weight: 400;
   color: #2b415c;
   font-style: italic;
+}
+.doctor__dashboard .doctor_daily_info .patient_search_box .search_box {
+  display: flex;
+  align-items: center;
+  width: 560px;
+  position: relative;
+  margin-bottom: 16px;
+}
+.doctor__dashboard .doctor_daily_info .patient_search_box .search_box input {
+  width: 560px;
+  padding: 5px 10px;
+  line-height: 21px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 1px solid rgba(43, 65, 92, 0.6392156863);
+  border-radius: 5px;
+  color: rgba(0, 0, 0, 0.2509803922);
+  caret-color: red;
+}
+.doctor__dashboard .doctor_daily_info .patient_search_box .search_box input:focus,
+.doctor__dashboard .doctor_daily_info .patient_search_box .search_box input :active {
+  outline: none;
+}
+.doctor__dashboard .doctor_daily_info .patient_search_box .search_box button {
+  position: absolute;
+  right: 0;
+  top: 1px;
+  width: 124px;
+  font-weight: 400;
+  color: #ffffff;
+  background-color: #2b415c;
+  line-height: 21px;
+  padding: 5px 10px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .doctor__dashboard .doctor_daily_info .patient_container_content {
   display: grid;
@@ -663,6 +708,9 @@ abbr {
   padding: 4px 16px;
   border-radius: 5px;
   text-decoration: none;
+}
+.doctor__dashboard .doctor_daily_info .doctors_container_content .patient_appointment_table .patient_appointment_table_holder th {
+  padding: 9px 20px;
 }
 .doctor__dashboard .doctor_daily_info .doctors_container_content .patient_appointment_table .patient_appointment_table_holder td {
   padding: 9px 20px;
