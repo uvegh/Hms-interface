@@ -19,7 +19,7 @@ function StaffLogin() {
     password: "",
   });
   const navigate = useNavigate();
-  const { staffGoogleObj, setStaffGoogleObj, setCurrentEmpId, currentEmpId } =
+  const { staffGoogleObj, setStaffGoogleObj,setIsLoggedIn, setCurrentEmpId, currentEmpId } =
     useContext(HmsContext);
   const handleLogin = async () => {
     setIsloading(true);
@@ -45,6 +45,7 @@ function StaffLogin() {
     if (response?.status == "200") {
       setIsloading(false);
       setValidate(false);
+      setIsLoggedIn(true)
       alert("logged in");
       // setLoginData({
       //   emailOrPhone: '',
