@@ -67,6 +67,7 @@ export default function App() {
                     // </DoctorProtected>
                   }
                 />
+                
               </Route>
               {/* doctor disgnosis route here */}
               <Route path="/diagnosis" element={<DoctorDiagnosis />} />
