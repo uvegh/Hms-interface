@@ -10,25 +10,38 @@ import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 
 function Dashboard () {
-  const {currentEmpId,handleGetDiagnosis,diagnosis,setDiagnosis,handleGetAppointment,appointments}=useContext(HmsContext)
+  const {currentEmpId,handleGetDiagnosis,diagnosis,setDiagnosis,handleGetAppointment,appointments,prescriptionsDeployed, getPrescriptionsDeployed,isLoggedIn}=useContext(HmsContext)
   const baseUrl = 'https://gavohms.onrender.com'
   
   
   useEffect(()=>{
     handleGetDiagnosis()
     handleGetAppointment()
+    getPrescriptionsDeployed()
 },[])
   
 
-const handleRescheduleAppointment= async(id)=>{
-let response =(await axios.put(`${baseUrl}/appointment`,{status:"rescheduled"})).data
+const handleRescheduleAppointment= async(appointment)=>{
+  if(appointment?.status!="rescheduled"){
+let response =(await axios.put(`${baseUrl}/appointment/${appointment?._id}`,{status:"rescheduled"})).data
 console.log(response);
-alert("appointment rescheduled")
+if(response.code=="200"){
+  alert('appointment rescheduled');
+  handleGetAppointment()
+  return
 }
-
+alert("failed to reschedule")
+}
+}
 const handleDeleteAppointment=async(id)=>{
-  let response =(await axios.delete(`${baseUrl}/appointment/${id}`,{status:"rescheduled"})).data
+  let response =(await axios.delete(`${baseUrl}/appointment/${id}`)).data
 console.log(response);
+if(response.code=="200"){
+  alert("appointment deleted")
+  handleGetAppointment()
+  return
+}
+alert("failed to delete")
 }
 
 
@@ -113,7 +126,7 @@ console.log(response);
               </div>
               <div className='tab'>
                 <TbPrescription className='icons' />
-                <p className='counts'>5</p>
+                <p className='counts'>{prescriptionsDeployed?.length}</p>
                 <p>Prescriptions deployed</p>
               </div>
             </div>
@@ -146,96 +159,38 @@ console.log(response);
 
 
                     { appointments?.length===0?(<p>no appointment</p>)
-                  :(
+                  : appointments.map((appointment)=>(
 
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>{appointments?.card_no}</td>
-                      <td>
-                        
-                        {
-                          appointments?.status=="rescheduled"?(
-                            <button
-                        onClick={()=>{handleRescheduleAppointment(appointments?._id)}}
-                        >Reschedule</button>
-                          ):(
-                            <button className="bg-danger"
-                        onClick={()=>{handleRescheduleAppointment(appointments?._id)}}
-                        >Rescheduled</button>
-                          )
-                        }
-                       
-                        <button
-                        onClick={()=>{
-                          handleDeleteAppointment(appointments?._id)
-                        }}
-                        >Delete</button>
-                      </td>
-                    </tr>
-                  )  
+<tr>
+  <td>9:30Am</td>
+  <td>11/05/2023</td>
+  <td>Precious Adah</td>
+  <td>{appointment?.card_no}</td>
+  <td>
+    
+    {
+      appointment?.status=="rescheduled"?(
+        <button className="bg-danger"
+    onClick={()=>{handleRescheduleAppointment(appointment)}}
+    >Rescheduled</button>
+      ):(
+        <button className=""
+    onClick={()=>{handleRescheduleAppointment(appointment)}}
+    >Reschedule</button>
+      )
+    }
+   
+    <button
+    onClick={()=>{
+      handleDeleteAppointment(appointment?._id)
+    }}
+    >Delete</button>
+  </td>
+</tr>
+)  ) 
                   }
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
+                    
+                  
                   </tbody>
                 </table>
               </div>
