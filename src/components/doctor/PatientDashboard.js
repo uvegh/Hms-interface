@@ -147,7 +147,7 @@ function PatientDashboard() {
               </div>
             </div> */}
             {/* appointment table */}
-            <div className="appointment_table patient_appointment_table">
+            {/* <div className="appointment_table patient_appointment_table">
               <div className="appointment_list">
                 <div className="left">
                   <p>Consultation History</p>
@@ -218,7 +218,7 @@ function PatientDashboard() {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
