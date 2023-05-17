@@ -1286,6 +1286,24 @@ abbr {
   font-family: "Roboto";
 }
 
+.add-patient-form {
+  color: #2B415C;
+}
+.add-patient-form .btn-primary {
+  background-color: "#2B415C" !important;
+}
+.add-patient-form form {
+  background: whitesmoke;
+  font-weight: 600;
+}
+.add-patient-form form span:hover {
+  cursor: pointer;
+}
+
+.organization_name span {
+  color: #add8dc;
+}
+
 .notFound-container {
   position: relative;
   height: 100vh;
