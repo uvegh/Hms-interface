@@ -16,8 +16,10 @@ function Dd() {
           <form>
             <div className="diagFormgroup">
               <label>Patient Name</label> <br />
-              <div><input type="text" name="name" value="" placeholder="First" />
-              <input type="text" name="last" value="" placeholder="Last" /></div>
+              <div>
+                <input type="text" name="name" value="" placeholder="First" />
+                <input type="text" name="last" value="" placeholder="Last" />
+              </div>
             </div>
             <div className="diagFormgroup2">
               <div>
@@ -27,6 +29,24 @@ function Dd() {
               <div>
                 <label for="date of diagnosis">Date of Diagnosis</label>
                 <input type="date" name="" value="" />
+              </div>
+            </div>
+            <div className="diagForm3">
+              <label for="symptoms">symptoms</label>
+              <textarea className="textarea" rows="2" cols="40"></textarea>
+            </div>
+            <div className="diagForm3">
+              <label for="symptoms">Diagnosis</label>
+              <textarea className="textarea" rows="2" cols="40"></textarea>
+            </div>
+            <div className="diagForm4">
+              <div>
+                <label for="docname">Doctor’s Name</label>
+                <input type="text" name="doctorsname" value="" placeholder="Name"/>
+              </div>
+              <div>
+                <label for="DoctorsSign">Doctor’s Signature</label>
+                <input className="docSign" type="file" name="signature" value=""/>
               </div>
             </div>
           </form>

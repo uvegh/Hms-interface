@@ -67,13 +67,14 @@ export default function App() {
                     // </DoctorProtected>
                   }
                 />
-                {/* doctor diagnosis route here */}
-                <Route path="diagnosis" element={<DoctorDiagnosis />} />
+                  <Route path="diagnosis" element={<DoctorDiagnosis />} />
               </Route>
-
+              {/* doctor disgnosis route here */}
+            
               <Route path="/receptionist" element={<ReceptionistLayout />}>
-              <Route path="dashboard" element={<DashboardRec />}/>
-
+                <Route path="dashboard" element={ <DashboardRec /> }/>
+               
+                
               </Route>
 
               <Route path="/admin" element={<AdminLayout />}></Route>
