@@ -81,7 +81,7 @@ console.log(response);
                 <img src={profile} alt='' />
               </div>
               <div className='profile_name'>
-                <p className='profile_name'> ` ${currentEmpId?.firstname} ${currentEmpId?.lastname}` </p>
+                <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
                 <span className='profile_occupation'>Doctor</span>
               </div>
             </div>
@@ -151,7 +151,7 @@ console.log(response);
                     <tr>
                       <td>9:30Am</td>
                       <td>11/05/2023</td>
-                      <td>Precious Adah</td>
+                      <td>{appointments?.first_name} {appointments?.last_name} </td>
                       <td>{appointments?.card_no}</td>
                       <td>
                         
