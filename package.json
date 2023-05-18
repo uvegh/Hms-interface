@@ -2,7 +2,7 @@
   "name": "react",
   "version": "1.0.0",
   "description": "React example starter project",
-  "proxy":"https://4tnyzq-3000.csb.app",
+  "proxy": "https://4tnyzq-3000.csb.app",
   "keywords": [
     "react",
     "starter"

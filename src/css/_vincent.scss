@@ -1,0 +1,19 @@
+.add-patient-form{
+color:$loginBlue;
+
+  .btn-primary{background-color:"#2B415C" !important;}
+  form{background: whitesmoke;
+    font-weight: 600;
+    span{
+      &:hover{
+       cursor: pointer; 
+      }
+    }
+  }
+}
+
+.organization_name{
+  span {
+    color: #add8dc;
+  }
+}
