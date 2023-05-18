@@ -114,6 +114,11 @@ address,
 abbr {
   margin: 0;
   text-decoration: none;
+  font-style: normal;
+}
+
+.hidden {
+  display: none;
 }
 
 .ht-100 {
@@ -228,6 +233,7 @@ abbr {
 .doctor__dashboard .doctor_daily_info .doctors_header .present_section .patient_page {
   font-size: 28px;
   line-height: 33px;
+  text-transform: capitalize;
 }
 .doctor__dashboard .doctor_daily_info .doctors_header .present_section .patient_page:nth-child(2) {
   color: #add8dc;
@@ -284,7 +290,7 @@ abbr {
   border-radius: 5px;
   border: 1px solid rgba(43, 65, 92, 0.6392156863);
   border-radius: 5px;
-  color: rgba(0, 0, 0, 0.2509803922);
+  color: #2b415c;
   caret-color: red;
 }
 .doctor__dashboard .doctor_daily_info .patient_search_box .search_box input:focus,
@@ -348,6 +354,9 @@ abbr {
   font-weight: 600;
   margin: 0;
   text-transform: capitalize;
+}
+.doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary .patient_name h1 span {
+  text-transform: capitalize !important;
 }
 .doctor__dashboard .doctor_daily_info .patient_container_content .patient_info_wrap .patient_detail_summary .card_no {
   line-height: 16px;

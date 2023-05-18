@@ -3,6 +3,11 @@ address,
 abbr {
   margin: 0;
   text-decoration: none;
+  font-style: normal;
+}
+
+.hidden {
+  display: none;
 }
 
 .ht-100 {
@@ -133,6 +138,7 @@ abbr {
         .patient_page {
           font-size: 28px;
           line-height: 33px;
+          text-transform: capitalize;
 
           &:nth-child(2) {
             color: #add8dc;
@@ -203,7 +209,7 @@ abbr {
           border-radius: 5px;
           border: 1px solid #2b415ca3;
           border-radius: 5px;
-          color: #00000040;
+          color: #2b415c;
           caret-color: red;
 
           &:focus,
@@ -276,6 +282,10 @@ abbr {
               font-weight: 600;
               margin: 0;
               text-transform: capitalize;
+
+              span {
+                text-transform: capitalize !important;
+              }
             }
           }
 
