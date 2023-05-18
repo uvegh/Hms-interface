@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import profile from '../../img/pexels-photo-6.jpg'
+import { useState, useContext } from 'react'
 import greater_than_icon from '../../img/greater-than.svg'
 import { Link } from 'react-router-dom'
 import Stethoscope from '../../img/stethoscope.svg'
 import axios from 'axios'
 import { differenceInYears, intlFormat } from 'date-fns'
+import { HmsContext } from '../../context/HmsContext'
 
 function PatientDashboard () {
   // const baseUrl = 'https://gavohms.onrender.com'
@@ -12,6 +12,8 @@ function PatientDashboard () {
   const [cardId, setCardId] = useState('')
   const [patientFound, setPatientFound] = useState('')
   const [errMsg, setErrMsg] = useState('Nothing to display')
+  const { currentEmpId } = useContext(HmsContext)
+
   const handleSearch = async e => {
     e.preventDefault()
 
@@ -88,7 +90,9 @@ function PatientDashboard () {
                     <img src={profile} alt='' />
                   </div>
                   <div className='profile_name'>
-                    <p className='profile_name'>{` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
+                    <p className='profile_name'>
+                      {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`}{' '}
+                    </p>
                     <span className='profile_occupation'>Doctor</span>
                   </div>
                 </div>
