@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react'
 import greater_than_icon from '../../img/greater-than.svg'
+import profile from '../../img/pexels-photo-6.jpg'
 import { Link } from 'react-router-dom'
 import Stethoscope from '../../img/stethoscope.svg'
 import axios from 'axios'
@@ -116,7 +117,7 @@ function PatientDashboard () {
 
               {/* tabble with all patient */}
               <div className='doctors_container_content ht-100'>
-                <div className='d-flex align-items-center justify-content-center'>
+                <div className='d-flex align-items-start justify-content-start'>
                   <p>{errMsg}</p>
                 </div>
                 {/* <div className='appointment_table patient_appointment_table ht-inherit'>

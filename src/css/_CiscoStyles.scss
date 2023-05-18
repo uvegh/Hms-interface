@@ -126,6 +126,7 @@
             background: #ffffff;
             border: 1px solid rgba(43, 65, 92, 0.64);
             border-radius: 5px;
+            padding: 10px;
           }
         }
 
@@ -143,31 +144,31 @@
             padding: 10px;
           }
           .docSign {
-            color: transparent;
-            position: relative;
+            color: black;
           }
-          .docSign::-webkit-file-upload-button {
-            visibility: hidden;
-          }
-          .docSign::after {
-            content: "+";
-            display: inline-block;
-            background: linear-gradient(top, #f9f9f9, #e3e3e3);
-            outline: none;
-            white-space: nowrap;
-            -webkit-user-select: none;
-            cursor: pointer;
-            text-shadow: 1px 1px #fff;
-            color: rgba(0, 0, 0, 0.4);
-            position: absolute;
-            right: 20px;
-            bottom: 0px;
-            font-family: "Roboto";
-            font-style: normal;
-            font-weight: 400;
-            font-size: 24px;
-            line-height: 28px;
-          }
+          // .docSign::-webkit-file-upload-button {
+          //   visibility: hidden;
+          // }
+          // .docSign::after {
+          //   content: "+";
+          //   display: inline-block;
+          //   background: linear-gradient(top, #f9f9f9, #e3e3e3);
+          //   outline: none;
+          //   white-space: nowrap;
+          //   -webkit-user-select: none;
+          //   cursor: pointer;
+          //   text-shadow: 1px 1px #fff;
+          //   color: rgba(0, 0, 0, 0.4);
+          //   position: absolute;
+          //   right: 20px;
+          //   bottom: 0px;
+          //   font-family: "Roboto";
+          //   font-style: normal;
+          //   font-weight: 400;
+          //   font-size: 24px;
+          //   line-height: 28px;
+          // }
+
           div label {
             font-family: "Roboto";
             font-style: normal;
@@ -209,6 +210,14 @@
           line-height: 19px;
           text-align: center;
           color: #ffffff;
+        }
+        .noInput{
+          cursor: not-allowed;
+          background-color: #526479 !important;
+        }
+        .allowInput{
+          cursor: pointer;
+          background: #2b415c !important;
         }
       }
     }
@@ -519,6 +528,7 @@
           text-align: center;
           color: #2b415c;
         }
+        
         button:nth-child(even) {
           background: #2b415c;
           border-radius: 5px;
@@ -529,6 +539,9 @@
           line-height: 19px;
           text-align: center;
           color: #ffffff;
+        }
+        button.saves{
+          background-color: red !important;
         }
       }
     }

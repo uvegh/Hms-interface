@@ -26,7 +26,7 @@ import NurseLayout from "./components/nurse/NurseLayout";
 import LabLayout from "./components/lab/LabLayout";
 import DoctorDiagnosis from "./components/doctor/Dd";
 import ReceptionistLayout from "./components/receptionist/ReceptionistLayout";
-import DashboardRec from "./components/receptionist/DashboardRec";
+import DashboardRec from "./components/receptionist/Dashboardrec";
 
 
 export default function App() {
