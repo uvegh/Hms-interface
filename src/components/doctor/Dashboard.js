@@ -148,6 +148,7 @@ alert("failed to delete")
                 <table>
                   <thead>
                     <tr>
+                    <th>S/N</th>
                       <th>time</th>
                       <th>date</th>
                       <th>name</th>
@@ -159,9 +160,10 @@ alert("failed to delete")
 
 
                     { appointments?.length===0?(<p>no appointment</p>)
-                  : appointments.map((appointment)=>(
+                  : appointments.map((appointment,i)=>(
 
 <tr>
+<td>{i+1}</td>
   <td>9:30Am</td>
   <td>11/05/2023</td>
   <td>Precious Adah</td>

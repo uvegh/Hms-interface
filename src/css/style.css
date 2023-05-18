@@ -775,6 +775,7 @@ abbr {
   font-size: 14px;
   line-height: 16px;
   color: #2b415c;
+  padding-bottom: 8px;
 }
 .diagnosis .diagnos2 .mainDiagnos_form form .diagFormgroup div {
   display: flex;
@@ -783,20 +784,40 @@ abbr {
   gap: 10px;
 }
 .diagnosis .diagnos2 .mainDiagnos_form form .diagFormgroup div input {
-  width: 100%;
+  width: 307px;
+  height: 26px;
   border: none;
   outline: none;
   background: #ffffff;
   border: 1px solid rgba(43, 65, 92, 0.64);
   border-radius: 5px;
-  padding: 1px;
+  padding: 10px;
   font-size: 14px;
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagFormgroup div input::-moz-placeholder {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+  color: rgba(0, 0, 0, 0.4);
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagFormgroup div input::placeholder {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+  color: rgba(0, 0, 0, 0.4);
 }
 .diagnosis .diagnos2 .mainDiagnos_form form .diagFormgroup2 {
   display: flex;
   flex-direction: row;
   width: 100%;
   gap: 10px;
+  margin: auto auto 24px auto;
 }
 .diagnosis .diagnos2 .mainDiagnos_form form .diagFormgroup2 div {
   display: block;
@@ -807,28 +828,124 @@ abbr {
   background: #ffffff;
   border: 1px solid rgba(43, 65, 92, 0.64);
   border-radius: 5px;
-}
-.diagnosis .diagnos2 .mainDiagnos_form form .diagFormgroup2 div ::-moz-placeholder {
+  padding: 10px;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  /* identical to box height */
-  display: flex;
-  align-items: center;
   color: rgba(0, 0, 0, 0.4);
 }
-.diagnosis .diagnos2 .mainDiagnos_form form .diagFormgroup2 div ::placeholder {
+.diagnosis .diagnos2 .mainDiagnos_form form .diagFormgroup2 div label {
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  padding-bottom: 8px;
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagForm3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: auto auto 24px auto;
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagForm3 label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  padding-bottom: 8px;
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagForm3 .textarea {
+  width: 623px;
+  height: 64px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagForm4 {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  margin: auto auto 24px auto;
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagForm4 div input {
+  width: 307px;
+  height: 26px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+  padding: 10px;
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagForm4 .docSign {
+  color: transparent;
+  position: relative;
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagForm4 .docSign::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagForm4 .docSign::after {
+  content: "+";
+  display: inline-block;
+  background: linear-gradient(top, #f9f9f9, #e3e3e3);
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  right: 20px;
+  bottom: 0px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+}
+.diagnosis .diagnos2 .mainDiagnos_form form .diagForm4 div label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  padding-bottom: 8px;
+}
+.diagnosis .diagnos2 .mainDiagnos_form .diagnosbtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.diagnosis .diagnos2 .mainDiagnos_form .diagnosbtn button {
+  width: 307px;
+  height: 40px;
+  border: none;
+  outline: none;
+  border: 1px solid #2b415c;
+  border-radius: 5px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
   font-size: 16px;
   line-height: 19px;
-  /* identical to box height */
-  display: flex;
-  align-items: center;
-  color: rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: #2b415c;
+}
+.diagnosis .diagnos2 .mainDiagnos_form .diagnosbtn button:nth-child(even) {
+  background: #2b415c;
+  border-radius: 5px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #ffffff;
 }
 .diagnosis .topSection {
   display: flex;
@@ -847,6 +964,353 @@ abbr {
   font-size: 24px;
   font-weight: 400;
   font-family: "Roboto";
+}
+
+.prescription {
+  padding-top: 90px;
+  height: 100vh;
+}
+.prescription .prescrib2 {
+  background: #f6f6f6;
+  width: 720px;
+  height: 777px;
+  margin: auto;
+  border-radius: 10px;
+  padding: 32px;
+}
+.prescription .prescrib2 .prescribe_form {
+  width: 656px;
+  height: 545px;
+  border: 1px solid #e9e9e9;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  margin-top: 14px;
+}
+.prescription .prescrib2 .prescribe_form h3 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 35px;
+  color: #2b415c;
+  padding: 18px 0px 0px 13px;
+}
+.prescription .prescrib2 .prescribe_form form {
+  padding: 16px;
+  width: 100%;
+}
+.prescription .prescrib2 .prescribe_form form .presFormgroup label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  padding-bottom: 8px;
+}
+.prescription .prescrib2 .prescribe_form form .presFormgroup div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+.prescription .prescrib2 .prescribe_form form .presFormgroup div input {
+  width: 307px;
+  height: 26px;
+  border: none;
+  outline: none;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+}
+.prescription .prescrib2 .prescribe_form form .presFormgroup div input::-moz-placeholder {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+  color: rgba(0, 0, 0, 0.4);
+}
+.prescription .prescrib2 .prescribe_form form .presFormgroup div input::placeholder {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+  color: rgba(0, 0, 0, 0.4);
+}
+.prescription .prescrib2 .prescribe_form form .presFormgroup2 {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 10px;
+  margin: auto auto 10px auto;
+}
+.prescription .prescrib2 .prescribe_form form .presFormgroup2 div {
+  display: block;
+}
+.prescription .prescrib2 .prescribe_form form .presFormgroup2 div input {
+  width: 307px;
+  height: 26px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+  padding: 10px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(0, 0, 0, 0.4);
+}
+.prescription .prescrib2 .prescribe_form form .presFormgroup2 div label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  padding-bottom: 8px;
+}
+.prescription .prescrib2 .prescribe_form form .presForm4 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  margin: auto auto 10px auto;
+}
+.prescription .prescrib2 .prescribe_form form .presForm4 div label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  padding-bottom: 8px;
+}
+.prescription .prescrib2 .prescribe_form form .presForm4 input:nth-child(2) {
+  width: 153px;
+  height: 26px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+  padding: 0px 10px;
+}
+.prescription .prescrib2 .prescribe_form form .presForm4 input:nth-child(3) {
+  width: 145px;
+  height: 26px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+  padding: 0px 10px;
+}
+.prescription .prescrib2 .prescribe_form form .presForm4 input.medicSelect {
+  width: 307px;
+  height: 25px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+  position: relative;
+  padding: 0px 10px;
+}
+.prescription .prescrib2 .prescribe_form form .presForm4 div .medicSelect::-moz-placeholder {
+  position: absolute;
+  right: 5px;
+  bottom: -1px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.4);
+  padding: 2px;
+}
+.prescription .prescrib2 .prescribe_form form .presForm4 div .medicSelect::placeholder {
+  position: absolute;
+  right: 5px;
+  bottom: -1px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.4);
+  padding: 2px;
+}
+.prescription .prescrib2 .prescribe_form form .presForm5 {
+  width: 623px;
+  height: auto;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+  padding: 4px 7px;
+  margin: auto auto 10px auto;
+}
+.prescription .prescrib2 .prescribe_form form .presForm5 div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e1dcdc;
+  padding: 5px 0px;
+  margin: 0;
+}
+.prescription .prescrib2 .prescribe_form form .presForm5 div p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  margin-bottom: 0 !important;
+  text-align: center;
+}
+.prescription .prescrib2 .prescribe_form form .presForm6 {
+  display: flex;
+  flex-direction: column;
+  margin: auto auto 10px auto;
+}
+.prescription .prescrib2 .prescribe_form form .presForm6 label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  padding-bottom: 8px;
+}
+.prescription .prescrib2 .prescribe_form form .presForm6 input {
+  width: 623px;
+  height: 48px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+  padding: 0px 10px;
+}
+.prescription .prescrib2 .prescribe_form form .diagForm4 {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  margin: auto auto 24px auto;
+}
+.prescription .prescrib2 .prescribe_form form .diagForm4 div input {
+  width: 307px;
+  height: 26px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+  padding: 10px;
+}
+.prescription .prescrib2 .prescribe_form form .diagForm4 .docSign {
+  color: transparent;
+  position: relative;
+}
+.prescription .prescrib2 .prescribe_form form .diagForm4 .docSign::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.prescription .prescrib2 .prescribe_form form .diagForm4 .docSign::after {
+  content: "+";
+  display: inline-block;
+  background: linear-gradient(top, #f9f9f9, #e3e3e3);
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  right: 20px;
+  bottom: 0px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+}
+.prescription .prescrib2 .prescribe_form form .diagForm4 div label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  padding-bottom: 8px;
+}
+.prescription .prescrib2 .prescribe_form .diagnosbtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+}
+.prescription .prescrib2 .prescribe_form .diagnosbtn button {
+  width: 307px;
+  height: 40px;
+  border: none;
+  outline: none;
+  border: 1px solid #2b415c;
+  border-radius: 5px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #2b415c;
+}
+.prescription .prescrib2 .prescribe_form .diagnosbtn button:nth-child(even) {
+  background: #2b415c;
+  border-radius: 5px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #ffffff;
+}
+.prescription .prescrib2 .topSection {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+.prescription .prescrib2 .topSection p {
+  color: #2b415c;
+  font-size: 24px;
+  font-weight: 400;
+  font-family: "Roboto";
+}
+.prescription .prescrib2 .topSection p span {
+  color: #add8dc;
+  font-size: 24px;
+  font-weight: 400;
+  font-family: "Roboto";
+}
+
+.add-patient-form {
+  color: #2B415C;
+}
+.add-patient-form .btn-primary {
+  background-color: "#2B415C" !important;
+}
+.add-patient-form form {
+  background: whitesmoke;
+  font-weight: 600;
+}
+.add-patient-form form span:hover {
+  cursor: pointer;
+}
+
+.organization_name span {
+  color: #add8dc;
 }
 
 .notFound-container {

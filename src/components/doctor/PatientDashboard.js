@@ -88,7 +88,7 @@ function PatientDashboard () {
                     <img src={profile} alt='' />
                   </div>
                   <div className='profile_name'>
-                    <p className='profile_name'>John Ahmed</p>
+                    <p className='profile_name'>{` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
                     <span className='profile_occupation'>Doctor</span>
                   </div>
                 </div>
