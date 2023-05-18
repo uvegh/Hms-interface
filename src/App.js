@@ -24,7 +24,10 @@ import SuperAdminLayout from "./components/superAdmin/SuperAdminLayout";
 import PharmacistLayout from "./components/pharmacist/PharmacistLayout";
 import NurseLayout from "./components/nurse/NurseLayout";
 import LabLayout from "./components/lab/LabLayout";
-import DoctorDiagnosis from "./components/Doctor_diagnosis/Dd";
+import DoctorDiagnosis from "./components/doctor/Dd";
+import ReceptionistLayout from "./components/receptionist/ReceptionistLayout";
+import DashboardRec from "./components/receptionist/Dashboardrec";
+
 
 export default function App() {
   return (
@@ -50,9 +53,7 @@ export default function App() {
               />
 
               <Route path="/doctor" element={<DoctorLayout />}>
-                <Route
-                  path="dashboard"
-                  element={
+                <Route path="dashboard" element={
                     // <DoctorProtected>
                     <DoctorDashboard />
                     // </DoctorProtected>
@@ -66,9 +67,16 @@ export default function App() {
                     // </DoctorProtected>
                   }
                 />
+                  <Route path="diagnosis" element={<DoctorDiagnosis />} />
               </Route>
               {/* doctor disgnosis route here */}
-              <Route path="/diagnosis" element={<DoctorDiagnosis />} />
+            
+              <Route path="/receptionist" element={<ReceptionistLayout />}>
+                <Route path="dashboard" element={ <DashboardRec /> }/>
+               
+                
+              </Route>
+
               <Route path="/admin" element={<AdminLayout />}></Route>
               <Route path="/super" element={<SuperAdminLayout />}></Route>
 

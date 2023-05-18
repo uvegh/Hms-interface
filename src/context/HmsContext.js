@@ -6,21 +6,19 @@ export const HmsContext=createContext()
 function HmsProvider(props) {
   
     const [currentEmpId,setCurrentEmpId]=useState({})
-const[isLoggedIn,setIsloggedIn]=useState(false)
+const[isLoggedIn,setIsLoggedIn]=useState(false)
     const [currentPatientId,setCurrentPatientId]=useState({})
     const[appointments,setAppointments]=useState([])
     // console.log(currentPatientId + "this is from the context api")
     const[patientGoogleObj,setPatientGoogleObj]=useState({})
     // console.log(patientGoogleObj);
     const[staffGoogleObj,setStaffGoogleObj]=useState({})
+    const[prescriptionsDeployed,setPrescriptionsDeployed]=useState([])
     const [diagnosis,setDiagnosis]=useState([])
     const baseUrl = 'https://gavohms.onrender.com'
 
     
-const testing=()=>{
-  console.log(currentEmpId + "this is from the context api")
-  console.log(patientGoogleObj);
-}
+
 
 
   const handleGetDiagnosis=async()=>{
@@ -54,13 +52,27 @@ const testing=()=>{
     
   }
 
-// useEffect(()=>{
-//   testing()
-// },[])
+  const getPrescriptionsDeployed=async()=>{
+    let response= (await (axios.get(`${baseUrl}/record`))).data
+ 
+    let filter_Prescriptions_Deployed= response?.data.filter((prescription)=>{
+      return  prescription?.data?.doctor?.emp_id?._id==currentEmpId?._id
+    } )
+    
+   
+    
+   
+    setPrescriptionsDeployed(filter_Prescriptions_Deployed)
+    console.log(prescriptionsDeployed)
+    
+  }
 
+// useEffect(()=>{
+ 
+// })
 
   return (
-   <HmsContext.Provider value={{currentEmpId,setCurrentEmpId,currentPatientId,setCurrentPatientId,patientGoogleObj,setPatientGoogleObj,setStaffGoogleObj,handleGetDiagnosis,handleGetAppointment,setIsloggedIn,isLoggedIn,diagnosis,setDiagnosis,appointments}}>
+   <HmsContext.Provider value={{currentEmpId,setCurrentEmpId,currentPatientId,setCurrentPatientId,patientGoogleObj,setPatientGoogleObj,setStaffGoogleObj,handleGetDiagnosis,handleGetAppointment,setIsLoggedIn,isLoggedIn,diagnosis,setDiagnosis,appointments, getPrescriptionsDeployed,prescriptionsDeployed}}>
 {props.children}
 
    </HmsContext.Provider>
