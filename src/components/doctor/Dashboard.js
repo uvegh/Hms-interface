@@ -10,25 +10,38 @@ import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 
 function Dashboard () {
-  const {currentEmpId,handleGetDiagnosis,diagnosis,setDiagnosis,handleGetAppointment,appointments}=useContext(HmsContext)
+  const {currentEmpId,handleGetDiagnosis,diagnosis,setDiagnosis,handleGetAppointment,appointments,prescriptionsDeployed, getPrescriptionsDeployed,isLoggedIn}=useContext(HmsContext)
   const baseUrl = 'https://gavohms.onrender.com'
   
   
   useEffect(()=>{
     handleGetDiagnosis()
     handleGetAppointment()
+    getPrescriptionsDeployed()
 },[])
   
 
-const handleRescheduleAppointment= async(id)=>{
-let response =(await axios.put(`${baseUrl}/appointment`,{status:"rescheduled"})).data
+const handleRescheduleAppointment= async(appointment)=>{
+  if(appointment?.status!="rescheduled"){
+let response =(await axios.put(`${baseUrl}/appointment/${appointment?._id}`,{status:"rescheduled"})).data
 console.log(response);
-alert("appointment rescheduled")
+if(response.code=="200"){
+  alert('appointment rescheduled');
+  handleGetAppointment()
+  return
 }
-
+alert("failed to reschedule")
+}
+}
 const handleDeleteAppointment=async(id)=>{
-  let response =(await axios.delete(`${baseUrl}/appointment/${id}`,{status:"rescheduled"})).data
+  let response =(await axios.delete(`${baseUrl}/appointment/${id}`)).data
 console.log(response);
+if(response.code=="200"){
+  alert("appointment deleted")
+  handleGetAppointment()
+  return
+}
+alert("failed to delete")
 }
 
 
@@ -113,7 +126,7 @@ console.log(response);
               </div>
               <div className='tab'>
                 <TbPrescription className='icons' />
-                <p className='counts'>5</p>
+                <p className='counts'>{prescriptionsDeployed?.length}</p>
                 <p>Prescriptions deployed</p>
               </div>
             </div>
@@ -135,6 +148,7 @@ console.log(response);
                 <table>
                   <thead>
                     <tr>
+                    <th>S/N</th>
                       <th>time</th>
                       <th>date</th>
                       <th>name</th>
@@ -146,7 +160,7 @@ console.log(response);
 
 
                     { appointments?.length===0?(<p>no appointment</p>)
-                  :(
+                  : appointments.map((appointment,i)=>(
 
                     <tr>
                       <td>9:30Am</td>
@@ -176,66 +190,8 @@ console.log(response);
                     </tr>
                   )  
                   }
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>Precious Adah</td>
-                      <td>#2232</td>
-                      <td>
-                        <button>Reschedule</button>
-                        <button>Delete</button>
-                      </td>
-                    </tr>
+                    
+                  
                   </tbody>
                 </table>
               </div>
