@@ -60,6 +60,10 @@ function StaffLogin() {
       if (response?.data?.data?.role == "receptionist") {
         navigate("/receptionist/dashboard");
       }
+      if (response?.data?.data?.role == "nurse") {
+        navigate("/nurse/dashboard");
+      }
+
 
     } else {
       setIsloading(false);

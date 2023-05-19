@@ -8,14 +8,11 @@ import profile from '../../img/pexels-photo-6.jpg'
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
-function DashboardNurse() {
-    const { currentEmpId, handleGetNurseDetail, nurseObj } = useContext(HmsContext)
-
+function Patient() {
+    const { currentEmpId, nurseObj } = useContext(HmsContext)
     useEffect(() => {
-        // console.log(currentEmpId)
-        // console.log(nurseObj)
-        handleGetNurseDetail()
-    }, [nurseObj])
+        console.log(nurseObj)
+    })
     return (
         <>
             <section className='doctor__dashboard'>
@@ -66,45 +63,12 @@ function DashboardNurse() {
                         </div>
                     </div>
                     <div className='doctors_container_content'>
-                        <div className='doctors_info_wrap'>
-                            <div className='overview'>
-                                <div>
-                                    <h2>Activity Overview</h2>
-                                </div>
-                                <div className='week_select'>
-                                    <p>This week</p>
-                                </div>
-                            </div>
-                            <div className='tab '>
-                                <FiUser className='icons' />
-                                <p className='counts'> {nurseObj?.data?.patients_incharge_of?.length}</p>
-                                <p>Patients Assigned</p>
-                            </div>
-                            <div className='tab'>
-                                <BsFillHouseAddFill className='icons' />
-                                <p className='counts'>{nurseObj?.data?.ward_no?.length}</p>
-                                <p>Ward Assigned</p>
-                            </div>
-                            <div className='tab'>
-                                <FiUser className='icons' />
-                                <p className='counts'>2</p>
-                                <p>Available Consultants</p>
-                            </div>
-                            <div className='tab'>
 
-                                <p className='counts'> </p>
-                                <p></p>
-                            </div>
-                        </div>
-                        {/* Calendar setup */}
-                        <div className='calender'>
-                            <Calender />
-                        </div>
                         {/* appointment table */}
                         <div className='appointment_table' style={{ overflowX: "scroll" }}>
                             <div className='appointment_list'>
                                 <div className='left'>
-                                    <p>Patient Details</p>
+                                    <p>Assigned Pateints</p>
                                 </div>
                                 <div className='right'>
                                     <p></p>
@@ -117,35 +81,68 @@ function DashboardNurse() {
                                             <th>S/N</th>
                                             <th>Name</th>
                                             <th>ID</th>
-                                            <th>BP</th>
+                                            <th>Ward</th>
+                                            <th>Medication</th>
+                                            <th>Diagnosis</th>
+                                            <th>BP </th>
                                             <th>Weight</th>
-                                            <th>Payment</th>
-                                            <th>Consultant Dr</th>
-                                            <th>Actions</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
-
-
                                         <tr>
                                             <td>1</td>
-                                            <td>vincent</td>
+                                            <td>daavid</td>
                                             <td>#123</td>
-                                            <td>120/90 </td>
-                                            <td>102</td>
-                                            <td>pending</td>
-                                            <td></td>
+                                            <td>Ward </td>
+                                            <td>medication </td>
+                                            <td>diagnosis</td>
+                                            <td>120/1</td>
+                                            <td> 90</td>
                                             <td>
 
 
 
-                                                <button
+                                                <button className='bg-primary'
                                                     onClick={() => {
 
                                                     }}
-                                                >Post</button>
+                                                >Edit</button>
                                             </td>
                                         </tr>
+                                    </tbody>
+
+                                    <tbody>
+                                        {nurseObj?.data?.patients_incharge_of?.length == 0 ?
+                                            (<p> No patient assigned</p>)
+                                            : nurseObj?.data?.patients_incharge_of?.map((patient, i) => (
+
+
+                                                <tr>
+                                                    <td>{i + 1}</td>
+                                                    <td>{patient?.first_name} {patient?.last_name} </td>
+                                                    <td>#{patient?.card_no}</td>
+                                                    <td>Ward </td>
+                                                    <td>medication </td>
+                                                    <td>diagnosis</td>
+                                                    <td>{patient?.blood_pressure}</td>
+                                                    <td> {patient?.weight}</td>
+                                                    <td>
+
+
+
+                                                        <button className='bg-primary'
+                                                            onClick={() => {
+
+                                                            }}
+                                                        >Edit</button>
+                                                    </td>
+                                                </tr>
+
+                                            ))}
+
+
 
 
                                     </tbody>
@@ -160,4 +157,4 @@ function DashboardNurse() {
     )
 }
 
-export default DashboardNurse
+export default Patient
