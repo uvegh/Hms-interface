@@ -162,33 +162,34 @@ alert("failed to delete")
                     { appointments?.length===0?(<p>no appointment</p>)
                   : appointments.map((appointment,i)=>(
 
-                    <tr>
+                    <tr key={i}>
+                       <td>{i+1}</td>
                       <td>9:30Am</td>
                       <td>11/05/2023</td>
-                      <td>{appointments?.first_name} {appointments?.last_name} </td>
-                      <td>{appointments?.card_no}</td>
+                      <td>{appointment?.first_name} {appointment?.last_name} </td>
+                      <td>{appointment?.card_no}</td>
                       <td>
                         
                         {
                           appointments?.status=="rescheduled"?(
                             <button
-                        onClick={()=>{handleRescheduleAppointment(appointments?._id)}}
+                        onClick={()=>{handleRescheduleAppointment(appointment?._id)}}
                         >Reschedule</button>
                           ):(
                             <button className="bg-danger"
-                        onClick={()=>{handleRescheduleAppointment(appointments?._id)}}
+                        onClick={()=>{handleRescheduleAppointment(appointment?._id)}}
                         >Rescheduled</button>
                           )
                         }
                        
                         <button
                         onClick={()=>{
-                          handleDeleteAppointment(appointments?._id)
+                          handleDeleteAppointment(appointment?._id)
                         }}
                         >Delete</button>
                       </td>
                     </tr>
-                  )  
+                  )) 
                   }
                     
                   
