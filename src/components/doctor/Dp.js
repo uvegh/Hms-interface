@@ -1,7 +1,6 @@
 import React from "react";
 import gavologo from "../../img/gavologo.png";
 import { useState, useEffect } from "react";
-import { set } from "mongoose";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
