@@ -158,11 +158,9 @@ alert("failed to delete")
                   </thead>
                   <tbody>
 
-
-                    { appointments?.length===0?(<p>no appointment</p>)
-                  : appointments.map((appointment,i)=>(
-
-                    <tr>
+                  {appointments?.length === 0 ? (<p>no appointment</p>): (
+                    appointments.map((appointment, i) => (
+                      <tr>
                       <td>9:30Am</td>
                       <td>11/05/2023</td>
                       <td>{appointments?.first_name} {appointments?.last_name} </td>
@@ -188,11 +186,10 @@ alert("failed to delete")
                         >Delete</button>
                       </td>
                     </tr>
-                  )  
-                  }
-                    
-                  
+                    ))
+                  )}
                   </tbody>
+                 
                 </table>
               </div>
             </div>
