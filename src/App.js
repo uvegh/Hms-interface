@@ -27,6 +27,7 @@ import LabLayout from "./components/lab/LabLayout";
 import DoctorDiagnosis from "./components/doctor/Dd";
 import ReceptionistLayout from "./components/receptionist/ReceptionistLayout";
 import DashboardRec from "./components/receptionist/Dashboardrec";
+import Profile from "./components/receptionist/Profile";
 
 
 export default function App() {
@@ -54,27 +55,25 @@ export default function App() {
 
               <Route path="/doctor" element={<DoctorLayout />}>
                 <Route path="dashboard" element={
-                    // <DoctorProtected>
-                    <DoctorDashboard />
-                    // </DoctorProtected>
-                  }
+                  // <DoctorProtected>
+                  <DoctorDashboard />
+                  // </DoctorProtected>
+                }
                 />
-                <Route
-                  path="patient"
-                  element={
-                    // <DoctorProtected>
-                    <PatientDashboard />
-                    // </DoctorProtected>
-                  }
+                <Route path="patient" element={
+                  // <DoctorProtected>
+                  <PatientDashboard />
+                  // </DoctorProtected>
+                }
                 />
-                  <Route path="diagnosis" element={<DoctorDiagnosis />} />
+                <Route path="diagnosis" element={<DoctorDiagnosis />} />
               </Route>
               {/* doctor disgnosis route here */}
-            
+
               <Route path="/receptionist" element={<ReceptionistLayout />}>
-                <Route path="dashboard" element={ <DashboardRec /> }/>
-               
-                
+                <Route path="dashboard" element={<DashboardRec />} />
+                <Route path="profile" element={<Profile />} />
+
               </Route>
 
               <Route path="/admin" element={<AdminLayout />}></Route>

@@ -1,18 +1,39 @@
-.add-patient-form{
-color:$loginBlue;
+.add-patient-form {
+  color: $loginBlue;
 
-  .btn-primary{background-color:"#2B415C" !important;}
-  form{background: whitesmoke;
+  .found-patient-details {
+    background: whitesmoke;
     font-weight: 600;
-    span{
-      &:hover{
-       cursor: pointer; 
+
+    p {
+      border: 0.5px solid $loginBlue;
+    }
+
+    span {
+      &:hover {
+        cursor: pointer;
+      }
+
+    }
+  }
+
+  .btn-primary {
+    background-color: "#2B415C" !important;
+  }
+
+  form {
+    background: whitesmoke;
+    font-weight: 600;
+
+    span {
+      &:hover {
+        cursor: pointer;
       }
     }
   }
 }
 
-.organization_name{
+.organization_name {
   span {
     color: #add8dc;
   }

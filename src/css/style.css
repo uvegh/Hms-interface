@@ -1287,6 +1287,16 @@ abbr {
 .add-patient-form {
   color: #2B415C;
 }
+.add-patient-form .found-patient-details {
+  background: whitesmoke;
+  font-weight: 600;
+}
+.add-patient-form .found-patient-details p {
+  border: 0.5px solid #2B415C;
+}
+.add-patient-form .found-patient-details span:hover {
+  cursor: pointer;
+}
 .add-patient-form .btn-primary {
   background-color: "#2B415C" !important;
 }

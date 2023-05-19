@@ -6,6 +6,8 @@ import { useContext, useState } from 'react'
 import { HmsContext } from '../../context/HmsContext'
 import { TiTimes } from 'react-icons/ti'
 import axios from 'axios'
+import { AiFillPhone } from 'react-icons/ai'
+
 
 function DashboardRec() {
   const baseUrl = "https://gavohms.onrender.com"
@@ -13,6 +15,9 @@ function DashboardRec() {
   const [addPatient, setAddPatient] = useState(false)
   const [isLoading, setIsloading] = useState(false);
   const [addedPatient, setAddedPatient] = useState({})
+  const [foundPatientIsShown, setFoundPatientIsShown] = useState(true)
+  const [foundPatient, setFoundPatient] = useState({})
+  const [patientCardNo, setPatientCardNo] = useState()
   const [newPatientData, setNewPatientData] = useState({
     first_name: "",
     last_name: "",
@@ -104,6 +109,17 @@ function DashboardRec() {
       }))
     }
   }
+  const handleGetPatient = async () => {
+    console.log(patientCardNo);
+
+    let response = (await (axios.get(`${baseUrl}/patient?card_no=${patientCardNo}`))).data
+    console.log(response)
+  }
+
+
+  const handleAddConsultation = async () => {
+
+  }
 
   return (
     <>
@@ -123,7 +139,7 @@ function DashboardRec() {
               <h3>PATIENT FORM</h3>
               <div className="row g-3 ">
                 <div className="col-md-4">
-                  <label for="validationDefault01" className="form-label">First name</label>
+                  <label htmlFor="validationDefault01" className="form-label">First name</label>
                   <input type="text"
                     name='first_name'
                     value={newPatientData.first_name}
@@ -135,7 +151,7 @@ function DashboardRec() {
                 </div>
 
                 <div className="col-md-4">
-                  <label for="validationDefault02" className="form-label">Last name</label>
+                  <label htmlFor="validationDefault02" className="form-label">Last name</label>
                   <input type="text"
                     name='last_name'
                     onChange={handleChange}
@@ -144,7 +160,7 @@ function DashboardRec() {
                 </div>
 
                 <div className="col-md-4">
-                  <label for="validationDefaultUsername" className="form-label">Email</label>
+                  <label htmlFor="validationDefaultUsername" className="form-label">Email</label>
                   <div className="input-group">
 
                     <input type="email"
@@ -157,7 +173,7 @@ function DashboardRec() {
                 </div>
 
                 <div className="col-md-6">
-                  <label for="validationDefault03" className="form-label">Address</label>
+                  <label htmlFor="validationDefault03" className="form-label">Address</label>
                   <input type="text"
                     name='address'
                     onChange={handleChange}
@@ -167,7 +183,7 @@ function DashboardRec() {
                 </div>
 
                 <div className="col-md-3">
-                  <label for="validationDefault04" className="form-label">Gender</label>
+                  <label htmlFor="validationDefault04" className="form-label">Gender</label>
                   <select className={validate == true && !newPatientData.gender ? ("form-control border border-danger") : ("form-control")}
                     onChange={handleChange}
                     name='gender'
@@ -179,7 +195,7 @@ function DashboardRec() {
                   </select>
                 </div>
                 <div className="col-md-3">
-                  <label for="validationDefault05" className="form-label">Phone</label>
+                  <label htmlFor="validationDefault05" className="form-label">Phone</label>
                   <input type="tel"
                     onChange={handleChange}
                     name='phone'
@@ -188,7 +204,7 @@ function DashboardRec() {
                 </div>
 
                 <div className="col-md-3">
-                  <label for="validationDefault05" className="form-label">Occupation</label>
+                  <label htmlFor="validationDefault05" className="form-label">Occupation</label>
                   <input type="text"
                     onChange={handleChange}
                     name='occupation'
@@ -197,7 +213,7 @@ function DashboardRec() {
                 </div>
 
                 <div className="col-md-3">
-                  <label for="validationDefault05" className="form-label">Date of Birth</label>
+                  <label htmlFor="validationDefault05" className="form-label">Date of Birth</label>
                   <input type="date"
                     onChange={handleChange}
                     name='d_o_b'
@@ -208,7 +224,7 @@ function DashboardRec() {
                 <h3>EMERGENCY CONTACT</h3>
 
                 <div className="col-md-3">
-                  <label for="validationDefault01"
+                  <label htmlFor="validationDefault01"
 
                     className="form-label">First name</label>
                   <input type="text"
@@ -220,7 +236,7 @@ function DashboardRec() {
                 </div>
 
                 <div className="col-md-3">
-                  <label for="validationDefault02" className="form-label">Last name</label>
+                  <label htmlFor="validationDefault02" className="form-label">Last name</label>
                   <input type="text"
                     value={newPatientData.emergency_contact.last_name}
                     name='emergency_contact.last_name'
@@ -230,7 +246,7 @@ function DashboardRec() {
 
 
                 <div className="col-md-3">
-                  <label for="validationDefaultUsername" className="form-label">Email</label>
+                  <label htmlFor="validationDefaultUsername" className="form-label">Email</label>
 
 
                   <input type="email"
@@ -244,7 +260,7 @@ function DashboardRec() {
                 </div>
 
                 <div className="col-md-3">
-                  <label for="validationDefault05" className="form-label">Phone</label>
+                  <label htmlFor="validationDefault05" className="form-label">Phone</label>
                   <input type="tel"
 
                     className="form-control"
@@ -282,8 +298,123 @@ function DashboardRec() {
         </div>
 
       )
+      }
+
+      {foundPatientIsShown && (<div className="overlay">
+        <div className="container  add-patient-form">
+          {
+            foundPatient == "" ? (
+              <div className=" container found-patient-details  col-lg-10 col-md-10 m-auto mt-1 rounded p-5">
+                <div className="d-flex fs-3 col-12 justify-content-end">
+                  <span onClick={() => {
+                    setFoundPatientIsShown(false)
+                  }}> <TiTimes /> </span>
+                </div>
+                <h3 className='text-center'>PATIENT FOUND</h3>
+                <div className="row g-3 ">
+                  <div className="col-md-8">
+                    <label htmlFor='' className="form-label">NAME</label>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>Eghobamien vincent</p>
+                  </div>
+
+                  <div className="col-md-4">
+                    <label htmlFor='' className="form-label">Card_no</label>
+                    <p className='bg-white rounded p-2' style={{ textTransform: 'uppercase' }}>#300</p>
+                  </div>
+
+                  <div className="col-md-4">
+                    <label htmlFor='' className="form-label">STATUS</label>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>inpatient</p>
+                  </div>
+
+                  <div className="col-md-4">
+                    <label htmlFor='' className="form-label">GENDER</label>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>MALE</p>
+                  </div>
+
+                  <div className="col-md-4">
+                    <label htmlFor='' className="form-label">PHONE</label>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>0812439902</p>
+                  </div>
+
+                  <div className="col-md-4">
+                    <label htmlFor='' className="form-label">EMAIL</label>
+                    <p className='bg-white rounded p-2 '>uveghobamien@gmail.com</p>
+                  </div>
+                  {/* if inpatient show ward */}
+                  <div className="col-md-4">
+                    <label htmlFor='' className="form-label">WARD/ROOM</label>
+                    <p className='bg-white rounded p-2 '>room4</p>
+                  </div>
+
+
+                  <h3>EMERGENCY CONTACT</h3>
+
+                  <div className="col-md-4">
+                    <label htmlFor='' className="form-label">NAME</label>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>donald duke</p>
+                  </div>
+                  <div className="col-md-4">
+                    <label htmlFor='' className="form-label ">PHONE</label>
+                    <p className='bg-white rounded p-2 ' >098283823</p>
+                  </div>
+
+                  <div className="col-md-4">
+                    <label htmlFor='' className="form-label">EMAIL</label>
+                    <p className='bg-white rounded p-2 '>uveghobamien@gmail.com</p>
+                  </div>
+
+
+
+
+                  <div className="col-12 text-center">
+                    {isLoading == true ? (<>
+                      <div className="text-center">
+                        <div className="spinner-border" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                    </>) :
+                      (<>
+                        <button type="button" className="btn btn-primary border-0 col-7 mt-3 fs-5" style={{ backgroundColor: "#2B415C" }}
+
+                          onClick={handleAddConsultation}
+                        >Add Consultation
+                        </button>
+
+                      </>)
+
+                    }
+
+                  </div>
+                </div>
+              </div>) : (
+
+
+              <>
+
+                <div className="overlay">
+                  <div className="container  add-patient-form">
+                    <div className=" container found-patient-details  col-lg-7 col-md-8 col-sm-11 col-md-10 m-auto mt-5 rounded ">
+                      <div className="d-flex fs-3 col-12 justify-content-end">
+                        <span onClick={() => {
+                          setFoundPatientIsShown(false)
+                        }}> <TiTimes /> </span>
+                      </div>
+                      <h4 className='text-center m-auto p-5'> Card does not exist</h4>
+                    </div>
+
+                  </div>
+                </div>
+              </>
+            )
+          }
+
+        </div>
+      </div>)
 
       }
+
 
       <section className='doctor__dashboard'>
         <div className='doctor_sidebar'>
@@ -302,15 +433,11 @@ function DashboardRec() {
               <li className='sidebar_btn active'>
                 <Link to='/receptionist/dashboard'> Dashboard </Link>
               </li>
-              <li className='sidebar_btn'>
-                <Link to='/receptionist/patient'> Patients </Link>
-              </li>
+
+
 
               <li className='sidebar_btn'>
-                <div> Appointments </div>
-              </li>
-              <li className='sidebar_btn'>
-                <div> Profile </div>
+                <Link to='/receptionist/profile'> Profile </Link>
               </li>
               <li className='sidebar_btn'>
                 <div> Logout </div>
@@ -340,22 +467,32 @@ function DashboardRec() {
                   </div>
                 </div>
               </div>
-              {/* Search box for patient */}
+
+
+
               <div className='organization_name text-center fs-1 mt-5 pt-5'>
                 <h1>
                   <span >Health</span>Line Clinic
                 </h1>
               </div>
-
+              {/* Search box for patient */}
               <div className='search_box position-absolute m-auto ' style={{ left: "50%" }} >
 
                 <form action=''>
-                  <input type='text' placeholder='Search Patient by Card No' className='p-3' />
-                  <button type='submit' className='p-3'>Search</button>
+                  <input type='text'
+                    onChange={(e) => {
+                      setPatientCardNo(e.target.value
+                      )
+
+                    }}
+
+                    placeholder='Search Patient by Card No' className='p-3' />
+                  <button type='button'
+                    onClick={handleGetPatient}
+                    className='p-3'>Search</button>
                 </form>
               </div>
 
-              {/* tabble with all patient */}
 
             </div>
 
@@ -363,8 +500,10 @@ function DashboardRec() {
           </div>
 
           <div className='doctors_container_content  mt-5'>
+
             <div className='appointment_table patient_appointment_table ht-inherit mt-5'>
               <div className=' appointment_table_holder patient_appointment_table_holder '>
+                <h5>Recently added</h5>
                 <table>
                   <thead>
                     <tr>
