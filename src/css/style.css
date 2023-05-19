@@ -1087,6 +1087,16 @@ abbr {
   border-radius: 5px;
   padding: 0px 10px;
 }
+.prescription .prescrib2 .prescribe_form form .presForm4 .getDrugs {
+  border: none;
+  outline: none;
+  margin: auto;
+  padding: 3px;
+  background-color: #2b415c;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 14px;
+}
 .prescription .prescrib2 .prescribe_form form .presForm4 input:nth-child(3) {
   width: 145px;
   height: 26px;
@@ -1096,9 +1106,8 @@ abbr {
   padding: 0px 10px;
 }
 .prescription .prescrib2 .prescribe_form form .presForm4 input.medicSelect {
-  width: 307px;
+  width: 250px;
   height: 25px;
-  background: #ffffff;
   border: 1px solid rgba(43, 65, 92, 0.64);
   border-radius: 5px;
   position: relative;
@@ -1196,30 +1205,7 @@ abbr {
   padding: 10px;
 }
 .prescription .prescrib2 .prescribe_form form .diagForm4 .docSign {
-  color: transparent;
-  position: relative;
-}
-.prescription .prescrib2 .prescribe_form form .diagForm4 .docSign::-webkit-file-upload-button {
-  visibility: hidden;
-}
-.prescription .prescrib2 .prescribe_form form .diagForm4 .docSign::after {
-  content: "+";
-  display: inline-block;
-  background: linear-gradient(top, #f9f9f9, #e3e3e3);
-  outline: none;
-  white-space: nowrap;
-  -webkit-user-select: none;
-  cursor: pointer;
-  text-shadow: 1px 1px #fff;
-  color: rgba(0, 0, 0, 0.4);
-  position: absolute;
-  right: 20px;
-  bottom: 0px;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 28px;
+  color: black;
 }
 .prescription .prescrib2 .prescribe_form form .diagForm4 div label {
   font-family: "Roboto";
@@ -1230,13 +1216,13 @@ abbr {
   color: #2b415c;
   padding-bottom: 8px;
 }
-.prescription .prescrib2 .prescribe_form .diagnosbtn {
+.prescription .prescrib2 .prescribe_form .diagnosbtns {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 50px;
 }
-.prescription .prescrib2 .prescribe_form .diagnosbtn button {
+.prescription .prescrib2 .prescribe_form .diagnosbtns button {
   width: 307px;
   height: 40px;
   border: none;
@@ -1251,7 +1237,7 @@ abbr {
   text-align: center;
   color: #2b415c;
 }
-.prescription .prescrib2 .prescribe_form .diagnosbtn button:nth-child(even) {
+.prescription .prescrib2 .prescribe_form .diagnosbtns button:nth-child(even) {
   background: #2b415c;
   border-radius: 5px;
   font-family: "Roboto";
@@ -1262,8 +1248,13 @@ abbr {
   text-align: center;
   color: #ffffff;
 }
-.prescription .prescrib2 .prescribe_form .diagnosbtn button.saves {
-  background-color: red !important;
+.prescription .prescrib2 .prescribe_form .diagnosbtns .noInput {
+  cursor: not-allowed;
+  background-color: #526479 !important;
+}
+.prescription .prescrib2 .prescribe_form .diagnosbtns .allowInput {
+  cursor: pointer;
+  background: #2b415c !important;
 }
 .prescription .prescrib2 .topSection {
   display: flex;
