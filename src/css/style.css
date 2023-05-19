@@ -964,6 +964,46 @@ abbr {
   border-radius: 10px;
   padding: 32px;
 }
+.prescription .prescrib2 .diagnosbtns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+.prescription .prescrib2 .diagnosbtns button {
+  width: 307px;
+  height: 40px;
+  border: none;
+  outline: none;
+  border: 1px solid #2b415c;
+  border-radius: 5px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #2b415c;
+}
+.prescription .prescrib2 .diagnosbtns button:nth-child(even) {
+  background: #2b415c;
+  border-radius: 5px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #ffffff;
+}
+.prescription .prescrib2 .diagnosbtns .noInput {
+  cursor: not-allowed;
+  background-color: #526479 !important;
+}
+.prescription .prescrib2 .diagnosbtns .allowInput {
+  cursor: pointer;
+  background: #2b415c !important;
+}
 .prescription .prescrib2 .prescribe_form {
   width: 656px;
   height: 545px;
@@ -971,7 +1011,7 @@ abbr {
   background-color: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
-  margin-top: 14px;
+  margin: 20px auto;
 }
 .prescription .prescrib2 .prescribe_form h3 {
   font-family: "Roboto";
@@ -1158,6 +1198,9 @@ abbr {
   padding: 5px 0px;
   margin: 0;
 }
+.prescription .prescrib2 .prescribe_form form .presForm5 div .deleteIcon {
+  cursor: pointer;
+}
 .prescription .prescrib2 .prescribe_form form .presForm5 div p {
   font-family: "Roboto";
   font-style: normal;
@@ -1215,46 +1258,6 @@ abbr {
   line-height: 16px;
   color: #2b415c;
   padding-bottom: 8px;
-}
-.prescription .prescrib2 .prescribe_form .diagnosbtns {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 50px;
-}
-.prescription .prescrib2 .prescribe_form .diagnosbtns button {
-  width: 307px;
-  height: 40px;
-  border: none;
-  outline: none;
-  border: 1px solid #2b415c;
-  border-radius: 5px;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  color: #2b415c;
-}
-.prescription .prescrib2 .prescribe_form .diagnosbtns button:nth-child(even) {
-  background: #2b415c;
-  border-radius: 5px;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  color: #ffffff;
-}
-.prescription .prescrib2 .prescribe_form .diagnosbtns .noInput {
-  cursor: not-allowed;
-  background-color: #526479 !important;
-}
-.prescription .prescrib2 .prescribe_form .diagnosbtns .allowInput {
-  cursor: pointer;
-  background: #2b415c !important;
 }
 .prescription .prescrib2 .topSection {
   display: flex;
