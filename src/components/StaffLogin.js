@@ -19,7 +19,7 @@ function StaffLogin() {
     password: "",
   });
   const navigate = useNavigate();
-  const { staffGoogleObj, setStaffGoogleObj,setIsLoggedIn, setCurrentEmpId, currentEmpId } =
+  const { staffGoogleObj, setStaffGoogleObj, setIsLoggedIn, setCurrentEmpId, currentEmpId } =
     useContext(HmsContext);
   const handleLogin = async () => {
     setIsloading(true);
@@ -53,10 +53,18 @@ function StaffLogin() {
       // })
       setErrorMessage("");
       setCurrentEmpId(response?.data?.data);
-      console.log("current emp id",currentEmpId);
+      console.log("current emp id", currentEmpId);
       if (response?.data?.data?.role == "doctor") {
         navigate("/doctor/dashboard");
       }
+      if (response?.data?.data?.role == "receptionist") {
+        navigate("/receptionist/dashboard");
+      }
+      if (response?.data?.data?.role == "nurse") {
+        navigate("/nurse/dashboard");
+      }
+
+
     } else {
       setIsloading(false);
       setValidate(false);
