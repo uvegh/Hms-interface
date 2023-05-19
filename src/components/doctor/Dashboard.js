@@ -178,10 +178,8 @@ function Dashboard() {
                                   onClick={() => { handleRescheduleAppointment(appointment?._id) }}
                                 >Rescheduled</button>
                               )
-                            }
-
-<<<<<<< HEAD
-                    <tr key={i}>
+  
+                    <tr>
                        <td>{i+1}</td>
                       <td>9:30Am</td>
                       <td>11/05/2023</td>
@@ -212,17 +210,10 @@ function Dashboard() {
                   }
                     
                   
-=======
-                            <button
-                              onClick={() => {
-                                handleDeleteAppointment(appointment?._id)
-                              }}
-                            >Delete</button>
-                          </td>
-                        </tr>
-                      ))
-                    )}
->>>>>>> eaddbb6da6b571c48074b74595244c670a07f40d
+                            
+                  
+                  
+
                   </tbody>
 
                 </table>
