@@ -281,7 +281,7 @@ function DashboardRec() {
                     </div>
                   </>) :
                     (<>
-                      <button type="button" className="btn btn-primary border-0 col-7 mt-3 fs-5" style={{ backgroundColor: "#2B415C" }}
+                      <button type="button" className="btn btn-primary border-0 col-6 mt-3 fs-5" style={{ backgroundColor: "#2B415C" }}
 
                         onClick={handleNewPatient}
                       >Submit
@@ -393,15 +393,15 @@ function DashboardRec() {
 
               <>
 
-                <div className="overlay">
-                  <div className="container  add-patient-form">
-                    <div className=" container found-patient-details  col-lg-7 col-md-8 col-sm-11 col-md-10 m-auto mt-5 rounded ">
-                      <div className="d-flex fs-3 col-12 justify-content-end">
+                <div className="overlay container-fluid">
+                  <div className="container  add-patient-form position-absolute" style={{ top: "30%" }} >
+                    <div className=" container found-patient-details  col-lg-7 col-md-8 col-sm-11 col-md-10 m-auto mt-5 rounded " >
+                      <div className="d-flex fs-3 col-12 justify-content-end " >
                         <span onClick={() => {
                           setFoundPatientIsShown(false)
                         }}> <TiTimes /> </span>
                       </div>
-                      <h4 className='text-center m-auto p-5'> Card does not exist</h4>
+                      <h4 className='text-center m-auto p-5'> Card number does not exist</h4>
                     </div>
 
                   </div>
@@ -476,7 +476,7 @@ function DashboardRec() {
                 </h1>
               </div>
               {/* Search box for patient */}
-              <div className='search_box position-absolute m-auto ' style={{ left: "50%" }} >
+              <div className='search_box position-absolute m-auto ' style={{ left: "44%" }} >
 
                 <form action=''>
                   <input type='text'

@@ -30,6 +30,7 @@ import DashboardRec from "./components/receptionist/Dashboardrec";
 import Profile from "./components/receptionist/Profile";
 
 import DoctorPrescription from "./components/doctor/Dp";
+import DashboardNurse from "./components/nurse/DashboardNurse";
 
 export default function App() {
   return (
@@ -75,7 +76,7 @@ export default function App() {
                 />
                 <Route path="diagnosis" element={<DoctorDiagnosis />} />
               </Route>
-              {/* doctor disgnosis route here */}
+
 
               <Route path="/receptionist" element={<ReceptionistLayout />}>
                 <Route path="dashboard" element={<DashboardRec />} />
@@ -83,14 +84,17 @@ export default function App() {
 
               </Route>
 
+              <Route path="/nurse" element={<NurseLayout />}>
+                <Route path="/nurse" element={<DashboardNurse />} />
 
-              {/* doctor disgnosis route here */}
+              </Route>
+
               <Route path="/admin" element={<AdminLayout />}></Route>
               <Route path="/super" element={<SuperAdminLayout />}></Route>
 
               <Route path="/pharmacist" element={<PharmacistLayout />}></Route>
 
-              <Route path="/nurse" element={<NurseLayout />}></Route>
+
 
               <Route path="/lab" element={<LabLayout />}></Route>
             </Routes>
