@@ -25,14 +25,11 @@ import PharmacistLayout from "./components/pharmacist/PharmacistLayout";
 import NurseLayout from "./components/nurse/NurseLayout";
 import LabLayout from "./components/lab/LabLayout";
 import DoctorDiagnosis from "./components/doctor/Dd";
-<<<<<<< HEAD
 import ReceptionistLayout from "./components/receptionist/ReceptionistLayout";
 import DashboardRec from "./components/receptionist/Dashboardrec";
 import Profile from "./components/receptionist/Profile";
 
-=======
 import DoctorPrescription from "./components/doctor/Dp";
->>>>>>> 27d96131f0b7eb67cb5f533b3285fea23fd5cb0d
 
 export default function App() {
   return (
@@ -58,13 +55,9 @@ export default function App() {
               />
 
               <Route path="/doctor" element={<DoctorLayout />}>
-<<<<<<< HEAD
-                <Route path="dashboard" element={
-                  // <DoctorProtected>
-                  <DoctorDashboard />
-                  // </DoctorProtected>
-                }
-=======
+
+
+
                 <Route
                   path="dashboard"
                   element={
@@ -72,7 +65,7 @@ export default function App() {
                     <DoctorDashboard />
                     // </DoctorProtected>
                   }
->>>>>>> 27d96131f0b7eb67cb5f533b3285fea23fd5cb0d
+
                 />
                 <Route path="patient" element={
                   // <DoctorProtected>
@@ -80,7 +73,6 @@ export default function App() {
                   // </DoctorProtected>
                 }
                 />
-<<<<<<< HEAD
                 <Route path="diagnosis" element={<DoctorDiagnosis />} />
               </Route>
               {/* doctor disgnosis route here */}
@@ -89,11 +81,6 @@ export default function App() {
                 <Route path="dashboard" element={<DashboardRec />} />
                 <Route path="profile" element={<Profile />} />
 
-=======
-
-                <Route path="diagnosis" element={<DoctorDiagnosis />} />
-                <Route path="prescription" element={<DoctorPrescription />} />
->>>>>>> 27d96131f0b7eb67cb5f533b3285fea23fd5cb0d
               </Route>
 
 
