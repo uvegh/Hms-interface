@@ -9,13 +9,14 @@ import axios from 'axios'
 import { AiFillPhone } from 'react-icons/ai'
 
 
+
 function DashboardRec() {
   const baseUrl = "https://gavohms.onrender.com"
   const { currentEmpId } = useContext(HmsContext)
   const [addPatient, setAddPatient] = useState(false)
   const [isLoading, setIsloading] = useState(false);
   const [addedPatient, setAddedPatient] = useState({})
-  const [foundPatientIsShown, setFoundPatientIsShown] = useState(true)
+  const [foundPatientIsShown, setFoundPatientIsShown] = useState(false)
   const [foundPatient, setFoundPatient] = useState({})
   const [patientCardNo, setPatientCardNo] = useState()
   const [newPatientData, setNewPatientData] = useState({
@@ -110,10 +111,21 @@ function DashboardRec() {
     }
   }
   const handleGetPatient = async () => {
+    setIsloading(true)
     console.log(patientCardNo);
 
     let response = (await (axios.get(`${baseUrl}/patient?card_no=${patientCardNo}`))).data
-    console.log(response)
+    console.log(response?.data)
+    if (response) {
+      setIsloading(false)
+      setFoundPatient(response?.data[0])
+      setFoundPatientIsShown(true)
+      console.log(foundPatient)
+      return
+    }
+
+    setIsloading(false)
+
   }
 
 
@@ -124,7 +136,26 @@ function DashboardRec() {
   return (
     <>
 
-
+      {isLoading && (
+        <div className="container-fluid overlay">
+          <div className="loader m-auto">
+            <div className="lds-spinner text-center m-auto">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {addPatient && (
         <div className="overlay">
@@ -281,7 +312,7 @@ function DashboardRec() {
                     </div>
                   </>) :
                     (<>
-                      <button type="button" className="btn btn-primary border-0 col-7 mt-3 fs-5" style={{ backgroundColor: "#2B415C" }}
+                      <button type="button" className="btn btn-primary border-0 col-6 mt-3 fs-5" style={{ backgroundColor: "#2B415C" }}
 
                         onClick={handleNewPatient}
                       >Submit
@@ -303,7 +334,7 @@ function DashboardRec() {
       {foundPatientIsShown && (<div className="overlay">
         <div className="container  add-patient-form">
           {
-            foundPatient == "" ? (
+            foundPatient ? (
               <div className=" container found-patient-details  col-lg-10 col-md-10 m-auto mt-1 rounded p-5">
                 <div className="d-flex fs-3 col-12 justify-content-end">
                   <span onClick={() => {
@@ -314,37 +345,39 @@ function DashboardRec() {
                 <div className="row g-3 ">
                   <div className="col-md-8">
                     <label htmlFor='' className="form-label">NAME</label>
-                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>Eghobamien vincent</p>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.first_name} {foundPatient?.last_name} </p>
                   </div>
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">Card_no</label>
-                    <p className='bg-white rounded p-2' style={{ textTransform: 'uppercase' }}>#300</p>
+                    <p className='bg-white rounded p-2' style={{ textTransform: 'uppercase' }}>{foundPatient?.card_no}</p>
                   </div>
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">STATUS</label>
-                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>inpatient</p>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.status}</p>
                   </div>
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">GENDER</label>
-                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>MALE</p>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.gender}</p>
                   </div>
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">PHONE</label>
-                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>0812439902</p>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.phone}</p>
                   </div>
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">EMAIL</label>
-                    <p className='bg-white rounded p-2 '>uveghobamien@gmail.com</p>
+                    <p className='bg-white rounded p-2 '>{foundPatient?.email}</p>
                   </div>
                   {/* if inpatient show ward */}
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">WARD/ROOM</label>
-                    <p className='bg-white rounded p-2 '>room4</p>
+                    {!foundPatient?.ward ? (<p className='bg-white rounded p-2'> none</p>) : (
+                      <p className=' '>{foundPatient?.ward} </p>
+                    )}
                   </div>
 
 
@@ -352,16 +385,30 @@ function DashboardRec() {
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">NAME</label>
-                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>donald duke</p>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.emergency_contact?.first_name} {!foundPatient?.emergency_contact?.last_name ? ("none") : foundPatient?.emergency_contact?.last_name} </p>
                   </div>
-                  <div className="col-md-4">
-                    <label htmlFor='' className="form-label ">PHONE</label>
-                    <p className='bg-white rounded p-2 ' >098283823</p>
-                  </div>
+
+                  {foundPatient?.emergency_contact?.phone?.length == "0" ? (<>
+                    <div className="col-md-4">
+                      <label htmlFor='' className="form-label ">PHONE</label>
+                      <p className='bg-white rounded p-2 ' >
+                        none
+                      </p>
+                    </div>
+
+                  </>) : foundPatient?.emergency_contact?.phone.map((phone, i) => (
+                    <div className="col-md-4">
+                      <label htmlFor='' className="form-label ">PHONE{i + 1}</label>
+                      <p className='bg-white rounded p-2 ' >
+                        {phone}
+                      </p>
+                    </div>
+                  ))}
+
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">EMAIL</label>
-                    <p className='bg-white rounded p-2 '>uveghobamien@gmail.com</p>
+                    <p className='bg-white rounded p-2 '>{foundPatient?.emergency_contact?.email ? (foundPatient?.emergency_contact?.email) : ("none")}</p>
                   </div>
 
 
@@ -393,15 +440,15 @@ function DashboardRec() {
 
               <>
 
-                <div className="overlay">
-                  <div className="container  add-patient-form">
-                    <div className=" container found-patient-details  col-lg-7 col-md-8 col-sm-11 col-md-10 m-auto mt-5 rounded ">
-                      <div className="d-flex fs-3 col-12 justify-content-end">
+                <div className="overlay container-fluid">
+                  <div className="container  add-patient-form position-absolute" style={{ top: "30%" }} >
+                    <div className=" container found-patient-details  col-lg-7 col-md-8 col-sm-11 col-md-10 m-auto mt-5 rounded " >
+                      <div className="d-flex fs-3 col-12 justify-content-end " >
                         <span onClick={() => {
                           setFoundPatientIsShown(false)
                         }}> <TiTimes /> </span>
                       </div>
-                      <h4 className='text-center m-auto p-5'> Card does not exist</h4>
+                      <h4 className='text-center m-auto p-5'> Card number does not exist</h4>
                     </div>
 
                   </div>
@@ -476,7 +523,7 @@ function DashboardRec() {
                 </h1>
               </div>
               {/* Search box for patient */}
-              <div className='search_box position-absolute m-auto ' style={{ left: "50%" }} >
+              <div className='search_box position-absolute m-auto ' style={{ left: "44%" }} >
 
                 <form action=''>
                   <input type='text'
@@ -509,7 +556,7 @@ function DashboardRec() {
                     <tr>
                       <th>Patient name</th>
                       <th>card no</th>
-                      <th>unit</th>
+                      <th>d_o_b</th>
                       <th>gender</th>
                       <th>status</th>
                     </tr>
@@ -520,7 +567,7 @@ function DashboardRec() {
                       <td>
                         <span>#</span>{addedPatient?.card_no}
                       </td>
-                      <td>Gynaecology</td>
+                      <td>{addedPatient?.d_o_b} </td>
                       <td>{addedPatient?.gender} </td>
                       <td>{!addedPatient?.status ? ("outpatient") : (
 

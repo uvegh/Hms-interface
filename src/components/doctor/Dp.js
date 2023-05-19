@@ -1,7 +1,7 @@
 import React from "react";
 import gavologo from "../../img/gavologo.png";
 import { useState, useEffect } from "react";
-import { set } from "mongoose";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
@@ -37,14 +37,14 @@ const Dp = () => {
     // alert("submitted");
   };
 
-  const handleDelete = async(id) => {
+  const handleDelete = async (id) => {
     let response = (await axios.delete(`${testUrl}/${id}`)).data
-      if(response?.code =="200"){
-        alert("prescription deleted ")
-        getPrescription();
-        return
-      }
-      alert("failed to delete ")
+    if (response?.code == "200") {
+      alert("prescription deleted ")
+      getPrescription();
+      return
+    }
+    alert("failed to delete ")
   };
 
   const getPrescription = async () => {
@@ -257,16 +257,16 @@ const Dp = () => {
             </div>
           </form>
         </div>
-          <div className="diagnosbtns">
-            <button type="btn">Discard</button>
-            <button
-              type="btn"
-              className={disabled}
-              onClick={submitPrescription}
-            >
-              Post Prescription
-            </button>
-          </div>
+        <div className="diagnosbtns">
+          <button type="btn">Discard</button>
+          <button
+            type="btn"
+            className={disabled}
+            onClick={submitPrescription}
+          >
+            Post Prescription
+          </button>
+        </div>
       </div>
     </div>
   );
