@@ -208,7 +208,7 @@ function DashboardNurse() {
                         </div>
                         <div className='profile_avi_box'>
                             <div className='profile_avi'>
-                                <img src={profile} alt='' />
+                                <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt='' />
                             </div>
                             <div className='profile_name'>
                                 <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
