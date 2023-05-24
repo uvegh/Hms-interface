@@ -114,6 +114,11 @@ function DashboardRec() {
     setIsloading(true)
     console.log(patientCardNo);
 
+    if (!patientCardNo) {
+      alert("search box can not be empty")
+      setIsloading(false)
+      return
+    }
     let response = (await (axios.get(`${baseUrl}/patient?card_no=${patientCardNo}`))).data
     console.log(response?.data)
     if (response) {
@@ -124,13 +129,26 @@ function DashboardRec() {
       return
     }
 
-    setIsloading(false)
+
 
   }
 
 
   const handleAddConsultation = async () => {
+    console.log(foundPatient?._id);
 
+    if (foundPatient?._id) {
+      let response = (await (axios.post(`${baseUrl}/consultation`, {
+
+        patient_id: foundPatient?._id,
+
+        payment_status: "notpaid",
+
+
+
+      }))).data
+      console.log(response);
+    }
   }
 
   return (
@@ -375,7 +393,7 @@ function DashboardRec() {
                   {/* if inpatient show ward */}
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">WARD/ROOM</label>
-                    {!foundPatient?.ward ? (<p className='bg-white rounded p-2'> none</p>) : (
+                    {!foundPatient?.ward ? (<p className='bg-white rounded p-2'> NONE</p>) : (
                       <p className=' '>{foundPatient?.ward} </p>
                     )}
                   </div>
@@ -385,14 +403,14 @@ function DashboardRec() {
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">NAME</label>
-                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.emergency_contact?.first_name} {!foundPatient?.emergency_contact?.last_name ? ("none") : foundPatient?.emergency_contact?.last_name} </p>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.emergency_contact?.first_name} {!foundPatient?.emergency_contact?.last_name ? ("NONE") : foundPatient?.emergency_contact?.last_name} </p>
                   </div>
 
                   {foundPatient?.emergency_contact?.phone?.length == "0" ? (<>
                     <div className="col-md-4">
                       <label htmlFor='' className="form-label ">PHONE</label>
                       <p className='bg-white rounded p-2 ' >
-                        none
+                        NONE
                       </p>
                     </div>
 
@@ -408,7 +426,7 @@ function DashboardRec() {
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">EMAIL</label>
-                    <p className='bg-white rounded p-2 '>{foundPatient?.emergency_contact?.email ? (foundPatient?.emergency_contact?.email) : ("none")}</p>
+                    <p className='bg-white rounded p-2 '>{foundPatient?.emergency_contact?.email ? (foundPatient?.emergency_contact?.email) : ("NONE")}</p>
                   </div>
 
 

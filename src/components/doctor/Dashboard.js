@@ -165,7 +165,7 @@ function Dashboard() {
                           <td>9:30Am</td>
                           <td>11/05/2023</td>
                           <td>{appointment?.first_name} {appointment?.last_name} </td>
-                          <td>{appointment?.card_no}</td>
+                          <td>{appointment?.card_no?.card_no}</td>
                           <td>
 
                             {
