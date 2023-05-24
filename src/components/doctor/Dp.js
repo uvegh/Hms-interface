@@ -4,25 +4,79 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
-const Dp = () => {
+import { useContext } from "react";
+import { HmsContext } from "../../context/HmsContext";
+
+const Dp = (setShowPrescription) => {
   const baseUrl = "https://gavohms.onrender.com";
-  const testUrl = "http://localhost:3001/prescription"
+  const testUrl = "http://localhost:3001";
+  const {patientID} = useContext(HmsContext)
+  console.log(patientID);
   const [disabled, setDisabled] = useState("allowInput");
   const [prescription, setPrescription] = useState({
-    first_name: "",
-    last_name: "",
-    patient_age: "",
+    patient_id: "",
     date_of_diagnosis: "",
-    drug_id: "",
-    strength: "",
-    frequency: "",
+    prescription: [],
     notes: "",
     doctor_name: "",
     doctor_initials: "",
   });
-  const [prescribed, setPrescribed] = useState();
-  console.log(prescribed);
+
+  const [allDrugs, setAllDrugs] = useState();
   const navigate = useNavigate();
+
+  const [prescribedDrugs, setPrescribedDrugs] = useState([]);
+
+  const [filteredDrugs, setFilteredDrugs] = useState([]);
+  // console.log(filteredDrugs)
+  const [searchDrug, setSearchDrug] = useState(false);
+
+  const [drug, setDrug] = useState("");
+  const [frequency, setFrequency] = useState("");
+  const [selectedDrug, setSelectedDrug] = useState({});
+  // console.log(selectedDrug)
+
+  const getFilteredDrug = async (e) => {
+    let response = (await axios.get(`${testUrl}/drugs?name=${drug}`)).data;
+    console.log(response);
+    let filterList = [];
+    response.data.map((drug) =>
+      filterList.push({
+        id: drug?._id,
+        drugName: drug?.name,
+        strength: drug?.strength,
+      })
+    );
+    setFilteredDrugs(filterList);
+  };
+
+  // const getAllDrugs = async () => {
+  //   let response = (await axios.get(`${testUrl}/drugs`)).data;
+  //   // console.log(response)
+  //   if (response?.code === 200) {
+  //     setAllDrugs(response?.data);
+  //   }
+  //   return "no drug found";
+  // };
+
+  const addPrescribedDrugs = (e) => {
+    e.preventDefault();
+    const tempPrescribed = [...prescribedDrugs];
+
+    if (tempPrescribed.filter((item) => item.id === selectedDrug?.id).length) {
+      alert("drug already exists in prescription");
+    } else {
+      tempPrescribed.push({
+        id: selectedDrug?.id,
+        name: selectedDrug?.drugName,
+        strength: selectedDrug?.strength,
+        frequency: frequency,
+      });
+      setPrescribedDrugs(tempPrescribed);
+    }
+    setFrequency("");
+    setSelectedDrug("");
+  };
 
   const submitPrescription = (e) => {
     e.preventDefault();
@@ -37,18 +91,13 @@ const Dp = () => {
   };
 
   const handleDelete = async (id) => {
-    let response = (await axios.delete(`${testUrl}/${id}`)).data
+    let response = (await axios.delete(`${testUrl}/prescription/${id}`)).data;
     if (response?.code == "200") {
-      alert("prescription deleted ")
+      alert("prescription deleted ");
       getPrescription();
-      return
+      return;
     }
-    alert("failed to delete ")
-  };
-
-  const getPrescription = async () => {
-    let response = (await axios.get(testUrl)).data;
-    setPrescribed(response);
+    alert("failed to delete ");
   };
 
   useEffect(() => {
@@ -68,9 +117,8 @@ const Dp = () => {
     } else {
       setDisabled("allowInput");
     }
-
-    getPrescription();
-  }, [prescription]);
+    getFilteredDrug();
+  }, [prescription, drug, prescribedDrugs]);
 
   return (
     <div className="prescription">
@@ -148,19 +196,65 @@ const Dp = () => {
             <div className="presForm4">
               <div>
                 <label for="medication">Prescription: Medication</label>
-                <input
+                {/* <input
                   className="medicSelect"
                   type="text"
                   name="medication"
-                  value={prescription.drug_id}
+                  value={drug}
                   placeholder="+"
                   onChange={(e) =>
-                    setPrescription({
-                      ...prescription,
-                      drug_id: e.target.value,
-                    })
+                    setDrug(
+                      e.target.value
+                    )
                   }
-                />
+                /> */}
+
+                <div className="search-container">
+                  <input
+                    className="medicSelect"
+                    id="browser"
+                    value={selectedDrug?.drugName || drug}
+                    onChange={(e) => setDrug(e.target.value)}
+                    // onFocus={() => setSearchDrug(true)}
+                    onMouseEnter={() => setSearchDrug(true)}
+                    onBlur={() => setSearchDrug(false)}
+                  />
+                  {/* <div className="search-results">
+                      {filteredDrugs.length !== 0 ? (
+                        filteredDrugs.map((drug) => (
+                          <div
+                            key={drug.id}
+                            className="search-result"
+                            onClick={() => {
+                              setSelectedDrug(drug);
+                              console.log("hello")
+                            }}
+                          >
+                            {drug.drugName}
+                          </div>
+                        ))
+                      ) : (
+                        <div className="search-result">No results found</div>
+                      )}
+                    </div> */}
+                  {searchDrug && (
+                    <div className="search-results" onMouseLeave={()=> setSearchDrug(false)}>
+                      {filteredDrugs ? (
+                        filteredDrugs.map((drug)=>(
+                          <div className="search-result" key={drug.id}>
+                          <button type="button" onClick={(e)=>{
+                            e.preventDefault()
+                            setSelectedDrug(drug)
+                            setSearchDrug(false)
+                          }}>{drug.drugName}</button>
+                        </div>
+                        ))
+                      ):(<p>no drug found</p>)}
+                     
+                    </div>
+                  )}
+                </div>
+
                 {/* <button type="btn" className="getDrugs">Go</button> */}
               </div>
               <div>
@@ -168,44 +262,40 @@ const Dp = () => {
                 <input
                   type="text"
                   name="medication"
-                  value={prescription.strength}
-                  onChange={(e) =>
-                    setPrescription({
-                      ...prescription,
-                      strength: e.target.value,
-                    })
-                  }
+                  value={selectedDrug?.strength || ""}
+                  disabled
                 />
               </div>
+
               <div>
                 <label for="medication">Frequency</label>
                 <input
                   type="text"
                   name="medication"
-                  value={prescription.frequency}
-                  onChange={(e) =>
-                    setPrescription({
-                      ...prescription,
-                      frequency: e.target.value,
-                    })
-                  }
+                  value={frequency}
+                  onChange={(e) => setFrequency(e.target.value)}
                 />
+              </div>
+              <div className="addDrug">
+                <button type="btn" onClick={addPrescribedDrugs}>
+                  add
+                </button>
               </div>
             </div>
             <div className="presForm5">
-              {prescribed?.length == 0 ? (
-                <h1>no prescription</h1>
+              {prescribedDrugs.length == 0 ? (
+                <p>no prescription</p>
               ) : (
-                prescribed?.data.map((prescription) => (
-                  <div key={prescription._id}>
-                    <p>{prescription?.drug_id}</p>
+                prescribedDrugs.map((prescription) => (
+                  <div key={prescription?.id}>
+                    <p>{prescription?.name}</p>
                     <p>{prescription?.strength}</p>
                     <p>{prescription?.frequency}</p>
                     <MdDeleteForever
                       className="deleteIcon"
                       color="red"
                       size={20}
-                      onClick={() => handleDelete(prescription?._id)}
+                      onClick={() => handleDelete(prescription?.id)}
                     />
                   </div>
                 ))
@@ -257,12 +347,10 @@ const Dp = () => {
           </form>
         </div>
         <div className="diagnosbtns">
-          <button type="btn">Discard</button>
-          <button
-            type="btn"
-            className={disabled}
-            onClick={submitPrescription}
-          >
+          <button type="btn" onClick={()=>{
+            setShowPrescription(false)
+          }}>Discard</button>
+          <button type="btn" className={disabled} onClick={submitPrescription}>
             Post Prescription
           </button>
         </div>

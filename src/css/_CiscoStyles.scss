@@ -1,6 +1,11 @@
 .diagnosis {
-  padding-top: 90px;
+  padding-top: 100px;
   height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
   // background: rgba(0, 0, 0, 92);
   .diagnos2 {
     background: #f6f6f6;
@@ -9,6 +14,7 @@
     margin: auto;
     border-radius: 10px;
     padding: 32px;
+    margin-left: 32%;
 
     .mainDiagnos_form {
       width: 656px;
@@ -211,11 +217,11 @@
           text-align: center;
           color: #ffffff;
         }
-        .noInput{
+        .noInput {
           cursor: not-allowed;
           background-color: #526479 !important;
         }
-        .allowInput{
+        .allowInput {
           cursor: pointer;
           background: #2b415c !important;
         }
@@ -247,6 +253,11 @@
 .prescription {
   padding-top: 90px;
   height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
 
   .prescrib2 {
     background: #f6f6f6;
@@ -255,6 +266,7 @@
     margin: auto;
     border-radius: 10px;
     padding: 32px;
+    margin-left: 32%;
 
     .diagnosbtns {
       display: flex;
@@ -277,7 +289,7 @@
         text-align: center;
         color: #2b415c;
       }
-      
+
       button:nth-child(even) {
         background: #2b415c;
         border-radius: 5px;
@@ -289,11 +301,11 @@
         text-align: center;
         color: #ffffff;
       }
-       .noInput{
+      .noInput {
         cursor: not-allowed;
         background-color: #526479 !important;
       }
-      .allowInput{
+      .allowInput {
         cursor: pointer;
         background: #2b415c !important;
       }
@@ -398,6 +410,23 @@
           gap: 6px;
           margin: auto auto 10px auto;
 
+          .addDrug button {
+            width: 100%;
+            font-family: "Roboto";
+            font-style: normal;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 16px;
+            color: #ffffff;
+            background: #2b415c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+          }
+
           div label {
             font-family: "Roboto";
             font-style: normal;
@@ -416,12 +445,12 @@
             border-radius: 5px;
             padding: 0px 10px;
           }
-          .getDrugs{
+          .getDrugs {
             border: none;
             outline: none;
             margin: auto;
             padding: 3px;
-            background-color:  #2b415c ;
+            background-color: #2b415c;
             color: #ffffff;
             border-radius: 5px;
             font-size: 14px;
@@ -460,12 +489,14 @@
         }
         .presForm5 {
           width: 623px;
-          height: auto;
+          height: 60px;
           background: #ffffff;
           border: 1px solid rgba(43, 65, 92, 0.64);
           border-radius: 5px;
           padding: 4px 7px;
           margin: auto auto 10px auto;
+          overflow: hidden;
+          overflow-y: scroll;
 
           div {
             display: flex;
@@ -475,7 +506,7 @@
             padding: 5px 0px;
             margin: 0;
 
-            .deleteIcon{
+            .deleteIcon {
               cursor: pointer;
             }
             p {
@@ -528,7 +559,7 @@
           .docSign {
             color: black;
           }
-          
+
           div label {
             font-family: "Roboto";
             font-style: normal;
@@ -540,7 +571,6 @@
           }
         }
       }
-      
     }
 
     .topSection {
@@ -563,5 +593,29 @@
         }
       }
     }
+  }
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-results {
+  position: absolute;
+  background: white;
+  top: 30px;
+  width: 100%;
+  border-radius: 5px;
+  right: 0px;
+  border: 1px solid grey;
+}
+
+.search-result {
+  border-bottom: 1px solid grey;
+  padding: 3px 8px;
+  
+  button{
+    border: none;
+    background: transparent;
   }
 }

@@ -6,6 +6,8 @@ import Stethoscope from '../../img/stethoscope.svg'
 import axios from 'axios'
 import { differenceInYears, intlFormat } from 'date-fns'
 import { HmsContext } from '../../context/HmsContext'
+import Dp from './Dp'
+import Dd from './Dd'
 
 function PatientDashboard () {
   // const baseUrl = 'https://gavohms.onrender.com'
@@ -13,7 +15,9 @@ function PatientDashboard () {
   const [cardId, setCardId] = useState('')
   const [patientFound, setPatientFound] = useState('')
   const [errMsg, setErrMsg] = useState('Nothing to display')
-  const { currentEmpId } = useContext(HmsContext)
+  const { currentEmpId, setPatientID } = useContext(HmsContext)
+  const [showPrescription, setShowPrescription] = useState(false)
+  const [showDiagnosis, setShowDiagnosis] = useState(false)
 
   const handleSearch = async e => {
     e.preventDefault()
@@ -374,8 +378,13 @@ function PatientDashboard () {
                         </div>
                       </div>
                       <div className='btns'>
-                        <button className='add_diagnosis'>add diagnosis</button>
-                        <button className='add_presc'>add prescription</button>
+                        <button className='add_diagnosis' onClick={()=> {
+                          setPatientID(patient._id)
+                          setShowDiagnosis(true)
+                        }}>add diagnosis</button>
+                        <button className='add_presc' onClick={()=> {
+                            setShowPrescription(true)
+                        }}>add prescription</button>
                       </div>
                     </div>
                     {/* Calendar setup */}
@@ -521,6 +530,8 @@ function PatientDashboard () {
             })}
         </div>
       </section>
+    { showDiagnosis && <Dd/>}
+     { showPrescription && <Dp setShowPrescription/>}
     </>
   )
 }

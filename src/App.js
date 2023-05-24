@@ -59,9 +59,6 @@ export default function App() {
               />
 
               <Route path="/doctor" element={<DoctorLayout />}>
-
-
-
                 <Route
                   path="dashboard"
                   element={
@@ -78,11 +75,14 @@ export default function App() {
                 }
                 />
                 <Route path="diagnosis" element={<DoctorDiagnosis />} />
+                <Route path="prescription" element={<DoctorPrescription/>}/>
               </Route>
 
 
               <Route path="/receptionist" element={<ReceptionistLayout />}>
                 <Route path="dashboard" element={<DashboardRec />} />
+
+
                 <Route path="profile" element={<Profile />} />
 
               </Route>

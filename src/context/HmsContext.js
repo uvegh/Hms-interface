@@ -21,7 +21,7 @@ function HmsProvider(props) {
   const [consultationNurse, setConsultationNurse] = useState()
   const [consultationDoctor, setConsultationDoctor] = useState()
   const baseUrl = 'https://gavohms.onrender.com'
-
+  const [patientID, setPatientID] = useState({})
 
 
 
@@ -115,7 +115,10 @@ function HmsProvider(props) {
 
 
   return (
-    <HmsContext.Provider value={{ currentEmpId, setCurrentEmpId, currentPatientId, setCurrentPatientId, patientGoogleObj, setPatientGoogleObj, setStaffGoogleObj, handleGetDiagnosis, handleGetAppointment, setIsLoggedIn, isLoggedIn, diagnosis, setDiagnosis, appointments, handleGetNurseDetail, getPrescriptionsDeployed, prescriptionsDeployed, nurseObj, handleGetConsultation, consultation, handleGetAllDoctors, doctors, consultationDoctor, consultationNurse }}>
+    <HmsContext.Provider value={{
+      currentEmpId, setCurrentEmpId,
+      patientID, setPatientID, currentPatientId, setCurrentPatientId, patientGoogleObj, setPatientGoogleObj, setStaffGoogleObj, handleGetDiagnosis, handleGetAppointment, setIsLoggedIn, isLoggedIn, diagnosis, setDiagnosis, appointments, handleGetNurseDetail, getPrescriptionsDeployed, prescriptionsDeployed, nurseObj, handleGetConsultation, consultation, handleGetAllDoctors, doctors, consultationDoctor, consultationNurse
+    }}>
       {props.children}
 
     </HmsContext.Provider>

@@ -165,7 +165,7 @@ function Dashboard() {
                           <td>9:30Am</td>
                           <td>11/05/2023</td>
                           <td>{appointment?.first_name} {appointment?.last_name} </td>
-                          <td>{appointment?.card_no?.card_no}</td>
+                          <td>{appointment?.card_no}</td>
                           <td>
 
                             {
@@ -178,50 +178,25 @@ function Dashboard() {
                                   onClick={() => { handleRescheduleAppointment(appointment?._id) }}
                                 >Rescheduled</button>
                               )
-  
-                    <tr>
-                       <td>{i+1}</td>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>{appointment?.first_name} {appointment?.last_name} </td>
-                      <td>{appointment?.card_no}</td>
-                      <td>
-                        
-                        {
-                          appointments?.status=="rescheduled"?(
-                            <button
-                        onClick={()=>{handleRescheduleAppointment(appointment?._id)}}
-                        >Reschedule</button>
-                          ):(
-                            <button className="bg-danger"
-                        onClick={()=>{handleRescheduleAppointment(appointment?._id)}}
-                        >Rescheduled</button>
-                          )
-                        }
-                       
-                        <button
-                        onClick={()=>{
-                          handleDeleteAppointment(appointment?._id)
-                        }}
-                        >Delete</button>
-                      </td>
-                    </tr>
-                  )) 
-                  }
-                    
-                  
-                            
-                  
-                  
+                            }
 
+                            <button
+                              onClick={() => {
+                                handleDeleteAppointment(appointment?._id)
+                              }}
+                            >Delete</button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
 
                 </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              </div >
+            </div >
+          </div >
+        </div >
+      </section >
     </>
   )
 }
