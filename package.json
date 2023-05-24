@@ -2,7 +2,6 @@
   "name": "react",
   "version": "1.0.0",
   "description": "React example starter project",
-  "proxy": "https://4tnyzq-3000.csb.app",
   "keywords": [
     "react",
     "starter"
@@ -40,5 +39,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "options": {
+    "allowedHosts": ["localhost", ".localhost"],
+    "proxy": "https://localhost:3000"
+  }
 }
