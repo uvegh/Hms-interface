@@ -7,26 +7,23 @@ import { MdDeleteForever } from "react-icons/md";
 import { useContext } from "react";
 import { HmsContext } from "../../context/HmsContext";
 
-const Dp = (setShowPrescription) => {
+const Dp = ({ setShowPrescription, patientID }) => {
   const baseUrl = "https://gavohms.onrender.com";
   const testUrl = "http://localhost:3001";
-  const {patientID} = useContext(HmsContext)
   console.log(patientID);
   const [disabled, setDisabled] = useState("allowInput");
   const [prescription, setPrescription] = useState({
     patient_id: "",
     date_of_diagnosis: "",
-    prescription: [],
+    prescription: "",
     notes: "",
     doctor_name: "",
     doctor_initials: "",
   });
 
-  const [allDrugs, setAllDrugs] = useState();
+  // const [allDrugs, setAllDrugs] = useState();
   const navigate = useNavigate();
-
   const [prescribedDrugs, setPrescribedDrugs] = useState([]);
-
   const [filteredDrugs, setFilteredDrugs] = useState([]);
   // console.log(filteredDrugs)
   const [searchDrug, setSearchDrug] = useState(false);
@@ -34,7 +31,8 @@ const Dp = (setShowPrescription) => {
   const [drug, setDrug] = useState("");
   const [frequency, setFrequency] = useState("");
   const [selectedDrug, setSelectedDrug] = useState({});
-  // console.log(selectedDrug)
+  const [patientInfo, setPatientInfo] = useState({});
+  console.log(patientInfo);
 
   const getFilteredDrug = async (e) => {
     let response = (await axios.get(`${testUrl}/drugs?name=${drug}`)).data;
@@ -50,14 +48,12 @@ const Dp = (setShowPrescription) => {
     setFilteredDrugs(filterList);
   };
 
-  // const getAllDrugs = async () => {
-  //   let response = (await axios.get(`${testUrl}/drugs`)).data;
-  //   // console.log(response)
-  //   if (response?.code === 200) {
-  //     setAllDrugs(response?.data);
-  //   }
-  //   return "no drug found";
-  // };
+  const getPatientInfor = async () => {
+    const response = (await axios.get(`${testUrl}/patient/${patientID}`)).data;
+    if (response) {
+      setPatientInfo(response?.data);
+    }
+  };
 
   const addPrescribedDrugs = (e) => {
     e.preventDefault();
@@ -78,16 +74,22 @@ const Dp = (setShowPrescription) => {
     setSelectedDrug("");
   };
 
-  const submitPrescription = (e) => {
+  const submitPrescription = async (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3001/prescription", prescription)
-      .then((res) => {
-        alert("Prescribed successfully");
-        navigate("/doctor/Patient");
-      })
-      .catch((err) => console.log(err));
-    // alert("submitted");
+    prescription.patient_id = patientInfo._id;
+    prescription.prescription = prescribedDrugs;
+    try {
+      axios
+        .post("http://localhost:3001/prescription", prescription)
+        .then((res) => {
+            alert("Prescribed successfully");
+            setShowPrescription(false);
+          // navigate("/doctor/Patient");
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -102,13 +104,7 @@ const Dp = (setShowPrescription) => {
 
   useEffect(() => {
     if (
-      !prescription.first_name ||
-      !prescription.last_name ||
-      !prescription.patient_age ||
       !prescription.date_of_diagnosis ||
-      !prescription.drug_id ||
-      !prescription.strength ||
-      !prescription.frequency ||
       !prescription.notes ||
       !prescription.doctor_name ||
       !prescription.doctor_initials
@@ -120,6 +116,9 @@ const Dp = (setShowPrescription) => {
     getFilteredDrug();
   }, [prescription, drug, prescribedDrugs]);
 
+  useEffect(() => {
+    getPatientInfor();
+  }, []);
   return (
     <div className="prescription">
       <div className="prescrib2">
@@ -138,7 +137,7 @@ const Dp = (setShowPrescription) => {
                 <input
                   type="text"
                   name="name"
-                  value={prescription.first_name}
+                  value={patientInfo.first_name}
                   placeholder="First"
                   onChange={(e) =>
                     setPrescription({
@@ -150,7 +149,7 @@ const Dp = (setShowPrescription) => {
                 <input
                   type="text"
                   name="last"
-                  value={prescription.last_name}
+                  value={patientInfo.last_name}
                   placeholder="Last"
                   onChange={(e) =>
                     setPrescription({
@@ -168,7 +167,7 @@ const Dp = (setShowPrescription) => {
                   className="diagdates"
                   type="text"
                   name=""
-                  value={prescription.patient_age}
+                  value={patientInfo.d_o_b}
                   onChange={(e) =>
                     setPrescription({
                       ...prescription,
@@ -238,19 +237,28 @@ const Dp = (setShowPrescription) => {
                       )}
                     </div> */}
                   {searchDrug && (
-                    <div className="search-results" onMouseLeave={()=> setSearchDrug(false)}>
+                    <div
+                      className="search-results"
+                      onMouseLeave={() => setSearchDrug(false)}
+                    >
                       {filteredDrugs ? (
-                        filteredDrugs.map((drug)=>(
+                        filteredDrugs.map((drug) => (
                           <div className="search-result" key={drug.id}>
-                          <button type="button" onClick={(e)=>{
-                            e.preventDefault()
-                            setSelectedDrug(drug)
-                            setSearchDrug(false)
-                          }}>{drug.drugName}</button>
-                        </div>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setSelectedDrug(drug);
+                                setSearchDrug(false);
+                              }}
+                            >
+                              {drug.drugName}
+                            </button>
+                          </div>
                         ))
-                      ):(<p>no drug found</p>)}
-                     
+                      ) : (
+                        <p>no drug found</p>
+                      )}
                     </div>
                   )}
                 </div>
@@ -347,9 +355,14 @@ const Dp = (setShowPrescription) => {
           </form>
         </div>
         <div className="diagnosbtns">
-          <button type="btn" onClick={()=>{
-            setShowPrescription(false)
-          }}>Discard</button>
+          <button
+            type="btn"
+            onClick={() => {
+              setShowPrescription(false);
+            }}
+          >
+            Discard
+          </button>
           <button type="btn" className={disabled} onClick={submitPrescription}>
             Post Prescription
           </button>
