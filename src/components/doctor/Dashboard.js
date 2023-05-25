@@ -9,40 +9,40 @@ import { Link } from "react-router-dom";
 import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 
-function Dashboard () {
-  const {currentEmpId,handleGetDiagnosis,diagnosis,setDiagnosis,handleGetAppointment,appointments,prescriptionsDeployed, getPrescriptionsDeployed,isLoggedIn}=useContext(HmsContext)
+function Dashboard() {
+  const { currentEmpId, handleGetDiagnosis, diagnosis, setDiagnosis, handleGetAppointment, appointments, prescriptionsDeployed, getPrescriptionsDeployed, isLoggedIn } = useContext(HmsContext)
   const baseUrl = 'https://gavohms.onrender.com'
-  
-  
-  useEffect(()=>{
+
+
+  useEffect(() => {
     handleGetDiagnosis()
     handleGetAppointment()
     getPrescriptionsDeployed()
-},[])
-  
+  }, [])
 
-const handleRescheduleAppointment= async(appointment)=>{
-  if(appointment?.status!="rescheduled"){
-let response =(await axios.put(`${baseUrl}/appointment/${appointment?._id}`,{status:"rescheduled"})).data
-console.log(response);
-if(response.code=="200"){
-  alert('appointment rescheduled');
-  handleGetAppointment()
-  return
-}
-alert("failed to reschedule")
-}
-}
-const handleDeleteAppointment=async(id)=>{
-  let response =(await axios.delete(`${baseUrl}/appointment/${id}`)).data
-console.log(response);
-if(response.code=="200"){
-  alert("appointment deleted")
-  handleGetAppointment()
-  return
-}
-alert("failed to delete")
-}
+
+  const handleRescheduleAppointment = async (appointment) => {
+    if (appointment?.status != "rescheduled") {
+      let response = (await axios.put(`${baseUrl}/appointment/${appointment?._id}`, { status: "rescheduled" })).data
+      console.log(response);
+      if (response.code == "200") {
+        alert('appointment rescheduled');
+        handleGetAppointment()
+        return
+      }
+      alert("failed to reschedule")
+    }
+  }
+  const handleDeleteAppointment = async (id) => {
+    let response = (await axios.delete(`${baseUrl}/appointment/${id}`)).data
+    console.log(response);
+    if (response.code == "200") {
+      alert("appointment deleted")
+      handleGetAppointment()
+      return
+    }
+    alert("failed to delete")
+  }
 
 
   return (
@@ -62,12 +62,12 @@ alert("failed to delete")
             </div>
             <ul className='sidebar_link_btns'>
               <li className='sidebar_btn active'>
-              
+
                 <Link to="/doctor/dashboard"> Dashboard </Link>
 
               </li>
               <li className='sidebar_btn'>
-              <Link to="/doctor/patient"> Patients </Link>
+                <Link to="/doctor/patient"> Patients </Link>
               </li>
               <li className='sidebar_btn'>
                 <div> Prescriptions </div>
@@ -91,7 +91,7 @@ alert("failed to delete")
             </div>
             <div className='profile_avi_box'>
               <div className='profile_avi'>
-                <img src={profile} alt='' />
+                <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt='' />
               </div>
               <div className='profile_name'>
                 <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
@@ -148,7 +148,7 @@ alert("failed to delete")
                 <table>
                   <thead>
                     <tr>
-                    <th>S/N</th>
+                      <th>S/N</th>
                       <th>time</th>
                       <th>date</th>
                       <th>name</th>
@@ -158,44 +158,45 @@ alert("failed to delete")
                   </thead>
                   <tbody>
 
-                  {appointments?.length === 0 ? (<p>no appointment</p>): (
-                    appointments.map((appointment, i) => (
-                      <tr>
-                      <td>9:30Am</td>
-                      <td>11/05/2023</td>
-                      <td>{appointments?.first_name} {appointments?.last_name} </td>
-                      <td>{appointments?.card_no}</td>
-                      <td>
-                        
-                        {
-                          appointments?.status=="rescheduled"?(
+                    {appointments?.length === 0 ? (<p>no appointment</p>) : (
+                      appointments.map((appointment, i) => (
+                        <tr>
+                          <td>{i + 1}</td>
+                          <td> {appointment?.time}</td>
+                          <td>{appointment?.date}</td>
+                          <td>{appointment?.first_name} {appointment?.last_name} </td>
+                          <td>{appointment?.card_no}</td>
+                          <td>
+
+                            {
+                              appointment?.status == "rescheduled" ? (
+                                <button
+                                  onClick={() => { handleRescheduleAppointment(appointment?._id) }}
+                                >Reschedule</button>
+                              ) : (
+                                <button className="bg-danger"
+                                  onClick={() => { handleRescheduleAppointment(appointment?._id) }}
+                                >Rescheduled</button>
+                              )
+                            }
+
                             <button
-                        onClick={()=>{handleRescheduleAppointment(appointments?._id)}}
-                        >Reschedule</button>
-                          ):(
-                            <button className="bg-danger"
-                        onClick={()=>{handleRescheduleAppointment(appointments?._id)}}
-                        >Rescheduled</button>
-                          )
-                        }
-                       
-                        <button
-                        onClick={()=>{
-                          handleDeleteAppointment(appointments?._id)
-                        }}
-                        >Delete</button>
-                      </td>
-                    </tr>
-                    ))
-                  )}
+                              onClick={() => {
+                                handleDeleteAppointment(appointment?._id)
+                              }}
+                            >Delete</button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
-                 
+
                 </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              </div >
+            </div >
+          </div >
+        </div >
+      </section >
     </>
   )
 }

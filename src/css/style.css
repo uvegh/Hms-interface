@@ -1339,9 +1339,6 @@ abbr {
   background: whitesmoke;
   font-weight: 600;
 }
-.add-patient-form .found-patient-details p {
-  border: 0.5px solid #2B415C;
-}
 .add-patient-form .found-patient-details span:hover {
   cursor: pointer;
 }
@@ -1358,6 +1355,21 @@ abbr {
 
 .organization_name span {
   color: #add8dc;
+}
+
+.appointment_table_holder .form-select {
+  width: 10rem !important;
+}
+
+.nurse-dropDown ul {
+  overflow: scroll;
+  border-radius: 0.5rem;
+  background: white;
+}
+.nurse-dropDown ul li {
+  border-top: 0.5px solid whitesmoke;
+  list-style: none;
+  padding: 0.3rem;
 }
 
 .notFound-container {

@@ -16,6 +16,10 @@ function HmsProvider(props) {
   const [prescriptionsDeployed, setPrescriptionsDeployed] = useState([])
   const [diagnosis, setDiagnosis] = useState([])
   const [nurseObj, setNurseObj] = useState({})
+  const [consultation, setConsultation] = useState([])
+  const [doctors, setDoctors] = useState()
+  const [consultationNurse, setConsultationNurse] = useState()
+  const [consultationDoctor, setConsultationDoctor] = useState()
   const baseUrl = 'https://gavohms.onrender.com'
   
 
@@ -39,7 +43,7 @@ function HmsProvider(props) {
 
   const handleGetAppointment = async () => {
     let response = (await (axios.get(`${baseUrl}/appointment`))).data
-    //  console.log("current employee",currentEmpId );
+    //console.log("current employee", currentEmpId);
     //  console.log("appointmnt",response?.appointment );
     let filterAppointment = response?.appointment.filter((doctor) => {
       return doctor?.appointment?.physician?.emp_id?._id == currentEmpId?._id
@@ -47,7 +51,7 @@ function HmsProvider(props) {
 
 
     // setDiagnosis(filterDiagnosis)
-    console.log(filterAppointment)
+    // console.log(filterAppointment)
     setAppointments(filterAppointment)
 
 
@@ -64,7 +68,7 @@ function HmsProvider(props) {
 
 
     setPrescriptionsDeployed(filter_Prescriptions_Deployed)
-    console.log(prescriptionsDeployed)
+    //console.log(prescriptionsDeployed)
 
 
   }
@@ -77,10 +81,69 @@ function HmsProvider(props) {
 
   }
 
+  const handleGetConsultation = async () => {
+
+    let response = (await (axios.get(`${baseUrl}/consultation`))).data
+    //console.log(response?.data);
+    setConsultation(response?.data)
+
+    let nurse_consult = response?.data?.filter((consultation) => {
+      return consultation?.nurse_seen == false
+
+
+    }
+    )
+
+    setConsultationNurse(nurse_consult)
+    //console.log(consultationNurse);
+    consultation?.filter((consultation) => {
+      if (consultation?.nurse_seen == true && consultation?.doctor_seen == false) {
+
+        //console.log(consultation);
+        setConsultationDoctor(consultation)
+      }
+    })
+
+  }
+
+
+  const handleGetAllDoctors = async () => {
+    let response = (await (axios.get(`${baseUrl}/doctor`))).data
+    //console.log(response?.found_doctors?.data);
+    setDoctors(response?.found_doctors?.data)
+  }
+
 
   return (
-    <HmsContext.Provider value={{ currentEmpId, setCurrentEmpId, 
-    currentPatientId, setCurrentPatientId, patientGoogleObj, setPatientGoogleObj, setStaffGoogleObj, handleGetDiagnosis, handleGetAppointment, setIsLoggedIn, isLoggedIn, diagnosis, setDiagnosis, appointments, handleGetNurseDetail, getPrescriptionsDeployed, prescriptionsDeployed, nurseObj }}>
+    <HmsContext.Provider value={{
+      currentEmpId, 
+      setCurrentEmpId,
+      patientID, 
+      setPatientID, 
+      currentPatientId, 
+      setCurrentPatientId, 
+      patientGoogleObj, 
+      setPatientGoogleObj, 
+      setStaffGoogleObj, 
+      handleGetDiagnosis, 
+      handleGetAppointment, 
+      setIsLoggedIn, 
+      isLoggedIn, 
+      diagnosis, 
+      setDiagnosis, 
+      appointments, 
+      handleGetNurseDetail, 
+      getPrescriptionsDeployed, 
+      prescriptionsDeployed, 
+      nurseObj, 
+      handleGetConsultation, 
+      consultation, 
+      handleGetAllDoctors, 
+      doctors, 
+      consultationDoctor, 
+      consultationNurse
+    }}>
+
       {props.children}
 
     </HmsContext.Provider>
