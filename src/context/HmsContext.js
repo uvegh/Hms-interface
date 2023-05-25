@@ -11,16 +11,19 @@ function HmsProvider(props) {
   // console.log(currentPatientId + "this is from the context api")
   const [patientGoogleObj, setPatientGoogleObj] = useState({});
   // console.log(patientGoogleObj);
-  const [staffGoogleObj, setStaffGoogleObj] = useState({});
-  const [prescriptionsDeployed, setPrescriptionsDeployed] = useState([]);
-  const [diagnosis, setDiagnosis] = useState([]);
-  const [nurseObj, setNurseObj] = useState({});
-  const [consultation, setConsultation] = useState([]);
-  const [doctors, setDoctors] = useState();
-  const [consultationNurse, setConsultationNurse] = useState();
-  const [consultationDoctor, setConsultationDoctor] = useState();
-  const baseUrl = "https://gavohms.onrender.com";
-  const [patientID, setPatientID] = useState({});
+  const [staffGoogleObj, setStaffGoogleObj] = useState({})
+  const [prescriptionsDeployed, setPrescriptionsDeployed] = useState([])
+  const [diagnosis, setDiagnosis] = useState([])
+  const [nurseObj, setNurseObj] = useState({})
+  const [consultation, setConsultation] = useState([])
+  const [doctors, setDoctors] = useState()
+  const [consultationNurse, setConsultationNurse] = useState()
+  const [consultationDoctor, setConsultationDoctor] = useState()
+  const baseUrl = 'https://gavohms.onrender.com'
+  const [patientID, setPatientID] = useState({})
+
+
+
 
   const handleGetDiagnosis = async () => {
     let response = (await axios.get(`${baseUrl}/record`)).data;
@@ -99,33 +102,58 @@ function HmsProvider(props) {
     <HmsContext.Provider
       value={{
         currentEmpId,
+
         setCurrentEmpId,
         patientID,
+
         setPatientID,
+
         currentPatientId,
+
         setCurrentPatientId,
+
         patientGoogleObj,
+
         setPatientGoogleObj,
+
         setStaffGoogleObj,
+
         handleGetDiagnosis,
+
         handleGetAppointment,
+
         setIsLoggedIn,
+
         isLoggedIn,
+
         diagnosis,
+
         setDiagnosis,
+
         appointments,
+
         handleGetNurseDetail,
+
         getPrescriptionsDeployed,
+
         prescriptionsDeployed,
+
         nurseObj,
+
         handleGetConsultation,
+
         consultation,
+
         handleGetAllDoctors,
+
         doctors,
+
         consultationDoctor,
+
         consultationNurse,
       }}
     >
+
       {props.children}
     </HmsContext.Provider>
   );
