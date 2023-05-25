@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import logo from '../img/ORBIS.png'
 import { Link } from 'react-router-dom'
 import { HmsContext } from '../context/HmsContext'
-function LoginNav () {
-  const {isLoggedIn}=useContext(HmsContext)
+function LoginNav() {
+  const { isLoggedIn } = useContext(HmsContext)
   return (
     <>
       <nav className='fixed-top container-fluid '>
@@ -15,13 +15,17 @@ function LoginNav () {
             Home
           </Link>
 
-{isLoggedIn==true?(null)
-:(<button className='btn btn-login btn-primary btn-lg border-0 '>
-            Login
-          </button>)
+          {isLoggedIn == true ? (null)
+            : (<button className='btn btn-login btn-primary btn-lg border-0 '
+              onClick={() => {
+                navigate("/stafflogin")
+              }}
+            >
+              Login
+            </button>)
 
-}
-          
+          }
+
         </div>
       </nav>
     </>

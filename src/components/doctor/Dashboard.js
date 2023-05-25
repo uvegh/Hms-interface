@@ -158,7 +158,7 @@ function Dashboard() {
                   </thead>
                   <tbody>
 
-                    {appointments?.length === 0 ? (<p>no appointment</p>) : (
+                    {/* {appointments?.length === 0 ? (<p>no appointment</p>) : (
                       appointments.map((appointment, i) => (
                         <tr>
                           <td>{i + 1}</td>
@@ -188,15 +188,15 @@ function Dashboard() {
                           </td>
                         </tr>
                       ))
-                    )}
+                    )} */}
                   </tbody>
 
                 </table>
-              </div >
-            </div >
-          </div >
-        </div >
-      </section >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   )
 }
