@@ -183,7 +183,7 @@ function Management() {
                                 </div>
 
                                 <div className="col-md-6 m-auto nurse-dropDown">
-                                    <label htmlFor="validationDefault02" className="form-label"> Nursee</label>
+                                    <label htmlFor="validationDefault02" className="form-label"> Nurse</label>
                                     <input type="text"
                                         name=''
                                         onChange={(e) => {
