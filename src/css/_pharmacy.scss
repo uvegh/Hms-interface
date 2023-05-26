@@ -1,0 +1,28 @@
+.pharmacy{
+  padding-top: 100px;
+  height: 100vh;
+
+  // .pharmLeft{
+  //   // width: ;
+  // }
+  .topSection {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+
+    p {
+      color: #2b415c;
+      font-size: 24px;
+      font-weight: 400;
+      font-family: "Roboto";
+
+      span {
+        color: #add8dc;
+        font-size: 24px;
+        font-weight: 400;
+        font-family: "Roboto";
+      }
+    }
+  }
+}

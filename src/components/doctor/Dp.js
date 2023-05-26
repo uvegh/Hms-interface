@@ -17,22 +17,23 @@ const Dp = ({ setShowPrescription, patientID }) => {
     date_of_diagnosis: "",
     prescription: "",
     notes: "",
-    doctor_name: "",
+    doctor_id: "",
     doctor_initials: "",
   });
 
   // const [allDrugs, setAllDrugs] = useState();
   const navigate = useNavigate();
   const [prescribedDrugs, setPrescribedDrugs] = useState([]);
+  console.log(prescribedDrugs)
   const [filteredDrugs, setFilteredDrugs] = useState([]);
-  // console.log(filteredDrugs)
   const [searchDrug, setSearchDrug] = useState(false);
 
   const [drug, setDrug] = useState("");
   const [frequency, setFrequency] = useState("");
+  const [Duration, setDuration] = useState("")
   const [selectedDrug, setSelectedDrug] = useState({});
   const [patientInfo, setPatientInfo] = useState({});
-  console.log(patientInfo);
+  // console.log(patientInfo);
 
   const getFilteredDrug = async (e) => {
     let response = (await axios.get(`${testUrl}/drugs?name=${drug}`)).data;
@@ -67,10 +68,12 @@ const Dp = ({ setShowPrescription, patientID }) => {
         name: selectedDrug?.drugName,
         strength: selectedDrug?.strength,
         frequency: frequency,
+        duration:Duration
       });
       setPrescribedDrugs(tempPrescribed);
     }
     setFrequency("");
+    setDuration("");
     setSelectedDrug("");
   };
 
@@ -106,7 +109,7 @@ const Dp = ({ setShowPrescription, patientID }) => {
     if (
       !prescription.date_of_diagnosis ||
       !prescription.notes ||
-      !prescription.doctor_name ||
+      !prescription.doctor_id ||
       !prescription.doctor_initials
     ) {
       setDisabled("noInput");
@@ -195,19 +198,6 @@ const Dp = ({ setShowPrescription, patientID }) => {
             <div className="presForm4">
               <div>
                 <label for="medication">Prescription: Medication</label>
-                {/* <input
-                  className="medicSelect"
-                  type="text"
-                  name="medication"
-                  value={drug}
-                  placeholder="+"
-                  onChange={(e) =>
-                    setDrug(
-                      e.target.value
-                    )
-                  }
-                /> */}
-
                 <div className="search-container">
                   <input
                     className="medicSelect"
@@ -274,6 +264,15 @@ const Dp = ({ setShowPrescription, patientID }) => {
                   disabled
                 />
               </div>
+              <div>
+                <label for="medication">Duration</label>
+                <input
+                  type="text"
+                  name="medication"
+                  value={Duration}
+                  onChange={(e)=> setDuration(e.target.value)}
+                />
+              </div>
 
               <div>
                 <label for="medication">Frequency</label>
@@ -298,6 +297,7 @@ const Dp = ({ setShowPrescription, patientID }) => {
                   <div key={prescription?.id}>
                     <p>{prescription?.name}</p>
                     <p>{prescription?.strength}</p>
+                    <p>{prescription?.duration}</p>
                     <p>{prescription?.frequency}</p>
                     <MdDeleteForever
                       className="deleteIcon"
@@ -326,12 +326,12 @@ const Dp = ({ setShowPrescription, patientID }) => {
                 <input
                   type="text"
                   name="doctorsname"
-                  value={prescription.doctor_name}
+                  value={prescription.doctor_id}
                   placeholder="Name"
                   onChange={(e) =>
                     setPrescription({
                       ...prescription,
-                      doctor_name: e.target.value,
+                      doctor_id: e.target.value,
                     })
                   }
                 />

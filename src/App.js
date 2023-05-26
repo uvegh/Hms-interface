@@ -34,6 +34,7 @@ import DashboardNurse from "./components/nurse/DashboardNurse";
 import Patient from "./components/nurse/Patient";
 import ProfileNurse from "./components/nurse/ProfileNurse";
 import Management from "./components/nurse/Management";
+import Pharmacy from "./components/Pharmacy/Pharmacy";
 import Appointment from "./components/receptionist/Appointment";
 
 export default function App() {
@@ -79,6 +80,7 @@ export default function App() {
                 <Route path="prescription" element={<DoctorPrescription />} />
               </Route>
 
+                <Route path="/pharmacy" element={<Pharmacy/>}/>
 
               <Route path="/receptionist" element={<ReceptionistLayout />}>
                 <Route path="dashboard" element={<DashboardRec />} />
