@@ -134,16 +134,6 @@ function HmsProvider(props) {
 
         handleGetNurseDetail,
 
-        getPrescriptionsDeployed,
-
-        prescriptionsDeployed,
-
-        nurseObj,
-
-        handleGetConsultation,
-
-        consultation,
-
         handleGetAllDoctors,
 
         doctors,
