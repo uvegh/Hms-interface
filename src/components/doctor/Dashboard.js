@@ -5,14 +5,23 @@ import { TbPrescription, TbCalendarEvent } from 'react-icons/tb'
 import Calender from 'react-calendar'
 import Stethoscope from '../../img/stethoscope.svg'
 import profile from '../../img/pexels-photo-6.jpg'
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 
-function Dashboard() {
-  const { currentEmpId, handleGetDiagnosis, diagnosis, setDiagnosis, handleGetAppointment, appointments, prescriptionsDeployed, getPrescriptionsDeployed, isLoggedIn } = useContext(HmsContext)
+function Dashboard () {
+  const {
+    currentEmpId,
+    handleGetDiagnosis,
+    diagnosis,
+    setDiagnosis,
+    handleGetAppointment,
+    appointments,
+    prescriptionsDeployed,
+    getPrescriptionsDeployed,
+    isLoggedIn
+  } = useContext(HmsContext)
   const baseUrl = 'https://gavohms.onrender.com'
-
 
   useEffect(() => {
     handleGetDiagnosis()
@@ -20,30 +29,32 @@ function Dashboard() {
     getPrescriptionsDeployed()
   }, [])
 
-
-  const handleRescheduleAppointment = async (appointment) => {
-    if (appointment?.status != "rescheduled") {
-      let response = (await axios.put(`${baseUrl}/appointment/${appointment?._id}`, { status: "rescheduled" })).data
-      console.log(response);
-      if (response.code == "200") {
-        alert('appointment rescheduled');
+  const handleRescheduleAppointment = async appointment => {
+    if (appointment?.status != 'rescheduled') {
+      let response = (
+        await axios.put(`${baseUrl}/appointment/${appointment?._id}`, {
+          status: 'rescheduled'
+        })
+      ).data
+      console.log(response)
+      if (response.code == '200') {
+        alert('appointment rescheduled')
         handleGetAppointment()
         return
       }
-      alert("failed to reschedule")
+      alert('failed to reschedule')
     }
   }
-  const handleDeleteAppointment = async (id) => {
+  const handleDeleteAppointment = async id => {
     let response = (await axios.delete(`${baseUrl}/appointment/${id}`)).data
-    console.log(response);
-    if (response.code == "200") {
-      alert("appointment deleted")
+    console.log(response)
+    if (response.code == '200') {
+      alert('appointment deleted')
       handleGetAppointment()
       return
     }
-    alert("failed to delete")
+    alert('failed to delete')
   }
-
 
   return (
     <>
@@ -62,12 +73,10 @@ function Dashboard() {
             </div>
             <ul className='sidebar_link_btns'>
               <li className='sidebar_btn active'>
-
-                <Link to="/doctor/dashboard"> Dashboard </Link>
-
+                <Link to='/doctor/dashboard'> Dashboard </Link>
               </li>
               <li className='sidebar_btn'>
-                <Link to="/doctor/patient"> Patients </Link>
+                <Link to='/doctor/patient'> Patients </Link>
               </li>
               <li className='sidebar_btn'>
                 <div> Prescriptions </div>
@@ -94,7 +103,10 @@ function Dashboard() {
                 <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt='' />
               </div>
               <div className='profile_name'>
-                <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
+                <p className='profile_name'>
+                  {' '}
+                  {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`}{' '}
+                </p>
                 <span className='profile_occupation'>Doctor</span>
               </div>
             </div>
@@ -160,37 +172,44 @@ function Dashboard() {
 
                     {/* {appointments?.length === 0 ? (<p>no appointment</p>) : (
                       appointments.map((appointment, i) => (
-                        <tr>
+                        <tr key={appointment._id}>
                           <td>{i + 1}</td>
-                          <td> {appointment?.time}</td>
-                          <td>{appointment?.date}</td>
+                          <td>9:30Am</td>
+                          <td>11/05/2023</td>
                           <td>{appointment?.first_name} {appointment?.last_name} </td>
                           <td>{appointment?.card_no}</td>
                           <td>
-
-                            {
-                              appointment?.status == "rescheduled" ? (
-                                <button
-                                  onClick={() => { handleRescheduleAppointment(appointment?._id) }}
-                                >Reschedule</button>
-                              ) : (
-                                <button className="bg-danger"
-                                  onClick={() => { handleRescheduleAppointment(appointment?._id) }}
-                                >Rescheduled</button>
-                              )
-                            }
+                            {appointment?.status == 'rescheduled' ? (
+                              <button
+                                onClick={() => {
+                                  handleRescheduleAppointment(appointment?._id)
+                                }}
+                              >
+                                Reschedule
+                              </button>
+                            ) : (
+                              <button
+                                className='bg-danger'
+                                onClick={() => {
+                                  handleRescheduleAppointment(appointment?._id)
+                                }}
+                              >
+                                Rescheduled
+                              </button>
+                            )}
 
                             <button
                               onClick={() => {
                                 handleDeleteAppointment(appointment?._id)
                               }}
-                            >Delete</button>
+                            >
+                              Delete
+                            </button>
                           </td>
                         </tr>
                       ))
                     )} */}
                   </tbody>
-
                 </table>
               </div>
             </div>
