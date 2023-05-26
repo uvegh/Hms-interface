@@ -4,7 +4,7 @@ import gavologo from "../../img/gavologo.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
-function Dd() {
+function Dd({setShowDiagnosis}) {
   const baseUrl = "https://gavohms.onrender.com";
   const formData = new FormData();
   const navigate = useNavigate();
@@ -23,7 +23,8 @@ function Dd() {
   const saveDiagnosis = (e) => {
     axios.post("http://localhost:3001/diagnosis", diagnosis).then((res) => {
       alert("diagnosis created");
-      navigate("/doctor/Patient");
+      // navigate("/doctor/Patient");
+      setShowDiagnosis(false)
     });
   };
 
@@ -162,7 +163,9 @@ function Dd() {
             </div>
           </form>
           <div className="diagnosbtn">
-            <button type="btn">Discard</button>
+            <button type="btn" onClick={()=>{
+              setShowDiagnosis(false)
+            }}>Discard</button>
             <button type="btn" className={disabled} onClick={saveDiagnosis}>
               Save Diagnosis
             </button>

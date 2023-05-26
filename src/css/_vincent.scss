@@ -5,9 +5,8 @@
     background: whitesmoke;
     font-weight: 600;
 
-    p {
-      border: 0.5px solid $loginBlue;
-    }
+    // p {
+    //   border: 0.5px solid $loginBlue;// }
 
     span {
       &:hover {
@@ -37,4 +36,25 @@
   span {
     color: #add8dc;
   }
+}
+
+.appointment_table_holder {
+  .form-select {
+    width: 10rem !important;
+  }
+}
+
+.nurse-dropDown {
+  ul {
+    overflow: scroll;
+    border-radius: 0.5rem;
+    background: white;
+
+    li {
+      border-top: 0.5px solid whitesmoke;
+      list-style: none;
+      padding: 0.3rem;
+    }
+  }
+
 }

@@ -33,6 +33,7 @@ import DoctorPrescription from "./components/doctor/Dp";
 import DashboardNurse from "./components/nurse/DashboardNurse";
 import Patient from "./components/nurse/Patient";
 import ProfileNurse from "./components/nurse/ProfileNurse";
+import Management from "./components/nurse/Management";
 
 export default function App() {
   return (
@@ -58,9 +59,6 @@ export default function App() {
               />
 
               <Route path="/doctor" element={<DoctorLayout />}>
-
-
-
                 <Route
                   path="dashboard"
                   element={
@@ -77,11 +75,14 @@ export default function App() {
                 }
                 />
                 <Route path="diagnosis" element={<DoctorDiagnosis />} />
+                <Route path="prescription" element={<DoctorPrescription/>}/>
               </Route>
 
 
               <Route path="/receptionist" element={<ReceptionistLayout />}>
                 <Route path="dashboard" element={<DashboardRec />} />
+
+
                 <Route path="profile" element={<Profile />} />
 
               </Route>
@@ -90,6 +91,7 @@ export default function App() {
                 <Route path="dashboard" element={<DashboardNurse />} />
                 <Route path="patient" element={<Patient />} />
                 <Route path="profile" element={<ProfileNurse />} />
+                <Route path="management" element={<Management />} />
               </Route>
 
               <Route path="/admin" element={<AdminLayout />}></Route>

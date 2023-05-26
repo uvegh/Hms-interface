@@ -100,7 +100,7 @@ function Dashboard () {
             </div>
             <div className='profile_avi_box'>
               <div className='profile_avi'>
-                <img src={profile} alt='' />
+                <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt='' />
               </div>
               <div className='profile_name'>
                 <p className='profile_name'>
@@ -169,17 +169,14 @@ function Dashboard () {
                     </tr>
                   </thead>
                   <tbody>
-                    {appointments?.length === 0 ? (
-                      <p>no appointment</p>
-                    ) : (
+
+                    {/* {appointments?.length === 0 ? (<p>no appointment</p>) : (
                       appointments.map((appointment, i) => (
                         <tr key={appointment._id}>
                           <td>{i + 1}</td>
                           <td>9:30Am</td>
                           <td>11/05/2023</td>
-                          <td>
-                            {appointment?.first_name} {appointment?.last_name}{' '}
-                          </td>
+                          <td>{appointment?.first_name} {appointment?.last_name} </td>
                           <td>{appointment?.card_no}</td>
                           <td>
                             {appointment?.status == 'rescheduled' ? (
@@ -211,7 +208,7 @@ function Dashboard () {
                           </td>
                         </tr>
                       ))
-                    )}
+                    )} */}
                   </tbody>
                 </table>
               </div>

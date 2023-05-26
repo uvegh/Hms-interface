@@ -139,6 +139,7 @@ abbr {
   top: 70px;
   margin: auto;
   margin-bottom: 70px;
+  position: relative;
 }
 .doctor__dashboard .doctor_sidebar {
   background-color: #2b415c;
@@ -732,8 +733,13 @@ abbr {
 }
 
 .diagnosis {
-  padding-top: 90px;
+  padding-top: 100px;
   height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
 }
 .diagnosis .diagnos2 {
   background: #f6f6f6;
@@ -742,6 +748,7 @@ abbr {
   margin: auto;
   border-radius: 10px;
   padding: 32px;
+  margin-left: 32%;
 }
 .diagnosis .diagnos2 .mainDiagnos_form {
   width: 656px;
@@ -955,6 +962,11 @@ abbr {
 .prescription {
   padding-top: 90px;
   height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
 }
 .prescription .prescrib2 {
   background: #f6f6f6;
@@ -963,6 +975,7 @@ abbr {
   margin: auto;
   border-radius: 10px;
   padding: 32px;
+  margin-left: 32%;
 }
 .prescription .prescrib2 .diagnosbtns {
   display: flex;
@@ -1110,6 +1123,22 @@ abbr {
   gap: 6px;
   margin: auto auto 10px auto;
 }
+.prescription .prescrib2 .prescribe_form form .presForm4 .addDrug button {
+  width: 100%;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 16px;
+  color: #ffffff;
+  background: #2b415c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+}
 .prescription .prescrib2 .prescribe_form form .presForm4 div label {
   font-family: "Roboto";
   font-style: normal;
@@ -1183,12 +1212,14 @@ abbr {
 }
 .prescription .prescrib2 .prescribe_form form .presForm5 {
   width: 623px;
-  height: auto;
+  height: 60px;
   background: #ffffff;
   border: 1px solid rgba(43, 65, 92, 0.64);
   border-radius: 5px;
   padding: 4px 7px;
   margin: auto auto 10px auto;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 .prescription .prescrib2 .prescribe_form form .presForm5 div {
   display: flex;
@@ -1278,15 +1309,35 @@ abbr {
   font-family: "Roboto";
 }
 
+.search-container {
+  position: relative;
+}
+
+.search-results {
+  position: absolute;
+  background: white;
+  top: 30px;
+  width: 100%;
+  border-radius: 5px;
+  right: 0px;
+  border: 1px solid grey;
+}
+
+.search-result {
+  border-bottom: 1px solid grey;
+  padding: 3px 8px;
+}
+.search-result button {
+  border: none;
+  background: transparent;
+}
+
 .add-patient-form {
   color: #2B415C;
 }
 .add-patient-form .found-patient-details {
   background: whitesmoke;
   font-weight: 600;
-}
-.add-patient-form .found-patient-details p {
-  border: 0.5px solid #2B415C;
 }
 .add-patient-form .found-patient-details span:hover {
   cursor: pointer;
@@ -1304,6 +1355,21 @@ abbr {
 
 .organization_name span {
   color: #add8dc;
+}
+
+.appointment_table_holder .form-select {
+  width: 10rem !important;
+}
+
+.nurse-dropDown ul {
+  overflow: scroll;
+  border-radius: 0.5rem;
+  background: white;
+}
+.nurse-dropDown ul li {
+  border-top: 0.5px solid whitesmoke;
+  list-style: none;
+  padding: 0.3rem;
 }
 
 .notFound-container {

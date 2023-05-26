@@ -8,12 +8,15 @@ import axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import { HmsContext } from "../context/HmsContext";
-
+import { FiSmartphone } from "react-icons/fi";
+import { BsFillTelephoneFill } from "react-icons/bs";
+import { CiMail } from "react-icons/ci"
 function StaffLogin() {
   const baseUrl = "https://gavohms.onrender.com";
   const [isLoading, setIsloading] = useState(false);
   const [validate, setValidate] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
+  const [loginWithPhone, setLoginWithPhone] = useState(false)
   const [loginData, setLoginData] = useState({
     emailOrPhone: "",
     password: "",
@@ -53,7 +56,7 @@ function StaffLogin() {
       // })
       setErrorMessage("");
       setCurrentEmpId(response?.data?.data);
-      console.log("current emp id", currentEmpId);
+
       if (response?.data?.data?.role == "doctor") {
         navigate("/doctor/dashboard");
       }
@@ -173,35 +176,80 @@ function StaffLogin() {
               </header>
               <form className=" rounded-1 border border-1 p-3 col-9 m-auto mt-5">
                 <div className="col-9 m-auto">
-                  <label
-                    htmlFor="exampleFormControlInput1"
-                    className="form-label fw-bolder "
-                    style={{
-                      color: "#000000",
-                    }}
-                  >
-                    Email
-                  </label>
-                  <div className="form-floating mb-3">
-                    <input
-                      onChange={(e) => {
-                        setLoginData({
-                          ...loginData,
-                          emailOrPhone: e.target.value,
-                        });
-                      }}
-                      type="email"
-                      value={loginData.emailOrPhone}
-                      className={
-                        validate == true && !loginData.emailOrPhone
-                          ? " form-control border border-danger "
-                          : "form-control"
-                      }
-                      id="floatingInput"
-                      placeholder="name@example.com"
-                    />
-                    <label htmlFor="floatingInput">Email address</label>
-                  </div>
+
+
+                  {loginWithPhone == true ? (
+                    <>
+                      <label
+                        htmlFor="exampleFormControlInput1"
+                        className="form-label fw-bolder "
+                        style={{
+                          color: "#000000",
+                        }}
+                      >
+                        Phone
+                      </label>
+                      <div className="form-floating mb-3">
+
+
+                        <input
+                          onChange={(e) => {
+                            setLoginData({
+                              ...loginData,
+                              emailOrPhone: e.target.value,
+                            });
+                          }}
+                          type="tel"
+                          value={loginData.emailOrPhone}
+                          className={
+                            validate == true && !loginData.emailOrPhone
+                              ? " form-control border border-danger "
+                              : "form-control"
+                          }
+                          id="floatingInput"
+                          placeholder="name@example.com"
+                        />
+                        <label htmlFor="floatingInput">Phone</label>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <label
+                        htmlFor="exampleFormControlInput1"
+                        className="form-label fw-bolder "
+                        style={{
+                          color: "#000000",
+                        }}
+                      >
+                        Email
+                      </label>
+
+                      <div className="form-floating mb-3">
+
+
+                        <input
+                          onChange={(e) => {
+                            setLoginData({
+                              ...loginData,
+                              emailOrPhone: e.target.value,
+                            });
+                          }}
+                          type="email"
+                          value={loginData.emailOrPhone}
+                          className={
+                            validate == true && !loginData.emailOrPhone
+                              ? " form-control border border-danger "
+                              : "form-control"
+                          }
+                          id="floatingInput"
+                          placeholder="name@example.com"
+                        />
+                        <label htmlFor="floatingInput">Email address</label>
+                      </div>
+                    </>
+
+                  )}
+
                   {/* {validate == true && !loginData.email ? (<p className='text-danger'>*empty</p>) : (null)} */}
                 </div>
 
@@ -276,10 +324,27 @@ function StaffLogin() {
                 <br />
 
                 <div className="mt-3 mb-5">
-                  <button className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center">
-                    <img src={appleLogo} className="img-fluid" /> Login with
-                    Apple
-                  </button>
+                  {loginWithPhone == true ? (<button
+                    onClick={() => {
+                      setLoginWithPhone(false)
+                    }}
+                    className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center">
+
+                    <CiMail />  Login with
+                    mail
+                  </button>) : (
+
+                    <button
+                      onClick={() => {
+                        setLoginWithPhone(true)
+                      }}
+                      className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center">
+
+                      <BsFillTelephoneFill />  Login with
+                      phone
+                    </button>
+                  )
+                  }
                 </div>
               </div>
             </section>
