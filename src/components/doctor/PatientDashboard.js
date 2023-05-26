@@ -1,358 +1,231 @@
-import { useState, useContext } from "react";
-import greater_than_icon from "../../img/greater-than.svg";
-import profile from "../../img/pexels-photo-6.jpg";
-import { Link } from "react-router-dom";
-import Stethoscope from "../../img/stethoscope.svg";
-import axios from "axios";
-import { differenceInYears, intlFormat } from "date-fns";
-import { HmsContext } from "../../context/HmsContext";
-import Dp from "./Dp";
-import Dd from "./Dd";
+import { useState, useContext } from 'react'
+import greater_than_icon from '../../img/greater-than.svg'
+import profile from '../../img/pexels-photo-6.jpg'
+import { Link } from 'react-router-dom'
+import Stethoscope from '../../img/stethoscope.svg'
+import axios from 'axios'
+import { differenceInYears, intlFormat } from 'date-fns'
+import chart from '../../img/chart.svg'
+import urgent_attention from '../../img/emergency.svg'
+import consultation from '../../img/consultation.svg'
+import { MdFreeCancellation } from 'react-icons/md'
+import { HmsContext } from '../../context/HmsContext'
+import Dp from './Dp'
+import Dd from './Dd'
 
-function PatientDashboard() {
+function PatientDashboard () {
   // const baseUrl = 'https://gavohms.onrender.com'
-  const [hideDisplay, setHideDisplay] = useState("patient_search_box");
-  const [cardId, setCardId] = useState("");
-  const [patientFound, setPatientFound] = useState("");
-  const [errMsg, setErrMsg] = useState("Nothing to display");
-  const { currentEmpId } = useContext(HmsContext);
-  const [showPrescription, setShowPrescription] = useState(false);
-  const [showDiagnosis, setShowDiagnosis] = useState(false);
-  const [patientID, setPatientID] = useState('');
-  console.log(patientID);
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  const [hideDisplay, setHideDisplay] = useState('patient_search_box')
+  const [cardId, setCardId] = useState('')
+  const [patientFound, setPatientFound] = useState('jkjkj')
+  const [errMsg, setErrMsg] = useState()
+  const { currentEmpId } = useContext(HmsContext)
+  const [showPrescription, setShowPrescription] = useState(false)
+  const [showDiagnosis, setShowDiagnosis] = useState(false)
+  const [patientID, setPatientID] = useState('')
+  const handleSearch = async e => {
+    e.preventDefault()
 
     if (!cardId) {
-      setErrMsg("Wrong Input");
-      return;
+      setErrMsg('Wrong Input')
+      return
     }
     try {
       const result = await axios.get(
         `http://localhost:3001/patient?card_no=${cardId}`
-      );
+      )
       // .get(`${baseUrl}/patient?card_no=${cardId}`)
       if (result.data.data.length !== 0) {
-        setErrMsg("Records found");
-        setPatientFound(result.data);
-        setCardId("");
-        setHideDisplay("patient_search_box hidden");
+        setErrMsg('Records found')
+        setPatientFound(result.data)
+        setCardId('')
+        setHideDisplay('patient_search_box hidden')
       } else {
-        setErrMsg("No records found");
+        setErrMsg('No records found')
       }
     } catch (err) {
-      setErrMsg("No records found");
-      setCardId("");
+      setErrMsg('No records found')
+      setCardId('')
     }
-  };
+  }
 
   return (
     <>
-      <section className="doctor__dashboard">
-        <div className="doctor_sidebar">
-          <div className="links_display_box">
-            <div className="clinic_name">
-              <div className="organization_image">
-                <img src={Stethoscope} alt="" className="logo" />
+      <section className='doctor__dashboard'>
+        <div className='doctor_sidebar'>
+          <div className='links_display_box'>
+            <div className='clinic_name'>
+              <div className='organization_image'>
+                <img src={Stethoscope} alt='' className='logo' />
               </div>
-              <div className="organization_name">
+              <div className='organization_name'>
                 <h2>
                   <span>Health</span>Line Clinic
                 </h2>
               </div>
             </div>
-            <ul className="sidebar_link_btns">
-              <li className="sidebar_btn active">
-                <Link to="/doctor/dashboard"> Dashboard </Link>
+            <ul className='sidebar_link_btns'>
+              <li className='sidebar_btn active'>
+                <Link to='/doctor/dashboard'> Dashboard </Link>
               </li>
-              <li className="sidebar_btn">
-                <Link to="/doctor/patient"> Patients </Link>
+              <li className='sidebar_btn'>
+                <Link to='/doctor/patient'> Patients </Link>
               </li>
-              <li className="sidebar_btn">
+              <li className='sidebar_btn'>
                 <div> Prescriptions </div>
               </li>
-              <li className="sidebar_btn">
+              <li className='sidebar_btn'>
                 <div> Appointments </div>
               </li>
-              <li className="sidebar_btn">
+              <li className='sidebar_btn'>
                 <div> Profile </div>
               </li>
-              <li className="sidebar_btn">
+              <li className='sidebar_btn'>
                 <div> Logout </div>
               </li>
             </ul>
           </div>
         </div>
-        <div className="doctor_daily_info">
+        <div className='doctor_daily_info'>
           {/* search box to look for patient */}
           <div className={hideDisplay}>
             <div>
-              <div className="doctors_header">
-                <div className="present_section ">
-                  <h2 className="patient_page">Patient list</h2>
+              <div className='doctors_header'>
+                <div className='present_section '>
+                  <h2 className='patient_page'>Patient list</h2>
                 </div>
-                <div className="profile_avi_box">
-                  <div className="profile_avi">
-                    <img src={profile} alt="" />
+                <div className='profile_avi_box'>
+                  <div className='profile_avi'>
+                    <img src={profile} alt='' />
                   </div>
-                  <div className="profile_name">
-                    <p className="profile_name">
-                      {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`}{" "}
+                  <div className='profile_name'>
+                    <p className='profile_name'>
+                      {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`}{' '}
                     </p>
-                    <span className="profile_occupation">Doctor</span>
+                    <span className='profile_occupation'>Doctor</span>
                   </div>
                 </div>
               </div>
               {/* Search box for patient */}
-              <div className="search_box">
+              <div className='search_box'>
                 <form>
                   <input
-                    type="text"
-                    placeholder="Search Patient by Card No"
+                    type='text'
+                    placeholder='Search Patient by Card No'
                     value={cardId}
-                    onChange={(e) => {
-                      setCardId(e.target.value);
+                    onChange={e => {
+                      setCardId(e.target.value)
                     }}
                   />
-                  <button type="submit" onClick={handleSearch}>
+                  <button type='submit' onClick={handleSearch}>
                     Search
                   </button>
                 </form>
               </div>
 
               {/* tabble with all patient */}
-              <div className="doctors_container_content ht-100">
-                <div className="d-flex align-items-start justify-content-start">
+              <div className='doctors_container_content'>
+                <div className='d-flex align-items-start justify-content-start'>
                   <p>{errMsg}</p>
                 </div>
-                {/* <div className='appointment_table patient_appointment_table ht-inherit'>
-                  <div className=' appointment_table_holder patient_appointment_table_holder '>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Patient name</th>
-                          <th>card no</th>
-                          <th>unit</th>
-                          <th>gender</th>
-                          <th>status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                        <tr>
-                          <td>Precious Adah</td>
-                          <td>
-                            <span>#</span>2332
-                          </td>
-                          <td>Gynaecology</td>
-                          <td>female </td>
-                          <td>outpatient </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
-
+          <section className='segregated_section'>
+            <div className='segregated_container'>
+              <div className='container_attr'>Appointment</div>
+              <div className='container_attr_icons'>
+                <div className='image_icons'>
+                  <img src={chart} alt='' />
+                </div>
+                <div className='content'>
+                  <h3>150</h3>
+                  <p>Today</p>
+                </div>
+              </div>
+            </div>
+            <div className='segregated_container'>
+              <div className='container_attr'>Consultations</div>
+              <div className='container_attr_icons'>
+                <div className='image_icons'>
+                  <img src={consultation} alt='' />
+                </div>
+                <div className='content'>
+                  <h3>22</h3>
+                  <p>Today</p>
+                </div>
+              </div>
+            </div>
+            <div className='segregated_container'>
+              <div className='container_attr'>Cancelled</div>
+              <div className='container_attr_icons'>
+                <div className='image_icons'>
+                  <MdFreeCancellation  className='cancel'/>
+                </div>
+                <div className='content'>
+                  <h3>03</h3>
+                  <p>Today</p>
+                </div>
+              </div>
+            </div>
+            <div className='segregated_container'>
+              <div className='container_attr'>Urgent Resolve</div>
+              <div className='container_attr_icons'>
+                <div className='image_icons'>
+                  <img src={urgent_attention} alt='' />
+                </div>
+                <div className='content'>
+                  <h3>05</h3>
+                  <p>Today</p>
+                </div>
+              </div>
+            </div>
+          </section>
           {/* to show if patient is found */}
           {patientFound.data &&
-            patientFound.data.map((patient) => {
+            patientFound.data.map(patient => {
               return (
                 <div key={patient._id}>
-                  <div className="doctors_header">
-                    <div className="present_section ">
-                      <h2 className="patient_page">Patient list</h2>
+                  <div className='doctors_header'>
+                    <div className='present_section '>
+                      <h2 className='patient_page'>Patient list</h2>
                       <img
                         src={greater_than_icon}
-                        alt="icon"
-                        className="patient_page"
+                        alt='icon'
+                        className='patient_page'
                       />
-                      <h2 className="patient_page">
+                      <h2 className='patient_page'>
                         {patient.first_name}
                         <span> </span>
                         {patient.last_name}
                       </h2>
                     </div>
-                    <div className="profile_avi_box">
-                      <div className="profile_avi">
-                        <img src={profile} alt="" />
+                    <div className='profile_avi_box'>
+                      <div className='profile_avi'>
+                        <img src={profile} alt='' />
                       </div>
-                      <div className="profile_name">
-                        <p className="profile_name">John Ahmed</p>
-                        <span className="profile_occupation">Doctor</span>
+                      <div className='profile_name'>
+                        <p className='profile_name'>John Ahmed</p>
+                        <span className='profile_occupation'>Doctor</span>
                       </div>
                     </div>
                   </div>
-                  <div className="doctors_container_content patient_container_content">
-                    <div className="patient_info_wrap">
-                      <div className="patient_detail_summary">
-                        <div className="patient_image">
-                          <img src={profile} alt="" />
+                  <div className='doctors_container_content patient_container_content'>
+                    <div className='patient_info_wrap'>
+                      <div className='patient_detail_summary'>
+                        <div className='patient_image'>
+                          <img src={profile} alt='' />
                         </div>
-                        <div className="patient_name">
+                        <div className='patient_name'>
                           <h1>
                             <span>{patient.first_name} </span>
                             <span>{patient.last_name}</span>
                           </h1>
                         </div>
-                        <div className="card_no">#{patient.card_no}</div>
+                        <div className='card_no'>#{patient.card_no}</div>
                       </div>
-                      <div className="patient_detail_summary_contd">
-                        <div className="info">
+                      <div className='patient_detail_summary_contd'>
+                        <div className='info'>
                           <h3>Age</h3>
                           <p>
                             {differenceInYears(
@@ -361,7 +234,7 @@ function PatientDashboard() {
                             )}
                           </p>
                         </div>
-                        <div className="info">
+                        <div className='info'>
                           <h3>weight</h3>
                           {!patient.vitals ? (
                             <p>N/A</p>
@@ -369,7 +242,7 @@ function PatientDashboard() {
                             <p>{patient.vitals.weight}</p>
                           )}
                         </div>
-                        <div className="info">
+                        <div className='info'>
                           <h3>B.P</h3>
                           {patient.vitals ? (
                             <p>{patient.vitals.blood_pressure}</p>
@@ -378,23 +251,23 @@ function PatientDashboard() {
                           )}
                         </div>
                       </div>
-                      <div className="btns">
+                      <div className='btns'>
                         <button
-                          className="add_diagnosis"
+                          className='add_diagnosis'
                           onClick={() => {
-                            setPatientID(patient._id);
+                            setPatientID(patient._id)
                             // console.log(patient._id)
-                            setShowDiagnosis(true);
+                            setShowDiagnosis(true)
                           }}
                         >
                           add diagnosis
                         </button>
                         <button
-                          className="add_presc"
+                          className='add_presc'
                           onClick={() => {
-                            setPatientID(patient._id);
+                            setPatientID(patient._id)
                             console.log(patient._id)
-                            setShowPrescription(true);
+                            setShowPrescription(true)
                           }}
                         >
                           add prescription
@@ -402,42 +275,42 @@ function PatientDashboard() {
                       </div>
                     </div>
                     {/* Calendar setup */}
-                    <div className="patient_details">
-                      <div className="patient_detail_summary_contd1">
-                        <div className="info">
+                    <div className='patient_details'>
+                      <div className='patient_detail_summary_contd1'>
+                        <div className='info'>
                           <h3>Gender</h3>
                           <p>{patient.gender}</p>
                         </div>
-                        <div className="info">
+                        <div className='info'>
                           <h3>
-                            <abbr title="Date Of Birth">DOB</abbr>
+                            <abbr title='Date Of Birth'>DOB</abbr>
                           </h3>
                           <p>
                             {intlFormat(new Date(patient.d_o_b), {
-                              year: "numeric",
-                              month: "short",
-                              day: "2-digit",
+                              year: 'numeric',
+                              month: 'short',
+                              day: '2-digit'
                             })}
                           </p>
                         </div>
-                        <div className="info">
+                        <div className='info'>
                           <h3>phone number</h3>
                           <p>{patient.phone}</p>
                         </div>
                       </div>
-                      <div className="patient_detail_summary_contd1">
-                        <address className="info">
+                      <div className='patient_detail_summary_contd1'>
+                        <address className='info'>
                           <h3>house address</h3>
                           <p>{patient.address}</p>
                         </address>
-                        <address className="info">
+                        <address className='info'>
                           <h3>city, state</h3>
                           <p>
                             {patient.city},
-                            <span className="state">{patient.state}</span>
+                            <span className='state'>{patient.state}</span>
                           </p>
                         </address>
-                        <div className="info">
+                        <div className='info'>
                           <h3>blood pressure</h3>
                           {patient.vitals ? (
                             <p>{patient.vitals.blood_pressure}</p>
@@ -446,16 +319,16 @@ function PatientDashboard() {
                           )}
                         </div>
                       </div>
-                      <div className="patient_detail_summary_contd1">
-                        <div className="info  border-bottom-0 pb-0">
+                      <div className='patient_detail_summary_contd1'>
+                        <div className='info  border-bottom-0 pb-0'>
                           <h3>patient_status</h3>
                           <p>{patient.status}</p>
                         </div>
-                        <div className="info  border-bottom-0 pb-0">
+                        <div className='info  border-bottom-0 pb-0'>
                           <h3>last consultation date</h3>
                           <p>16th mar, 2023</p>
                         </div>
-                        <div className="info  border-bottom-0 pb-0">
+                        <div className='info  border-bottom-0 pb-0'>
                           <h3>bood group</h3>
                           {patient.vitals ? (
                             <p>{patient.vitals.blood_group}</p>
@@ -466,16 +339,16 @@ function PatientDashboard() {
                       </div>
                     </div>
                     {/* appointment table */}
-                    <div className="appointment_table patient_appointment_table">
-                      <div className="appointment_list">
-                        <div className="left">
+                    <div className='appointment_table patient_appointment_table'>
+                      <div className='appointment_list'>
+                        <div className='left'>
                           <p>Consultation History</p>
                         </div>
-                        <div className="right">
+                        <div className='right'>
                           <p>View Medical History</p>
                         </div>
                       </div>
-                      <div className="appointment_table_holder patient_appointment_table_holder">
+                      <div className='appointment_table_holder patient_appointment_table_holder'>
                         <table>
                           <thead>
                             <tr>
@@ -540,14 +413,16 @@ function PatientDashboard() {
                     </div>
                   </div>
                 </div>
-              );
+              )
             })}
         </div>
       </section>
       {showDiagnosis && <Dd setShowDiagnosis={setShowDiagnosis} />}
-      {showPrescription && <Dp setShowPrescription={setShowPrescription} patientID={patientID}/>}
+      {showPrescription && (
+        <Dp setShowPrescription={setShowPrescription} patientID={patientID} />
+      )}
     </>
-  );
+  )
 }
 
-export default PatientDashboard;
+export default PatientDashboard

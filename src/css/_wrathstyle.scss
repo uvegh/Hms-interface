@@ -24,7 +24,7 @@ abbr {
   // height: fit-content;
   height: 864px;
   display: grid;
-  grid-template-columns: 405px 1035px;
+  grid-template-columns: 270px 1170px;
   // grid-template-columns: 28.125% 71.875%;
   position: relative;
   top: 70px;
@@ -34,10 +34,10 @@ abbr {
 
   .doctor_sidebar {
     background-color: #2b415c;
-    padding-left: 80px;
+    padding-left: 17px;
 
     .links_display_box {
-      width: 325px;
+      // width: 250px;
 
       .clinic_name {
         width: 100%;
@@ -49,8 +49,8 @@ abbr {
         padding-top: 15px;
 
         .organization_image {
-          width: 90px;
-          height: 90px;
+          width: 50px;
+          height: 50px;
           cursor: pointer;
 
           img {
@@ -65,7 +65,7 @@ abbr {
 
           h2 {
             line-height: 29px;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 400;
             cursor: pointer;
 
@@ -188,6 +188,75 @@ abbr {
             font-weight: 400;
             color: #2b415c;
             font-style: italic;
+          }
+        }
+      }
+    }
+
+    .segregated_section {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .5rem;
+
+      .segregated_container {
+        height: 200px;
+        border: 1px solid red;
+        border-radius: 5px;
+
+        .container_attr {
+          text-align: center;
+          line-height: 30px;
+          padding: 10px;
+          background-color: #2b415c;
+          color: #ffffff;
+          font-size: 18px;
+          border-radius: 5px 5px 0 0;
+        }
+
+        .container_attr_icons {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 30px;
+          padding-top: 10px;
+
+          .image_icons {
+            border: 10px solid #ffffff;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: grid;
+            place-content: center;
+            padding: 10px;
+            border-top-color: #2b415c;
+            border-left-color: #2b415c;
+            border-bottom-color: #2b415c;
+
+            img {
+              width: 100%;
+              height: 90%;
+              object-fit: contain;
+            }
+            .cancel{
+              font-size: 60px;
+              color: #2b415c;
+            }
+          }
+
+          .content {
+            h3 {
+              font-size: 20px;
+              line-height: 22px;
+              color: #2b415c;
+              margin-bottom: 10px;
+            }
+
+            p {
+              font-size: 16px;
+              line-height: 18px;
+              color: #526479;
+            }
           }
         }
       }
@@ -394,7 +463,7 @@ abbr {
     .doctors_container_content {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: 320px;
+      grid-template-rows: fit-content;
       gap: 32px 48px;
 
       .doctors_info_wrap {
