@@ -58,3 +58,53 @@
   }
 
 }
+
+.new-appointment {
+  p {
+    min-height: 2.4rem;
+    padding: 0.2rem;
+    text-transform: capitalize;
+    border: 0.2px solid rgb(180, 174, 174) !important;
+    border-radius: 0.2rem;
+  }
+
+  select {
+    color: $loginBlue !important;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  input {
+    min-height: 2rem;
+  }
+
+  .form-control {
+    border: 0.2px solid rgb(180, 174, 174) !important;
+  }
+
+  ul {
+    list-style: none;
+    overflow-y: auto;
+
+    &:hover {
+      cursor: pointer !important;
+    }
+
+    li {
+      border-bottom: #add8dc;
+    }
+  }
+
+  .avail-doctors {
+    margin-top: 4.5rem;
+  }
+}
+
+.nested-select {
+  display: flex;
+}
+
+select {
+  flex: 1;
+  margin-right: 10px;
+}

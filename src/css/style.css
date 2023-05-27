@@ -1372,6 +1372,47 @@ abbr {
   padding: 0.3rem;
 }
 
+.new-appointment p {
+  min-height: 2.4rem;
+  padding: 0.2rem;
+  text-transform: capitalize;
+  border: 0.2px solid rgb(180, 174, 174) !important;
+  border-radius: 0.2rem;
+}
+.new-appointment select {
+  color: #2B415C !important;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.new-appointment input {
+  min-height: 2rem;
+}
+.new-appointment .form-control {
+  border: 0.2px solid rgb(180, 174, 174) !important;
+}
+.new-appointment ul {
+  list-style: none;
+  overflow-y: auto;
+}
+.new-appointment ul:hover {
+  cursor: pointer !important;
+}
+.new-appointment ul li {
+  border-bottom: #add8dc;
+}
+.new-appointment .avail-doctors {
+  margin-top: 4.5rem;
+}
+
+.nested-select {
+  display: flex;
+}
+
+select {
+  flex: 1;
+  margin-right: 10px;
+}
+
 .notFound-container {
   position: relative;
   height: 100vh;

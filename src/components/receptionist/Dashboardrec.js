@@ -504,6 +504,9 @@ function DashboardRec() {
               <li className='sidebar_btn'>
                 <Link to='/receptionist/profile'> Profile </Link>
               </li>
+              <li className="sidebar_btn">
+                                <Link to="/receptionist/appointment"> Appointment </Link>
+                            </li>
               <li className='sidebar_btn'>
                 <div> Logout </div>
               </li>
