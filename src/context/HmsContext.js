@@ -81,7 +81,7 @@ function HmsProvider(props) {
     setConsultation(response?.data);
 
     let nurse_consult = response?.data?.filter((consultation) => {
-      return consultation?.nurse_seen == false;
+      return consultation?.nurse_seen == false && consultation?.payment_status == "paid";
     });
 
     setConsultationNurse(nurse_consult);
@@ -182,7 +182,8 @@ function HmsProvider(props) {
         avaialabeGeneralDoctors,
 
         getAvaialabeGeneralDoctors,
-        appt
+        appt,
+        handleGetConsultation
       }}
     >
 
