@@ -34,8 +34,10 @@ import DashboardNurse from "./components/nurse/DashboardNurse";
 import Patient from "./components/nurse/Patient";
 import ProfileNurse from "./components/nurse/ProfileNurse";
 import Management from "./components/nurse/Management";
-import Pharmacy from "./components/Pharmacy/Pharmacy";
 import Appointment from "./components/receptionist/Appointment";
+import Pharmacy from "./components/Pharmacy/Pharmacy";
+import ViewPatients from "./components/Pharmacy/ViewPatients";
+import Dispense from "./components/Pharmacy/Dispense";
 
 export default function App() {
   return (
@@ -81,6 +83,8 @@ export default function App() {
               </Route>
 
                 <Route path="/pharmacy" element={<Pharmacy/>}/>
+                <Route path ="/viewPatient" element={<ViewPatients/>}/>
+                <Route path="/dispense" element={<Dispense/>}/>
 
               <Route path="/receptionist" element={<ReceptionistLayout />}>
                 <Route path="dashboard" element={<DashboardRec />} />

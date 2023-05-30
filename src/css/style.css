@@ -1390,26 +1390,402 @@ abbr {
 }
 
 .pharmacy {
-  padding-top: 100px;
   height: 100vh;
+  width: 100%;
+  max-width: 1440px;
+  display: grid;
+  grid-template-columns: 270px 1170px;
+  position: relative;
+  top: 70px;
+  margin: auto;
+  margin-bottom: 70px;
 }
-.pharmacy .topSection {
+.pharmacy * {
+  padding: 0;
+  margin: 0;
+}
+.pharmacy .doctor_sidebar {
+  background-color: #2b415c;
+}
+.pharmacy .doctor_sidebar .loggedIn {
   display: flex;
+  color: #ffffff;
+  padding: 5px;
   justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+}
+.pharmacy .doctor_sidebar .loggedIn div {
+  width: 70px;
+  height: 70px;
+  background: white;
+  border-radius: 50px;
+}
+.pharmacy .doctor_sidebar .links_display_box .clinic_name {
+  width: 100%;
+  height: 106px;
+  background-color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 15px;
+  padding-left: 17px;
+}
+.pharmacy .doctor_sidebar .links_display_box .clinic_name .organization_image {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.pharmacy .doctor_sidebar .links_display_box .clinic_name .organization_image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: center;
+     object-fit: center;
+}
+.pharmacy .doctor_sidebar .links_display_box .clinic_name .organization_name {
+  color: #ffffff;
+}
+.pharmacy .doctor_sidebar .links_display_box .clinic_name .organization_name h2 {
+  line-height: 29px;
+  font-size: 20px;
+  font-weight: 400;
+  cursor: pointer;
+}
+.pharmacy .doctor_sidebar .links_display_box .clinic_name .organization_name h2 span {
+  color: #add8dc;
+}
+.pharmacy .doctor_sidebar .links_display_box .sidebar_link_btns {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 17px;
+}
+.pharmacy .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn {
+  height: 56px;
+  width: 100%;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+}
+.pharmacy .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn a {
+  text-decoration: none;
+  color: white;
+}
+.pharmacy .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn:hover,
+.pharmacy .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn :active {
+  background-color: #526479;
+  border-radius: 2px;
+}
+.pharmacy .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn div {
+  font-size: 18px;
+  color: #ffffff;
+  line-height: 21px;
+  cursor: pointer;
+}
+.pharmacy .pharmRight .pharmTops {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: auto;
+  padding-top: 50px;
+}
+.pharmacy .pharmRight .pharmTops div {
+  width: 30%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #e9e9e9;
+  box-shadow: 4px 4px 4px #cccccc;
+  border-radius: 5px;
+  align-items: center;
+  padding: 0;
+}
+.pharmacy .pharmRight .pharmTops div p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 16px;
+  color: #2b415c;
+  padding: 10px 0px;
+}
+.pharmacy .pharmRight .pharmTops div span {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 35px;
+  color: #2b415c;
+}
+.pharmacy .pharmRight .pharmTops div i {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+}
+.pharmacy .pharmRight .pharmMiddle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+}
+.pharmacy .pharmRight .pharmMiddle button {
+  width: 200px;
+  height: 40px;
+  outline: none;
+  background: #2b415c;
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff;
+}
+.pharmacy .pharmRight .pharmMiddle input {
+  width: 67%;
+  height: 40px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+.pharmacy .pharmRight .pharmBottom {
+  width: 90;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 10px;
 }
-.pharmacy .topSection p {
-  color: #2b415c;
-  font-size: 24px;
-  font-weight: 400;
-  font-family: "Roboto";
+.pharmacy .pharmRight .pharmBottom .patients {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 4px 4px 4px #cccccc;
+  border-radius: 5px;
+  width: 85%;
+  margin: auto;
+  padding: 6px;
+  cursor: pointer;
 }
-.pharmacy .topSection p span {
-  color: #add8dc;
-  font-size: 24px;
-  font-weight: 400;
-  font-family: "Roboto";
+.pharmacy .pharmRight .pharmBottom .patients div i {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+}
+.pharmacy .pharmRight .pharmBottom .patients div p {
+  color: rgba(0, 0, 0, 0.4);
+}
+.pharmacy .pharmRight .pharmBottom .patients div span {
+  color: #2b415c;
+}
+
+.viewPatient {
+  width: 100%;
+  height: 100vh;
+  padding-top: 80px;
+}
+.viewPatient * {
+  padding: 0;
+  margin: 0;
+}
+.viewPatient .viewPBox {
+  width: 890px;
+  min-height: 335px;
+  height: auto;
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  margin: auto;
+  padding: 10px;
+}
+.viewPatient .viewPBox .tops {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f6f6f6;
+  padding: 10px 0px;
+}
+.viewPatient .viewPBox .tops .first {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+}
+.viewPatient .viewPBox .tops .first div span {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
+}
+.viewPatient .viewPBox .tops .second {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+}
+.viewPatient .viewPBox .tops .second div p {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
+}
+.viewPatient .viewPBox .tops .second div span {
+  font-size: 15px;
+  color: #2b415c;
+}
+.viewPatient .viewPBox .records {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-bottom: 2px solid #f6f6f6;
+  padding-bottom: 20px;
+}
+.viewPatient .viewPBox .records p {
+  font-size: 18px;
+  color: #2b415c;
+}
+.viewPatient .viewPBox .records .zsel {
+  border-bottom: 2px solid #f6f6f6;
+}
+.viewPatient .viewPBox .records .records1 {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 10px 0px;
+}
+.viewPatient .viewPBox .records .records1 p {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
+}
+.viewPatient .viewPBox .records .records1 span {
+  background: #f6f6f6;
+  padding: 5px 20px;
+  color: #2b415c;
+}
+.viewPatient .viewPBox .records .records1 i {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+}
+.viewPatient .viewPBox .records .records1 button {
+  border: none;
+  width: 108px;
+  height: 30px;
+  background: #2b415c;
+  border-radius: 5px;
+  color: #ffffff;
+}
+.viewPatient .viewPBox .records .records1 button span {
+  background: none;
+}
+.viewPatient .viewPBox .records .records1 .dispensed {
+  background: none;
+  color: #2b415c;
+}
+.viewPatient .viewPBox .records .records2 {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+.viewPatient .viewPBox .records .records2 p {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
+}
+.viewPatient .viewPBox .records .records2 span {
+  background: #f6f6f6;
+  padding: 5px 20px;
+  color: #2b415c;
+}
+
+.dispense {
+  width: 100%;
+  height: 100vh;
+  padding-top: 90px;
+}
+.dispense * {
+  padding: 0;
+  margin: 0;
+}
+.dispense .dispenseMain {
+  width: 75%;
+  height: auto;
+  margin: auto;
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 20px;
+}
+.dispense .dispenseMain .dispenseTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #f6f6f6;
+  padding: 10px 0px;
+  margin-bottom: 10px;
+}
+.dispense .dispenseMain .dispenseTop .drugImg img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 70px;
+  height: 70px;
+}
+.dispense .dispenseMain .dispenseTop .left {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+}
+.dispense .dispenseMain .dispenseTop .left p {
+  color: #2b415c;
+  font-size: 16px;
+}
+.dispense .dispenseMain .dispenseTop .left i {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+}
+.dispense .dispenseMain .dispenseTop .right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+.dispense .dispenseMain .dispenseTop .right button {
+  width: 207px;
+  height: 40px;
+  border: none;
+  background: #2b415c;
+  border-radius: 5px;
+  color: #ffffff;
+}
+.dispense .dispenseMain .dispenseTop .right p {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+}
+.dispense .dispenseMain .dispenseTop .right span {
+  color: #2b415c;
+  font-size: 16px;
+}
+.dispense .dispenseMain .bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.dispense .dispenseMain .bottom p {
+  font-size: 16px;
+  color: #2b415c;
+}
+.dispense .dispenseMain .bottom table,
+.dispense .dispenseMain .bottom tr,
+.dispense .dispenseMain .bottom td,
+.dispense .dispenseMain .bottom th {
+  border: 1px solid #d6d3d3;
+  text-align: center;
+  padding: 10px;
+  margin: 10px auto;
+  color: #2b415c;
 }
 
 .add-patient-form {
