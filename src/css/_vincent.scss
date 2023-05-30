@@ -2,6 +2,7 @@
   color: $loginBlue;
 
   .found-patient-details {
+
     background: whitesmoke;
     font-weight: 600;
 
@@ -57,4 +58,123 @@
     }
   }
 
+}
+
+.new-appointment {
+  p {
+    min-height: 2.4rem;
+    padding: 0.2rem;
+    text-transform: capitalize;
+    border: 0.2px solid rgb(180, 174, 174) !important;
+    border-radius: 0.2rem;
+  }
+
+  select {
+    color: $loginBlue !important;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  input {
+    min-height: 2rem;
+  }
+
+  .form-control {
+    border: 0.2px solid rgb(180, 174, 174) !important;
+  }
+
+  ul {
+    list-style: none;
+    overflow-y: auto;
+
+    &:hover {
+      cursor: pointer !important;
+    }
+
+    li {
+      border-bottom: #add8dc;
+    }
+  }
+
+  .avail-doctors {
+    margin-top: 4.5rem;
+  }
+}
+
+.nested-select {
+  display: flex;
+}
+
+select {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.consulation-nurseView {
+  label {
+    font-weight: 500;
+  }
+
+  p {
+    min-height: 2.4rem;
+    padding: 0.2rem;
+    text-transform: capitalize;
+    border: 0.2px solid rgb(180, 174, 174) !important;
+    border-radius: 0.2rem;
+  }
+
+  .form-control {
+    border: 0.2px solid rgb(180, 174, 174) !important;
+  }
+
+  input {
+    min-height: 2rem;
+  }
+}
+
+.user-icon {
+  width: 2.5em;
+}
+
+.recently-added-receptionist-view {
+  p {
+    min-height: 2.4rem;
+    padding: 0.2rem;
+    background-color: white;
+  }
+}
+
+.consultants-avaialable {
+  .form-control {
+    border: none !important;
+    outline: none !important;
+  }
+}
+
+.dept {
+  border: none !important;
+  outline: none !important;
+  background-color: inherit;
+
+}
+
+.btns {
+
+
+
+  .post {
+    background-color: $loginBlue;
+  }
+}
+
+.consultantNames {
+  text-transform: capitalize;
+
+  &::before {
+    content: "Dr";
+  }
+}
+
+.select-department::after {
+  content: ">>";
 }

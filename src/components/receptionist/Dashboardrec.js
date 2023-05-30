@@ -17,6 +17,7 @@ function DashboardRec() {
   const [isLoading, setIsloading] = useState(false);
   const [addedPatient, setAddedPatient] = useState({})
   const [foundPatientIsShown, setFoundPatientIsShown] = useState(false)
+  const [viewAddedPatient, setViewAddedPatient] = useState(false)
   const [foundPatient, setFoundPatient] = useState({})
   const [patientCardNo, setPatientCardNo] = useState()
   const [newPatientData, setNewPatientData] = useState({
@@ -29,6 +30,10 @@ function DashboardRec() {
     password: "1234",
     address: "",
     occupation: "",
+    vitals: {
+      blood_group: ""
+
+    },
     emergency_contact: {
       first_name: "",
       last_name: "",
@@ -37,7 +42,7 @@ function DashboardRec() {
       phone: [
         ""
       ]
-    }
+    },
 
   })
   const [validate, setValidate] = useState(false)
@@ -55,7 +60,7 @@ function DashboardRec() {
     }
 
 
-    if (!newPatientData.first_name || !newPatientData.last_name || !newPatientData.email || !newPatientData.gender || newPatientData.phone?.length == 0 || !newPatientData.d_o_b || !newPatientData.address || !newPatientData.occupation || !newPatientData.emergency_contact.first_name || !newPatientData.emergency_contact.last_name || !newPatientData.emergency_contact.email || newPatientData.emergency_contact.phone?.length == 0) {
+    if (!newPatientData.first_name || !newPatientData.last_name || !newPatientData.email || !newPatientData.gender || newPatientData.phone?.length == 0 || !newPatientData.d_o_b || !newPatientData.address || !newPatientData.occupation || !newPatientData.vitals.blood_group || !newPatientData.emergency_contact.first_name || !newPatientData.emergency_contact.last_name || !newPatientData.emergency_contact.email || newPatientData.emergency_contact.phone?.length == 0) {
       console.log(newPatientData)
       setValidate(true)
       setIsloading(false)
@@ -93,22 +98,34 @@ function DashboardRec() {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-
-    if (name.includes('emergency_contact.')) {
-      const emergencyContactField = name.split('.')[1];
+    if (name.includes('vitals.')) {
+      const vitalsField = name.split('.')[1];
       setNewPatientData((prevData) => ({
         ...prevData,
-        emergency_contact: {
-          ...prevData.emergency_contact,
-          [emergencyContactField]: value,
+        vitals: {
+          ...prevData.vitals,
+          [vitalsField]: value,
         }
       }))
-    } else {
-      setNewPatientData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }))
-    }
+
+    } else
+
+
+      if (name.includes('emergency_contact.')) {
+        const emergencyContactField = name.split('.')[1];
+        setNewPatientData((prevData) => ({
+          ...prevData,
+          emergency_contact: {
+            ...prevData.emergency_contact,
+            [emergencyContactField]: value,
+          }
+        }))
+      } else {
+        setNewPatientData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }))
+      }
   }
   const handleGetPatient = async () => {
     setIsloading(true)
@@ -132,6 +149,8 @@ function DashboardRec() {
 
 
   }
+
+
 
 
   const handleAddConsultation = async () => {
@@ -269,6 +288,27 @@ function DashboardRec() {
                     value={newPatientData.d_o_b}
                     className={validate == true && !newPatientData.d_o_b ? ("form-control border border-danger") : ("form-control")} id="validationDefault05" placeholder='d_o_b' required />
                 </div>
+                <div className="col-md-2">
+                  <label htmlFor="validationDefault05" className="form-label">Blood Group</label>
+
+                  <select
+
+                    name='vitals.blood_group'
+                    value={newPatientData.vitals.blood_group}
+                    onChange={handleChange}
+                    className={validate == true && !newPatientData.vitals.blood_group ? ("form-control border border-danger") : ("form-control")} id="validationDefault05" placeholder='d_o_b' required >
+                    <option value="A+"> A+ </option>
+                    <option value="A-"> A- </option>
+                    <option value="B+"> B+ </option>
+                    <option value="B-"> B- </option>
+                    <option value="AB+"> AB+ </option>
+                    <option value="AB-"> AB- </option>
+                    <option value="O+"> O+ </option>
+                    <option value="O-"> O- </option>
+
+                  </select>
+                </div>
+
 
                 <h3>EMERGENCY CONTACT</h3>
 
@@ -349,18 +389,136 @@ function DashboardRec() {
       )
       }
 
+      {viewAddedPatient && (
+        <div className="overlay">
+          <div className="container  add-patient-form">
+
+            <form className=" container  col-lg-10 col-md-10 m-auto mt-5 rounded p-5 recently-added-receptionist-view">
+              <div className="d-flex fs-3 col-12 justify-content-end">
+                <span onClick={() => {
+                  setViewAddedPatient(false)
+                }}> <TiTimes /> </span>
+              </div>
+              <h3>PATIENT FORM</h3>
+              <div className="row g-3 ">
+                <div className="col-md-4">
+                  <label htmlFor="validationDefault01" className="form-label">First name</label>
+                  <p>{addedPatient?.first_name}</p>
+                </div>
+
+                <div className="col-md-4">
+                  <label htmlFor="validationDefault02" className="form-label">Last name</label>
+                  <p>{addedPatient?.last_name}</p>
+                </div>
+
+                <div className="col-md-4">
+                  <label htmlFor="validationDefaultUsername" className="form-label">Email</label>
+                  <div className="input-group">
+
+                    <p>{addedPatient?.email}</p>
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <label htmlFor="validationDefault03" className="form-label">Address</label>
+                  <p><p>{addedPatient?.address}</p></p>
+                </div>
+
+                <div className="col-md-3">
+                  <label htmlFor="validationDefault04" className="form-label">Gender</label>
+                  <p>{addedPatient?.gender}</p>
+                </div>
+                <div className="col-md-3">
+                  <label htmlFor="validationDefault05" className="form-label">Phone</label>
+                  <p>{addedPatient?.phone}</p>
+                </div>
+
+                <div className="col-md-3">
+                  <label htmlFor="validationDefault05" className="form-label">Occupation</label>
+                  <p>{addedPatient?.occupation}</p>
+                </div>
+
+                <div className="col-md-3">
+                  <label htmlFor="validationDefault05" className="form-label">Date of Birth</label>
+                  <p>{addedPatient?.d_o_b?.substring(0, 10)}</p>
+                </div>
+                <div className="col-md-2">
+                  <label htmlFor="validationDefault05" className="form-label">Blood Group</label>
+                  <p>{addedPatient?.vitals?.blood_group}</p>
+                </div>
+
+
+                <h3>EMERGENCY CONTACT</h3>
+
+                <div className="col-md-3">
+                  <p>{addedPatient?.emergency_contact?.first_name}</p>
+                </div>
+
+                <div className="col-md-3">
+                  <p>{addedPatient?.emergency_contact?.last_name}</p>
+                </div>
+
+
+                <div className="col-md-3">
+                  <label htmlFor="validationDefaultUsername" className="form-label">Email</label>
+
+
+                  <p>{addedPatient?.emergency_contact?.email}</p>
+
+                </div>
+
+
+
+
+                {addedPatient?.emergency_contact?.phone.map((phone, i) => (
+                  <div className="col-md-3" key={i}>
+                    <label htmlFor="validationDefault05" className="form-label">{phone}</label>
+                    <p>phone</p>
+                  </div>
+                ))}
+
+
+                {/* <div className="col-12 text-center">
+                  {isLoading == true ? (<>
+                    <div className="text-center">
+                      <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  </>) :
+                    (<>
+                      <button type="button" className="btn btn-primary border-0 col-6 mt-3 fs-5" style={{ backgroundColor: "#2B415C" }}
+
+                        onClick={handleNewPatient}
+                      >Submit
+                      </button>
+
+                    </>)
+
+                  }
+
+                </div> */}
+              </div>
+            </form>
+          </div>
+        </div>
+
+      )
+      }
+
+
       {foundPatientIsShown && (<div className="overlay">
         <div className="container  add-patient-form">
           {
             foundPatient ? (
-              <div className=" container found-patient-details  col-lg-10 col-md-10 m-auto mt-1 rounded p-5">
+              <div className=" container found-patient-details  col-lg-10 col-md-10 m-auto mt-1 rounded ">
                 <div className="d-flex fs-3 col-12 justify-content-end">
                   <span onClick={() => {
                     setFoundPatientIsShown(false)
                   }}> <TiTimes /> </span>
                 </div>
                 <h3 className='text-center'>PATIENT FOUND</h3>
-                <div className="row g-3 ">
+                <div className="row g-3 col-lg-10 col-md-10 col-sm-11 m-auto  ">
                   <div className="col-md-8">
                     <label htmlFor='' className="form-label">NAME</label>
                     <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.first_name} {foundPatient?.last_name} </p>
@@ -418,7 +576,7 @@ function DashboardRec() {
                     <div className="col-md-4">
                       <label htmlFor='' className="form-label ">PHONE{i + 1}</label>
                       <p className='bg-white rounded p-2 ' >
-                        {phone}
+                        {!phone ? ("none") : phone}
                       </p>
                     </div>
                   ))}
@@ -504,6 +662,9 @@ function DashboardRec() {
               <li className='sidebar_btn'>
                 <Link to='/receptionist/profile'> Profile </Link>
               </li>
+              <li className="sidebar_btn">
+                <Link to="/receptionist/appointment"> Appointment </Link>
+              </li>
               <li className='sidebar_btn'>
                 <div> Logout </div>
               </li>
@@ -572,25 +733,40 @@ function DashboardRec() {
                 <table>
                   <thead>
                     <tr>
+
                       <th>Patient name</th>
                       <th>card no</th>
-                      <th>d_o_b</th>
+                      <th>Date of Birth</th>
                       <th>gender</th>
                       <th>status</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{addedPatient?.first_name} {addedPatient?.first_name} </td>
+                      <td><img className='rounded-circle user-icon' src={`${baseUrl}/${addedPatient?.avatar}`} alt="" />  {addedPatient?.first_name} {addedPatient?.last_name} </td>
                       <td>
-                        <span>#</span>{addedPatient?.card_no}
+                        {addedPatient?.card_no ? `#${addedPatient?.card_no}` : addedPatient?.card_no}
                       </td>
-                      <td>{addedPatient?.d_o_b} </td>
+                      <td>{addedPatient?.d_o_b?.substring(0, 10)} </td>
                       <td>{addedPatient?.gender} </td>
-                      <td>{!addedPatient?.status ? ("outpatient") : (
+                      <td>{!addedPatient?.status ? ("") :
 
-                        <p> {!addedPatient?.status}</p>
-                      )} </td>
+                        addedPatient?.status
+                      } </td>
+                      {
+                        addedPatient?.first_name ? (<td className='text-decoration-underline'
+                          onClick={() => {
+                            setViewAddedPatient(true)
+                          }}
+                        > view</td>) : (
+                          <td className='text-decoration-underline'
+
+                          > </td>
+
+                        )
+                      }
+
                     </tr>
 
 

@@ -8,6 +8,7 @@ function HmsProvider(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPatientId, setCurrentPatientId] = useState({});
   const [appointments, setAppointments] = useState([]);
+  const [appt, setAppt] = useState()
   // console.log(currentPatientId + "this is from the context api")
   const [patientGoogleObj, setPatientGoogleObj] = useState({});
   // console.log(patientGoogleObj);
@@ -20,7 +21,10 @@ function HmsProvider(props) {
   const [consultationNurse, setConsultationNurse] = useState()
   const [consultationDoctor, setConsultationDoctor] = useState()
   const baseUrl = 'https://gavohms.onrender.com'
+  const [departments, setDepartments] = useState()
   const [patientID, setPatientID] = useState({})
+  const [avaialableConsultants, setAvaialableConsultants] = useState()
+  const [avaialabeGeneralDoctors, setAvaialabeGeneralDoctors] = useState()
 
 
 
@@ -39,8 +43,9 @@ function HmsProvider(props) {
 
   const handleGetAppointment = async () => {
     let response = (await axios.get(`${baseUrl}/appointment`)).data;
-    //console.log("current employee", currentEmpId);
-    //  console.log("appointmnt",response?.appointment );
+    setAppt(response?.appointment)
+    console.log("appointment", response?.appointment);
+
     let filterAppointment = response?.appointment.filter((doctor) => {
       return doctor?.appointment?.physician?.emp_id?._id == currentEmpId?._id;
     });
@@ -76,7 +81,7 @@ function HmsProvider(props) {
     setConsultation(response?.data);
 
     let nurse_consult = response?.data?.filter((consultation) => {
-      return consultation?.nurse_seen == false;
+      return consultation?.nurse_seen == false && consultation?.payment_status == "paid";
     });
 
     setConsultationNurse(nurse_consult);
@@ -97,6 +102,36 @@ function HmsProvider(props) {
     //console.log(response?.found_doctors?.data);
     setDoctors(response?.found_doctors?.data);
   };
+  const handleGetDepartments = async () => {
+    let response = (await axios.get(`${baseUrl}/department`)).data;
+    //console.log(response?.department);
+    setDepartments(response?.department)
+
+  }
+
+  const getAvaialbelConsultantByDepartment = async (deptId) => {
+    let response = (await axios.get(`${baseUrl}/employee?role=doctor&department=${deptId}&status=available`)).data;
+    console.log(response.employees?.data);
+    setAvaialableConsultants(response?.employees?.data)
+
+
+  }
+
+  const getAvaialabeGeneralDoctors = async (deptId) => {
+    let response = (await axios.get(`${baseUrl}/employee?role=doctor&department=647213929f4ee94640c242a7&status=available`)).data;
+    console.log(response.employees?.data);
+    setAvaialabeGeneralDoctors(response?.employees?.data)
+
+
+  }
+
+
+  useEffect(() => {
+    handleGetDepartments()
+
+  }, [])
+
+
 
   return (
     <HmsContext.Provider
@@ -141,6 +176,14 @@ function HmsProvider(props) {
         consultationDoctor,
 
         consultationNurse,
+        departments,
+        getAvaialbelConsultantByDepartment,
+        avaialableConsultants,
+        avaialabeGeneralDoctors,
+
+        getAvaialabeGeneralDoctors,
+        appt,
+        handleGetConsultation
       }}
     >
 
