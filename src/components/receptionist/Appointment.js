@@ -7,6 +7,7 @@ import { HmsContext } from "../../context/HmsContext";
 import { TiTimes } from "react-icons/ti";
 import axios from "axios";
 import { AiFillPhone, AiOutlineRight } from "react-icons/ai";
+import SpinnerLoader from "../SpinnerLoader";
 
 function Appointment() {
     const baseUrl = "https://gavohms.onrender.com";
@@ -181,24 +182,7 @@ function Appointment() {
     return (
         <>
             {isLoading && (
-                <div className="container-fluid overlay">
-                    <div className="loader m-auto">
-                        <div className="lds-spinner text-center m-auto">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                </div>
+              <SpinnerLoader/>
             )}
 
             {addAppointment && (

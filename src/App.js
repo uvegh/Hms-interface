@@ -60,6 +60,7 @@ export default function App() {
                 element={<ResetPasswordPatient />}
               />
 
+
               <Route path="/doctor" element={<DoctorLayout />}>
                 <Route
                   path="dashboard"
@@ -80,7 +81,7 @@ export default function App() {
                 <Route path="prescription" element={<DoctorPrescription />} />
               </Route>
 
-                <Route path="/pharmacy" element={<Pharmacy/>}/>
+              <Route path="/pharmacy" element={<Pharmacy />} />
 
               <Route path="/receptionist" element={<ReceptionistLayout />}>
                 <Route path="dashboard" element={<DashboardRec />} />

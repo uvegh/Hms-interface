@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { BsFileEarmarkMedical, BsFillHouseAddFill } from 'react-icons/bs'
+import { AiOutlineEllipsis } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
 import { TbPrescription, TbCalendarEvent } from 'react-icons/tb'
 import Calender from 'react-calendar'
@@ -9,12 +10,24 @@ import { Link } from "react-router-dom";
 import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 import { TiTimes } from 'react-icons/ti'
+import SpinnerLoader from '../SpinnerLoader'
 function Management() {
     const baseUrl = "https://gavohms.onrender.com"
-    const { currentEmpId, handleGetNurseDetail, nurseObj, consultation, handleGetConsultation, handleGetAllDoctors, doctors } = useContext(HmsContext)
+    const { currentEmpId,
+        handleGetNurseDetail,
+        nurseObj, consultation,
+        handleGetConsultation,
+        handleGetAllDoctors,
+        doctors,
+        nurses,
+        additionalNurseDetail,
+        handlegetNurseAddInfo,
+        wards } = useContext(HmsContext)
     const [showEdit, setShowEdit] = useState(false)
     const [assignNurse, setAssignNurse] = useState(false)
     const [foundNurse, setFoundNurse] = useState()
+    const [viewNurse, setViewNurse] = useState(false)
+    const [viewNurseIndex, setViewNurseIndex] = useState()
     const [patientVitals, setPatientVitals] = useState({
         vitals: {
             blood_pressure: "",
@@ -22,17 +35,22 @@ function Management() {
         }
 
     })
+    const [viewFoundNurse, setViewFoundNurse] = useState()
+    const [viewFoundNurseIndex, setViewFoundNurseIndex] = useState()
+    const [foundPatient, setFoundPatient] = useState({})
     const [isLoading, setIsloading] = useState(false);
     const [patientDetails, setPatientDetails] = useState()
     const [editIndex, setEditIndex] = useState()
+    const [isLoadingForm, setIsloadingForm] = useState(false);
     const [validate, setValidate] = useState(false)
-    const [searchNurseData, setSearchNurse] = useState({
+    const [searchNurseData, setSearchNurseData] = useState({
         first_name: ""
+
     })
     const [assignNurseData, setAssignNurseData] = useState({
         patients_incharge_of: ""
     })
-
+    const [patientCardNo, setPatientCardNo] = useState()
     const handleEditPatientVitals = async (id) => {
         if (!patientVitals.vitals.blood_pressure || !patientVitals.vitals.weight) {
             setValidate(true)
@@ -55,23 +73,83 @@ function Management() {
         }
 
     }
-    console.log(nurseObj);
+    //console.log(additionalNurseDetail);
 
     const handleConsultationStatus = async (id) => {
         let response = (await (axios.put(`${baseUrl}/${id}`, { nurse_seen: true }))).data
-        console.log(response);
+        // console.log(response);
     }
 
     const handleAssignNurse = async (nurseId) => {
         let response = (await (axios.post(`${baseUrl}/nurse/${nurseId}`))).data
     }
     const searchNurse = async () => {
-        let response = (await (axios.get(`${baseUrl}/employee?role=nurse&first_name=${searchNurseData.first_name}`))).data
-        console.log(response?.found_nurse);
-        setFoundNurse(response?.found_nurse)
+        setFoundNurse(response?.employees?.data)
+        let response = (await (axios.get(`${baseUrl}/employee?role=nurse&last_name=${searchNurseData.first_name}`))).data
+        if (response?.employees?.data?.length > 0) {
+            setFoundNurse(response?.employees?.data)
+            console.log(response?.employees?.data);
+            setIsloading(false)
+        }
+        else {
+            setFoundNurse(response?.employees?.data)
+            let response = (await (axios.get(`${baseUrl}/employee?role=nurse&first_name=${searchNurseData.first_name}`))).data
+
+            if (response?.employees?.data?.length > 0) {
+                setFoundNurse(response?.employees?.data)
+                console.log(response?.employees?.data)
+
+            }
+            else {
+
+                // alert("not found")
+            }
+        }
+
+
+
+
+        // let response = (await (axios.get(`${baseUrl}/employee?role=nurse&last_name=${searchNurseData.first_name}`))).data
+        // if (response?.employees?.data?.length == 0) {
+        //     let response2 = (await (axios.get(`${baseUrl}/employee?role=nurse&last_name=${searchNurseData.first_name}`))).data
+        //     if (response2?.employees?.data?.length == 0) {
+        //         console.log(response2);
+        //         setFoundNurse(response2?.employees?.data)
+        //         return
+        //     }
+        //     console.log(response?.employees?.data);
+        //     setFoundNurse(response2?.employees?.data)
+        //     console.log(foundNurse);
+        //     //setFoundNurse(response?.employees?.data)
+        //     return
+        // }
+
+
+
     }
 
+    const handleGetPatient = async () => {
+        setIsloadingForm(true)
+        console.log(patientCardNo);
 
+        if (!patientCardNo) {
+            // alert("search box can not be empty")
+            setIsloadingForm(false)
+            return
+        }
+        let response = (await (axios.get(`${baseUrl}/patient?card_no=${patientCardNo}`))).data
+        console.log(response?.data)
+        if (response) {
+            setIsloadingForm(false)
+            setFoundPatient(response?.data[0])
+            setFoundPatientIsShown(true)
+            console.log(foundPatient)
+            return
+        }
+
+
+
+    }
 
     useEffect(() => {
         // console.log(currentEmpId)
@@ -79,62 +157,349 @@ function Management() {
         handleGetNurseDetail()
         handleGetConsultation()
         handleGetAllDoctors()
-    }, [])
+    }, [additionalNurseDetail])
 
 
 
     return (
         <>
+
+            {
+                isLoading && (<SpinnerLoader />)
+            }
+            {viewNurse && (
+
+                <div className="overlay">
+                    <div className="container  add-patient-form">
+
+                        <form className=" container  col-lg-11 col-md-10 m-auto mt-5 rounded  nurse-view ">
+                            <div className="d-flex fs-3 col-12 justify-content-end">
+                                <span onClick={() => {
+                                    setViewNurse(false)
+                                }}> <TiTimes /> </span>
+                            </div>
+
+                            <div className=" text-center mb-3">
+                                <img className='user_view_icon' src={` ${baseUrl}/${nurses[viewNurseIndex]?.avatar}`} alt="" />
+                                <h6> {nurses[viewNurseIndex]?.first_name} {nurses[viewNurseIndex]?.last_name}  </h6>
+                                <p>#{nurses[viewNurseIndex]?._id} </p>
+                            </div>
+
+                            <section className="row nurse_view_details m-auto col-lg-10 col-sm-12 col-md-10">
+
+
+                                <div className="col-md-4 m-auto mb-3">
+                                    <label htmlFor="" >Gender</label>
+                                    <p className=''>{nurses[viewNurseIndex]?.gender}</p>
+
+                                </div>
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Department</label>
+                                    <p className=''>{nurses[viewNurseIndex]?.department?.name} </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Phone</label>
+                                    <p className=''>{nurses[viewNurseIndex]?.phone} </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Status</label>
+                                    <p className=''>{nurses[viewNurseIndex]?.status} </p>
+                                </div>
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Patients Assigned</label>
+                                    <ul className='list-group'>
+                                        {
+                                            additionalNurseDetail?.patients_incharge_of?.length == 0 || !additionalNurseDetail?.patients_incharge_of ? (<ul>
+                                                <li className='list-group-item'>None</li>
+                                            </ul>) :
+                                                additionalNurseDetail?.patients_incharge_of.map((patient) => (
+                                                    <li className='list-group-item'>#{patient?.card_no} {patient?.first_name} {patient?.last_name}</li>
+
+                                                ))
+                                        }
+
+
+
+                                    </ul>
+                                </div>
+                                <div className="col-md-5 col-lg-4 col-sm-11 m-auto mb-3 ">
+                                    <label htmlFor="">Ward Assigned</label>
+                                    <ul className='list-group'>
+                                        {
+                                            additionalNurseDetail?.data?.ward_no?.length == 0 || !additionalNurseDetail?.data?.ward_no ? (<ul>
+                                                <li className='list-group-item'>None</li>
+                                            </ul>) :
+                                                additionalNurseDetail?.data?.ward_no?.map((ward) => (
+                                                    <li className='list-group-item'>{ward?.name} {ward?.type} </li>
+
+                                                ))
+                                        }
+
+
+
+                                    </ul>
+                                </div>
+
+                                <div className='text-center mb-5'>
+                                    <button type='button' className='btn btn-primary col-4' onClick={() => {
+                                        setViewNurseIndex("")
+                                        setViewNurse(false)
+                                    }
+
+
+                                    }>
+                                        Close
+                                    </button>
+                                </div>
+                            </section>
+
+
+                        </form>
+                    </div>
+                </div>
+            )
+            }
+
+
+
+
+
+
+
+            {viewFoundNurse && (
+
+                <div className="overlay">
+                    <div className="container  add-patient-form">
+
+                        <form className=" container  col-lg-11 col-md-10 m-auto mt-5 rounded  nurse-view ">
+                            <div className="d-flex fs-3 col-12 justify-content-end">
+                                <span onClick={() => {
+                                    setViewFoundNurse(false)
+                                }}> <TiTimes /> </span>
+                            </div>
+
+                            <div className=" text-center mb-3">
+                                <img className='user_view_icon' src={` ${baseUrl}/${foundNurse[viewFoundNurseIndex]?.avatar}`} alt="" />
+                                <h6> {foundNurse[viewFoundNurseIndex]?.first_name} {foundNurse[viewFoundNurseIndex]?.last_name}  </h6>
+                                <p>#{foundNurse[viewFoundNurseIndex]?._id} </p>
+                            </div>
+
+                            <section className="row nurse_view_details m-auto col-lg-10 col-sm-12 col-md-10">
+
+
+                                <div className="col-md-4 m-auto mb-3">
+                                    <label htmlFor="" >Gender</label>
+                                    <p className=''>{foundNurse[viewFoundNurseIndex]?.gender}</p>
+
+                                </div>
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Department</label>
+                                    <p className=''>{foundNurse[viewFoundNurseIndex]?.department?.name} </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Phone</label>
+                                    <p className=''>{foundNurse[viewFoundNurseIndex]?.phone} </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Status</label>
+                                    <p className=''>{foundNurse[viewFoundNurseIndex]?.status} </p>
+                                </div>
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Patients Assigned</label>
+                                    <ul className='list-group'>
+                                        {
+                                            additionalNurseDetail?.patients_incharge_of?.length == 0 || !additionalNurseDetail?.patients_incharge_of ? (<ul>
+                                                <li className='list-group-item'>None</li>
+                                            </ul>) :
+                                                additionalNurseDetail?.patients_incharge_of.map((patient) => (
+                                                    <li className='list-group-item'>#{patient?.card_no} {patient?.first_name} {patient?.last_name}</li>
+
+                                                ))
+                                        }
+
+
+
+                                    </ul>
+                                </div>
+                                <div className="col-md-5 col-lg-4 col-sm-11 m-auto mb-3 ">
+                                    <label htmlFor="">Ward Assigned</label>
+                                    <ul className='list-group'>
+                                        {
+                                            additionalNurseDetail?.data?.ward_no?.length == 0 || !additionalNurseDetail?.data?.ward_no ? (<ul>
+                                                <li className='list-group-item'>None</li>
+                                            </ul>) :
+                                                additionalNurseDetail?.data?.ward_no?.map((ward) => (
+                                                    <li className='list-group-item'>{ward?.name} {ward?.type} </li>
+
+                                                ))
+                                        }
+
+
+
+                                    </ul>
+                                </div>
+
+                                <div className='text-center mb-5 mt-3'>
+                                    <button type='button' className='btn btn-primary col-lg-4 col-md-4 col-sm-10' onClick={() => {
+                                        setViewFoundNurse("")
+                                        setViewFoundNurse(false)
+                                    }
+
+
+                                    }>
+                                        Close
+                                    </button>
+                                </div>
+                            </section>
+
+
+                        </form>
+                    </div>
+                </div>
+            )
+            }
+
             {showEdit && (
 
                 <div className="overlay">
                     <div className="container  add-patient-form">
 
-                        <form className=" container  col-lg-6 col-md-10 m-auto mt-5 rounded ">
+                        <form className=" container  col-lg-11 col-md-10 m-auto mt-5 rounded  nurse-view ">
                             <div className="d-flex fs-3 col-12 justify-content-end">
                                 <span onClick={() => {
                                     setShowEdit(false)
                                 }}> <TiTimes /> </span>
                             </div>
-                            <section className="row">
+
+                            <div className=" text-center mb-3">
+                                <img className='user_view_icon' src={` ${baseUrl}/${nurses[viewNurseIndex]?.avatar}`} alt="avatar" />
+                                <h6> {nurses[viewNurseIndex]?.first_name} {nurses[viewNurseIndex]?.last_name}  </h6>
+                                <p>#{nurses[viewNurseIndex]?._id} </p>
+                            </div>
+
+                            <section className="row nurse_view_details m-auto col-lg-10 col-sm-12 col-md-10">
 
 
-                                <div className="col-md-5 m-auto mb-3">
-                                    <label htmlFor="">Card no</label>
-                                    <p className='bg-white p-2'>#{patientDetails?.card_no}</p>
-                                </div>
-                                <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Name</label>
-                                    <p className='bg-white p-2'>{patientDetails?.first_name} {patientDetails?.first_name} </p>
-                                </div>
+                                <div className="col-md-4 m-auto mb-3">
+                                    <label htmlFor="" >Gender</label>
+                                    <p className=''>{nurses[viewNurseIndex]?.gender}</p>
 
-                                <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Weight(kg)</label>
-                                    <input
-                                        name='vitals.weight'
-                                        value={patientVitals.vitals.weight}
-                                        onChange={handleVitalsChange}
-                                        type="number" className={!patientVitals.vitals.weight && validate == true ? (" form-control border border-danger") : ("form-control")} />
                                 </div>
-                                <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3 ">
-                                    <label htmlFor="">Blood Pressure</label>
-                                    <input type="text"
-                                        onChange={handleVitalsChange}
-                                        name='vitals.blood_pressure'
-                                        placeholder='110/90'
-                                        value={patientVitals.vitals.blood_pressure}
-                                        className={!patientVitals.vitals.blood_pressure && validate == true ? (" form-control border border-danger") : ("form-control")} />
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Department</label>
+                                    <p className=''>{nurses[viewNurseIndex]?.department?.name} </p>
                                 </div>
 
-                                <div className='text-center mb-3'>
-                                    <button type='button' className='btn btn-secondary ' onClick={() => {
-                                        handleEditPatientVitals(patientDetails?._id)
-                                    }
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Phone</label>
+                                    <p className=''>{nurses[viewNurseIndex]?.phone} </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Status</label>
+                                    <p className=''>{nurses[viewNurseIndex]?.status} </p>
+                                </div>
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">No of Patients Assigned</label>
+                                    <p className=''>{!additionalNurseDetail ? ("0") : additionalNurseDetail?.ward_no?.length} </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">No of Ward Assigned</label>
+                                    <p className=''>{!additionalNurseDetail ? ("0") : additionalNurseDetail?.patients_incharge_of?.length} </p>
+                                </div>
 
 
-                                    }>
-                                        Update
-                                    </button>
+                                <h4>Assign Patient</h4>
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor=""> Card_no</label>
+                                    <input className='form-control'
+                                        onChange={(e) => {
+                                            setPatientCardNo(e.target.value
+                                            )
+
+                                        }}
+                                        onKeyUpCapture={() => {
+                                            handleGetPatient()
+                                        }}
+                                        onClick={
+                                            () => {
+                                                handleGetPatient()
+                                            }
+                                        }
+
+                                        type="text" placeholder='enter card no' />
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor=""> First Name</label>
+                                    <p> {!foundPatient?.first_name || patientCardNo == "" ? ("none") : foundPatient?.first_name}</p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor=""> Last Name</label>
+                                    <p>{!foundPatient?.last_name || patientCardNo == "" ? ("none") : foundPatient?.last_name} </p>
+                                </div>
+
+                                <div className="col-md-5 col-lg-4 col-sm-11 m-auto mb-3 ">
+                                    <label htmlFor="">Ward Assigned</label>
+                                    <ul className='list-group'>
+                                        {
+                                            additionalNurseDetail?.data?.ward_no?.length == 0 || !additionalNurseDetail?.data?.ward_no ? (<ul>
+                                                <li className='list-group-item'>None</li>
+                                            </ul>) :
+                                                additionalNurseDetail?.data?.ward_no?.map((ward) => (
+                                                    <li className='list-group-item'>{ward?.name} {ward?.type} </li>
+
+                                                ))
+                                        }
+
+
+
+                                    </ul>
+                                </div>
+
+                                {/* <h4>Assign Ward</h4> */}
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor=""> </label>
+                                    <select className='form-control ward-select' name="" id="">
+                                        <option value="">select ward</option>
+                                        {
+                                            wards?.length == 0 ? ("No wards") : wards?.map((ward) => (
+                                                <option value={ward?._id}>{ward?.name}  ( <span className=''>{ward?.type}</span> )</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+
+                                <div className='text-center mb-5 mt-3'>
+
+                                    {isLoadingForm == true ? (
+                                        <>
+                                            <div className="text-center">
+                                                <div className="spinner-border" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button type='button' className='btn btn-primary col-lg-4 col-md-4 col-sm-10' onClick={() => {
+                                                setViewNurseIndex(false)
+
+                                            }
+
+
+                                            }>
+                                                Close
+                                            </button>
+                                        </>
+                                    )}
                                 </div>
                             </section>
 
@@ -302,7 +667,7 @@ function Management() {
                         </div>
                         <div className='profile_avi_box'>
                             <div className='profile_avi'>
-                                <img src={profile} alt='' />
+                                <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt='avatar' />
                             </div>
                             <div className='profile_name'>
                                 <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
@@ -311,6 +676,201 @@ function Management() {
                         </div>
                     </div>
                     <div className='doctors_container_content'>
+                        <div className='patient_search_box nurse_search_box'>
+                            <div className='search_box  m-auto '  >
+
+                                <form action=''>
+                                    <input
+                                        className="col-md-5 p-3"
+                                        type='text' onSubmit={searchNurse}
+                                        onChange={(e) => {
+                                            setSearchNurseData({
+                                                ...searchNurseData, first_name: e.target.value
+                                            })
+
+
+                                        }}
+                                        onKeyUpCapture={() => {
+                                            searchNurse()
+                                        }}
+                                        onClick={
+                                            () => {
+                                                searchNurse()
+                                            }
+                                        }
+
+                                        placeholder='Search Nurse' />
+                                    <button type='button'
+
+                                        onClick={
+                                            () => {
+                                                searchNurse()
+                                            }
+                                        }
+                                        className='p-3'>Search</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div className='appointment_table nurse_table mt-5' >
+                            <div className='appointment_list'>
+                                <div className='left'>
+                                    <p> Nurse Details</p>
+                                </div>
+                                {/* <div className='right mt-1'>
+                                    <button className='btn btn-secondary'>
+                                        Assign ward
+                                    </button>
+                                </div> */}
+                            </div>
+                            <div className='appointment_table_holder' >
+                                <table className='table-responsive' >
+                                    <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Name</th>
+                                            <th>ID</th>
+
+                                            <th>Department</th>
+
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {
+                                            nurses?.length == 0 ? ("loading...") :
+                                                searchNurseData?.first_name == "" ?
+
+                                                    (nurses?.map((nurses, i) => (
+
+                                                        <tr key={i}>
+                                                            <td>{i + 1}</td>
+                                                            <td className='nurse_name'> <img className='user-icon rounded-circle' src={`${baseUrl}/${nurses?.avatar}`} alt="" />  {nurses?.first_name} {nurses?.last_name}</td>
+                                                            <td> {nurses?._id}</td>
+
+                                                            <td clas>{nurses?.department?.name}</td>
+
+
+
+
+                                                            <td className='text-decoration-underline'
+
+
+                                                            >
+
+
+                                                                <div className="dropdown">
+                                                                    <Link className="btn bg-white border-0 dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <AiOutlineEllipsis />
+                                                                    </Link>
+
+                                                                    <ul className="dropdown-menu">
+                                                                        <li
+                                                                            onClick={() => {
+
+                                                                                setViewNurse(true)
+                                                                                handlegetNurseAddInfo(nurses?._id)
+                                                                                setViewNurseIndex(i)
+                                                                                console.log(additionalNurseDetail)
+
+
+                                                                            }}
+                                                                        ><Link className="dropdown-item" >view</Link></li>
+                                                                        <li
+                                                                            onClick={() => {
+                                                                                setShowEdit(true)
+                                                                                handlegetNurseAddInfo(nurses?._id)
+                                                                                setViewNurseIndex(i)
+                                                                                console.log(additionalNurseDetail)
+                                                                            }}
+
+                                                                        ><Link className="dropdown-item" >Edit </Link></li>
+
+                                                                    </ul>
+                                                                </div>
+
+
+
+                                                            </td>
+                                                        </tr>
+                                                    ))) :
+
+                                                    foundNurse?.length == 0 ? (
+                                                        <tr>
+                                                            <td>
+
+                                                            </td>
+                                                            <td>
+
+                                                            </td>
+                                                            <td className='table_loader '>
+                                                                <div className="text-center">
+                                                                    <div className="spinner-border" role="status">
+                                                                        <span className="visually-hidden">Loading...</span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+
+
+                                                    ) : foundNurse?.map((nurses, i) => (
+
+                                                        <tr key={i}>
+                                                            <td>{i + 1}</td>
+                                                            <td className='nurse_name'> <img className='user-icon rounded-circle' src={`${baseUrl}/${nurses?.avatar}`} alt="" />  {nurses?.first_name} {nurses?.last_name}</td>
+                                                            <td> {nurses?._id}</td>
+
+                                                            <td >{nurses?.department?.name}</td>
+
+                                                            <td className='text-decoration-underline'
+
+
+                                                            >
+
+
+                                                                <div className="dropdown">
+                                                                    <Link className="btn bg-white border-0 dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <AiOutlineEllipsis />
+                                                                    </Link>
+
+                                                                    <ul className="dropdown-menu">
+                                                                        <li
+                                                                            onClick={() => {
+
+                                                                                setViewFoundNurse(true)
+                                                                                handlegetNurseAddInfo(nurses?._id)
+                                                                                setViewFoundNurseIndex(i)
+
+
+                                                                            }}
+                                                                        ><Link className="dropdown-item" >view</Link></li>
+                                                                        <li
+                                                                            onClick={() => {
+                                                                                handlegetNurseAddInfo(nurses?._id)
+                                                                                setShowEdit(true)
+                                                                            }}
+
+                                                                        ><Link className="dropdown-item" >Edit </Link></li>
+
+                                                                    </ul>
+                                                                </div>
+
+
+
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                        }
+
+
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
 
                         <div className='appointment_table' >
                             <div className='appointment_list'>
@@ -326,6 +886,10 @@ function Management() {
                                     </button>
                                 </div>
                             </div>
+
+
+
+
                             <div className='appointment_table_holder' style={{ overflowX: "scroll" }}>
                                 <table className='table-responsive' >
                                     <thead>

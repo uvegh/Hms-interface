@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { HmsContext } from "../../context/HmsContext";
 import { TiTimes } from "react-icons/ti";
+import SpinnerLoader from "../SpinnerLoader";
 function DashboardNurse() {
     const baseUrl = "https://gavohms.onrender.com";
     const {
@@ -79,9 +80,9 @@ function DashboardNurse() {
             return;
         }
 
-        let response = (axios.put(`${baseUrl}/consultation/${consultationId}`, {
+        let response = await (axios.put(`${baseUrl}/consultation/${consultationId}`, {
             nurse_seen: true, employees_id: consultant.employees_id,
-        })).data;
+        }));
 
         console.log(response);
         if (response?.code == "200") {
@@ -103,24 +104,7 @@ function DashboardNurse() {
     return (
         <>
             {isLoading && (
-                <div className="container-fluid overlay">
-                    <div className="loader m-auto">
-                        <div className="lds-spinner text-center m-auto">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                </div>
+                <SpinnerLoader />
             )}
 
             {viewConsultation && (
@@ -137,6 +121,9 @@ function DashboardNurse() {
                                     <TiTimes />{" "}
                                 </span>
                             </div>
+
+
+
                             <section className="row col-md-10 m-auto">
                                 <div className="col-md-6 col-lg-6 col-sm-10 m-auto mb-3">
                                     <label htmlFor="" className="">
@@ -361,7 +348,7 @@ function DashboardNurse() {
                                             </option>
                                         ) : (
                                             departments?.map((department, i) => (
-                                                <option value={department?._id} className="">
+                                                <option key={i} value={department?._id} className="">
 
                                                     {department?.name}
                                                 </option>
@@ -593,7 +580,7 @@ function DashboardNurse() {
                                         {consultationNurse?.length == 0
                                             ? "no consultation"
                                             : consultationNurse?.map((consultation, i) => (
-                                                <tr>
+                                                <tr key={i}>
                                                     <td>{i + 1}</td>
                                                     <td>
                                                         {consultation?.patient_id?.first_name}{" "}

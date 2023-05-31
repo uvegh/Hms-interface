@@ -6,14 +6,15 @@ import { TbPrescription, TbCalendarEvent } from 'react-icons/tb'
 import Calender from 'react-calendar'
 import Stethoscope from '../../img/stethoscope.svg'
 import profile from '../../img/pexels-photo-6.jpg'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 function ProfileNurse() {
-    const { currentEmpId, nurseObj } = useContext(HmsContext)
+    const { currentEmpId, nurseObj, setIsLoggedIn, baseUrl } = useContext(HmsContext)
     useEffect(() => {
         console.log(nurseObj);
     })
+    const navigate = useNavigate()
 
 
     return (
@@ -45,7 +46,12 @@ function ProfileNurse() {
                             <li className='sidebar_btn'>
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
-                            <li className='sidebar_btn'>
+                            <li className='sidebar_btn'
+                                onClick={() => {
+                                    navigate("/stafflogin");
+                                    setIsLoggedIn(false)
+                                }}
+                            >
                                 <div> Logout </div>
                             </li>
                         </ul>
@@ -58,11 +64,11 @@ function ProfileNurse() {
                         </div>
                         <div className='profile_avi_box'>
                             <div className='profile_avi'>
-                                <img src={profile} alt='' />
+                                <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt='avatar' />
                             </div>
                             <div className='profile_name'>
                                 <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
-                                <span className='profile_occupation'>Receptionist</span>
+                                <span className='profile_occupation'>Nurse</span>
                             </div>
                         </div>
                     </div>
@@ -75,46 +81,46 @@ function ProfileNurse() {
                         <div className="  found-patient-details  col-lg-12 col-md-10 m-auto mt-1 rounded p-5">
 
 
-                            <div className="row g-3 rounded border border-light p-3">
+                            <div className="row g-3 rounded border border-light p-3 profile-nurse">
                                 <div className="col-md-6">
                                     <label htmlFor='' className="form-label">NAME</label>
-                                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
+                                    <p className='bg-white rounded p-2 ' >{` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
                                 </div>
 
                                 <div className="col-md-6">
-                                    <label htmlFor='' className="form-label">EMAIL</label>
-                                    <p className='bg-white rounded p-2' >{nurseObj?.data?.emp_id?.email} </p>
+                                    <label htmlFor='' className="form-label ">EMAIL</label>
+                                    <p className='bg-white rounded p-2 email' >{currentEmpId?.email} </p>
                                 </div>
 
                                 <div className="col-md-6">
-                                    <label htmlFor='' className="form-label" style={{ textTransform: 'uppercase' }}>PHONE</label>
-                                    <p className='bg-white rounded p-2 ' >{nurseObj?.data?.emp_id?.phone}</p>
+                                    <label htmlFor='' className="form-label" >PHONE</label>
+                                    <p className='bg-white rounded p-2 ' >{currentEmpId?.phone}</p>
                                 </div>
 
                                 <div className="col-md-6">
                                     <label htmlFor='' className="form-label">GENDER</label>
-                                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{nurseObj?.data?.emp_id?.gender}</p>
+                                    <p className='bg-white rounded p-2 ' >{currentEmpId?.gender}</p>
                                 </div>
 
 
 
                                 <div className="col-md-6">
-                                    <label htmlFor='' className="form-label" style={{ textTransform: 'uppercase' }}>ROLE</label>
-                                    <p className='bg-white rounded p-2 '>{nurseObj?.data?.emp_id?.role}</p>
+                                    <label htmlFor='' className="form-label" >ROLE</label>
+                                    <p className='bg-white rounded p-2 '>{currentEmpId?.role}</p>
                                 </div>
 
                                 <div className="col-md-6" style={{ overflowX: "scroll" }}>
                                     <label htmlFor='' className="form-label">ADDRESS</label>
-                                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{nurseObj?.data?.emp_id?.address}</p>
+                                    <p className='bg-white rounded p-2 '>{currentEmpId?.address}</p>
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor='' className="form-label">DEPARTMENT</label>
-                                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{nurseObj?.data?.emp_id?.department?.name}</p>
+                                    <p className='bg-white rounded p-2 ' >{currentEmpId?.department?.name}</p>
                                 </div>
 
                                 <div className="col-md-6">
                                     <label htmlFor='' className="form-label">HEAD_OF_DEPARTMENT</label>
-                                    <p className='bg-white rounded p-2 '>{nurseObj?.data?.emp_id?.department?.head_of_dept}</p>
+                                    <p className='bg-white rounded p-2 '>{currentEmpId?.department?.head_of_dept}</p>
                                 </div>
 
 

@@ -25,8 +25,11 @@ function HmsProvider(props) {
   const [patientID, setPatientID] = useState({})
   const [avaialableConsultants, setAvaialableConsultants] = useState()
   const [avaialabeGeneralDoctors, setAvaialabeGeneralDoctors] = useState()
-
-
+  const [nurses, setNurses] = useState()
+  const [additionalNurseDetail, setAdditionalNurseDetail] = useState()
+  const [patientsInChargeOf, setPatientsInChargeOf] = useState()
+  const [wardsInChargeOf, setWardsInChargeOf] = useState()
+  const [wards, setWards] = useState()
 
 
   const handleGetDiagnosis = async () => {
@@ -70,10 +73,15 @@ function HmsProvider(props) {
 
   const handleGetNurseDetail = async () => {
     let response = (await axios.get(`${baseUrl}/nurse/${currentEmpId?.id}`))
-      .data;
-    // console.log(response);
+    console.log(currentEmpId?.id);
+    setPatientsInChargeOf(response?.data?.data?.patients_incharge_of)
+    setWardsInChargeOf(response?.data?.data?.ward_no)
+    console.log(response?.data?.data?.patients_incharge_of
+    );
     setNurseObj(response);
   };
+
+
 
   const handleGetConsultation = async () => {
     let response = (await axios.get(`${baseUrl}/consultation`)).data;
@@ -111,7 +119,7 @@ function HmsProvider(props) {
 
   const getAvaialbelConsultantByDepartment = async (deptId) => {
     let response = (await axios.get(`${baseUrl}/employee?role=doctor&department=${deptId}&status=available`)).data;
-    console.log(response.employees?.data);
+    //console.log(response.employees?.data);
     setAvaialableConsultants(response?.employees?.data)
 
 
@@ -119,16 +127,37 @@ function HmsProvider(props) {
 
   const getAvaialabeGeneralDoctors = async (deptId) => {
     let response = (await axios.get(`${baseUrl}/employee?role=doctor&department=647213929f4ee94640c242a7&status=available`)).data;
-    console.log(response.employees?.data);
+    //console.log(response.employees?.data);
     setAvaialabeGeneralDoctors(response?.employees?.data)
 
 
   }
+  const handleGetAllNurses = async () => {
+    let response = (await axios.get(`${baseUrl}/employee?role=nurse`)).data;
+    // console.log(response?.employees?.data);
+    setNurses(response?.employees?.data)
+  }
 
+  const handlegetNurseAddInfo = async (id) => {
+    let response = (await axios.get(`${baseUrl}/nurse/${id}`))
+      .data;
+    console.log(response?.data);
+    setAdditionalNurseDetail(response?.data);
+  }
+
+  const handleGetAllWards = async () => {
+    let response = (await axios.get(`${baseUrl}/ward`))
+      .data;
+    console.log(response?.data);
+    setWards(response?.data);
+
+  }
 
   useEffect(() => {
     handleGetDepartments()
-
+    handleGetAllNurses()
+    handleGetNurseDetail()
+    handleGetAllWards()
   }, [])
 
 
@@ -183,7 +212,14 @@ function HmsProvider(props) {
 
         getAvaialabeGeneralDoctors,
         appt,
-        handleGetConsultation
+        handleGetConsultation,
+        nurses,
+        additionalNurseDetail,
+        handlegetNurseAddInfo,
+        wardsInChargeOf,
+        patientsInChargeOf,
+        wardsInChargeOf,
+        wards
       }}
     >
 

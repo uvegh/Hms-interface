@@ -13,7 +13,7 @@ import { HmsContext } from '../../context/HmsContext'
 import Dp from './Dp'
 import Dd from './Dd'
 
-function PatientDashboard () {
+function PatientDashboard() {
   // const baseUrl = 'https://gavohms.onrender.com'
   const [hideDisplay, setHideDisplay] = useState('patient_search_box')
   const [cardId, setCardId] = useState('')
@@ -160,7 +160,7 @@ function PatientDashboard () {
               <div className='container_attr'>Cancelled</div>
               <div className='container_attr_icons'>
                 <div className='image_icons'>
-                  <MdFreeCancellation  className='cancel'/>
+                  <MdFreeCancellation className='cancel' />
                 </div>
                 <div className='content'>
                   <h3>03</h3>
