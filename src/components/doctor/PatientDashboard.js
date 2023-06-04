@@ -8,13 +8,18 @@ import { differenceInYears, intlFormat } from 'date-fns'
 import chart from '../../img/chart.svg'
 import urgent_attention from '../../img/emergency.svg'
 import consultation from '../../img/consultation.svg'
-import { MdFreeCancellation } from 'react-icons/md'
+import {
+  MdFreeCancellation,
+  MdEditDocument,
+  MdOutlineLocalPhone,
+  MdOutlineChatBubbleOutline
+} from 'react-icons/md'
 import { HmsContext } from '../../context/HmsContext'
 import Dp from './Dp'
 import Dd from './Dd'
 
 function PatientDashboard () {
-  // const baseUrl = 'https://gavohms.onrender.com'
+  const baseUrl = 'https://gavohms.onrender.com'
   const [hideDisplay, setHideDisplay] = useState('patient_search_box')
   const [cardId, setCardId] = useState('')
   const [patientFound, setPatientFound] = useState('jkjkj')
@@ -31,9 +36,7 @@ function PatientDashboard () {
       return
     }
     try {
-      const result = await axios.get(
-        `http://localhost:3001/patient?card_no=${cardId}`
-      )
+      const result = await axios.get(`${baseUrl}/patient?card_no=${cardId}`)
       // .get(`${baseUrl}/patient?card_no=${cardId}`)
       if (result.data.data.length !== 0) {
         setErrMsg('Records found')
@@ -160,7 +163,7 @@ function PatientDashboard () {
               <div className='container_attr'>Cancelled</div>
               <div className='container_attr_icons'>
                 <div className='image_icons'>
-                  <MdFreeCancellation  className='cancel'/>
+                  <MdFreeCancellation className='cancel' />
                 </div>
                 <div className='content'>
                   <h3>03</h3>
@@ -181,6 +184,219 @@ function PatientDashboard () {
               </div>
             </div>
           </section>
+          <section className='ongoing_appointment_box'>
+            <div className='appointments_needed_to_attend'>
+              <div className='appointment_day'>Today's Appointment</div>
+              <div className='appointment_box'>
+                <div className='appointees'>
+                  <div className='name_image_box'>
+                    <div className='image'>
+                      <img src={profile} alt='' />
+                    </div>
+                    <div className='details'>
+                      <p>Beth McCoy</p>
+                      <span>Scaling</span>
+                    </div>
+                  </div>
+                  <div className='status'>
+                    <button>On Going</button>
+                  </div>
+                </div>
+                <div className='appointees'>
+                  <div className='name_image_box'>
+                    <div className='image'>
+                      <img src={profile} alt='' />
+                    </div>
+                    <div className='details'>
+                      <p>Beth McCoy</p>
+                      <span>Scaling</span>
+                    </div>
+                  </div>
+                  <div className='status'>
+                    <button>12:00 Am</button>
+                  </div>
+                </div>
+                <div className='appointees'>
+                  <div className='name_image_box'>
+                    <div className='image'>
+                      <img src={profile} alt='' />
+                    </div>
+                    <div className='details'>
+                      <p>Beth McCoy</p>
+                      <span>Scaling</span>
+                    </div>
+                  </div>
+                  <div className='status'>
+                    <button>01:30 Pm</button>
+                  </div>
+                </div>
+                <div className='appointees'>
+                  <div className='name_image_box'>
+                    <div className='image'>
+                      <img src={profile} alt='' />
+                    </div>
+                    <div className='details'>
+                      <p>Beth McCoy</p>
+                      <span>Scaling</span>
+                    </div>
+                  </div>
+                  <div className='status'>
+                    <button>On Going</button>
+                  </div>
+                </div>
+                <div className='appointees'>
+                  <div className='name_image_box'>
+                    <div className='image'>
+                      <img src={profile} alt='' />
+                    </div>
+                    <div className='details'>
+                      <p>Beth McCoy</p>
+                      <span>Scaling</span>
+                    </div>
+                  </div>
+                  <div className='status'>
+                    <button>On Going</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='appointee_info'>
+              <div className='appointment_day'>next patient details</div>
+              <div className='clients_info'>
+                <div className='image_box'>
+                  <div className='image'>
+                    <img src={profile} alt='' />
+                  </div>
+                  <div className='details'>
+                    <p>Beth McCoy</p>
+                    <address>
+                      2234 Avondale Ave. Pasedena, Oklahoma 88608
+                    </address>
+                  </div>
+                </div>
+                <div className='patient_details'>
+                  <div className='info'>
+                    <h3>D.O.B</h3>
+                    <p>29 January 2009</p>
+                  </div>
+                  <div className='info'>
+                    <h3>Sex</h3>
+                    <p>29 January 2009</p>
+                  </div>
+                  <div className='info'>
+                    <h3>Weight</h3>
+                    <p>29 January 2009</p>
+                  </div>
+                  <div className='info'>
+                    <h3>Height</h3>
+                    <p>29 January 2009</p>
+                  </div>
+                  <div className='info'>
+                    <h3>Last Appointment</h3>
+                    <p>29 January 2009</p>
+                  </div>
+                  <div className='info'>
+                    <h3>Register Date</h3>
+                    <p>29 January 2009</p>
+                  </div>
+                </div>
+                <div className='symptoms'>
+                  <div className='sympt'>Hypertension</div>
+                  <div className='sympt'>Asthma</div>
+                  <div className='sympt'>Catarrh</div>
+                  <div className='sympt'>Catarrh</div>
+                  <div className='sympt'>Catarrh</div>
+                </div>
+                <div className='others'>
+                  <button className='btn'>
+                    <MdOutlineLocalPhone /> <span>310-140-1899</span>
+                  </button>
+                  <button className='btn'>
+                    <MdEditDocument /> <span>Documents</span>
+                  </button>
+                  <button className='btn'>
+                    <MdOutlineChatBubbleOutline /> <span>chat</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* <div className='appointments_needed_to_attend'>
+              <div className='appointment_day'> Appointment Request</div>
+              <div className='appointment_box'>
+                <div className='appointees'>
+                  <div className='name_image_box'>
+                    <div className='image'>
+                      <img src={profile} alt='' />
+                    </div>
+                    <div className='details'>
+                      <p>Beth McCoy</p>
+                      <span>Scaling</span>
+                    </div>
+                  </div>
+                  <div className='status'>
+                    <button>On Going</button>
+                  </div>
+                </div>
+                <div className='appointees'>
+                  <div className='name_image_box'>
+                    <div className='image'>
+                      <img src={profile} alt='' />
+                    </div>
+                    <div className='details'>
+                      <p>Beth McCoy</p>
+                      <span>Scaling</span>
+                    </div>
+                  </div>
+                  <div className='status'>
+                    <button>12:00 Am</button>
+                  </div>
+                </div>
+                <div className='appointees'>
+                  <div className='name_image_box'>
+                    <div className='image'>
+                      <img src={profile} alt='' />
+                    </div>
+                    <div className='details'>
+                      <p>Beth McCoy</p>
+                      <span>Scaling</span>
+                    </div>
+                  </div>
+                  <div className='status'>
+                    <button>01:30 Pm</button>
+                  </div>
+                </div>
+                <div className='appointees'>
+                  <div className='name_image_box'>
+                    <div className='image'>
+                      <img src={profile} alt='' />
+                    </div>
+                    <div className='details'>
+                      <p>Beth McCoy</p>
+                      <span>Scaling</span>
+                    </div>
+                  </div>
+                  <div className='status'>
+                    <button>On Going</button>
+                  </div>
+                </div>
+                <div className='appointees'>
+                  <div className='name_image_box'>
+                    <div className='image'>
+                      <img src={profile} alt='' />
+                    </div>
+                    <div className='details'>
+                      <p>Beth McCoy</p>
+                      <span>Scaling</span>
+                    </div>
+                  </div>
+                  <div className='status'>
+                    <button>On Going</button>
+                  </div>
+                </div>
+              </div>
+            </div> */}
+          </section>
+
           {/* to show if patient is found */}
           {patientFound.data &&
             patientFound.data.map(patient => {

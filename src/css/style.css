@@ -278,11 +278,12 @@ abbr {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5rem;
+  margin-bottom: 20px;
 }
 .doctor__dashboard .doctor_daily_info .segregated_section .segregated_container {
-  height: 200px;
-  border: 1px solid red;
+  height: 160px;
   border-radius: 5px;
+  box-shadow: 0 0 4px red;
 }
 .doctor__dashboard .doctor_daily_info .segregated_section .segregated_container .container_attr {
   text-align: center;
@@ -303,8 +304,8 @@ abbr {
 .doctor__dashboard .doctor_daily_info .segregated_section .segregated_container .container_attr_icons .image_icons {
   border: 10px solid #ffffff;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   display: grid;
   place-content: center;
   padding: 10px;
@@ -333,12 +334,217 @@ abbr {
   line-height: 18px;
   color: #526479;
 }
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px 10px;
+  height: 370px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend {
+  border-radius: 7px;
+  padding: 10px 0 0 5px;
+  height: inherit;
+  background-color: #ffffff;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_day {
+  color: #2b415c;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18px;
+  text-transform: capitalize;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_box {
+  margin: 10px 0;
+  padding: 10px;
+  overflow: hidden;
+  overflow-y: scroll;
+  max-height: 320px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_box::-webkit-scrollbar {
+  display: none;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_box .appointees {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #76baff;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_box .appointees .name_image_box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_box .appointees .name_image_box .image {
+  width: 65px;
+  height: 70px;
+  padding: 10px;
+  border-radius: 50%;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_box .appointees .name_image_box .image img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_box .appointees .name_image_box .details p,
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_box .appointees .name_image_box .details span {
+  margin: 0;
+  color: #2b415c;
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 400;
+  display: block;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_box .appointees .name_image_box .details span {
+  margin-top: 10px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointments_needed_to_attend .appointment_box .appointees .status button {
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(43, 65, 92, 0.6392156863);
+  border: none;
+  background-color: inherit;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info {
+  border-radius: 7px;
+  padding: 10px 0 0 5px;
+  height: inherit;
+  background-color: #ffffff;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .appointment_day {
+  color: #2b415c;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18px;
+  text-transform: capitalize;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .clients_info {
+  margin: 10px 0;
+  padding: 20px 10px 0 20px;
+  border-radius: 7px;
+  height: 330px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .image_box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .image_box .image {
+  width: 70px;
+  height: 70px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .image_box .image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .image_box .details {
+  width: 50%;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .image_box .details p {
+  margin: 0;
+  color: #2b415c;
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 600;
+  display: block;
+  flex-wrap: wrap;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .image_box .details address {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  font-weight: 400;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .patient_details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .patient_details .info h3,
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .patient_details .info p {
+  color: #2b415c;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .patient_details .info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 18px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .patient_details .info p {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .symptoms {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .symptoms .sympt {
+  line-height: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  background-color: #f3f1f1;
+  box-shadow: 0 0px 2px #e9e9e9;
+  padding: 5px 8px;
+  border-radius: 5px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .symptoms .sympt:first-child {
+  color: rgb(154, 135, 222);
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .symptoms .sympt:nth-child(2) {
+  color: red;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .symptoms .sympt:nth-child(3) {
+  color: green;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .symptoms .sympt:nth-child(4) {
+  color: goldenrod;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .symptoms .sympt:nth-child(5) {
+  color: #2b415c;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .others {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .others .btn {
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #2b415c;
+  border: 1px solid #2b415c;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: capitalize;
+}
+.doctor__dashboard .doctor_daily_info .ongoing_appointment_box .appointee_info .others .btn span {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+}
 .doctor__dashboard .doctor_daily_info .patient_search_box .search_box {
   display: flex;
   align-items: center;
   width: 560px;
   position: relative;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
+  margin-top: -15px;
 }
 .doctor__dashboard .doctor_daily_info .patient_search_box .search_box input {
   width: 560px;
