@@ -19,12 +19,13 @@ const Dp = ({ setShowPrescription, patientID }) => {
     notes: "",
     doctor_id: "",
     doctor_initials: "",
+    card_no:""
   });
 
   // const [allDrugs, setAllDrugs] = useState();
   const navigate = useNavigate();
   const [prescribedDrugs, setPrescribedDrugs] = useState([]);
-  console.log(prescribedDrugs)
+  // console.log(prescribedDrugs)
   const [filteredDrugs, setFilteredDrugs] = useState([]);
   const [searchDrug, setSearchDrug] = useState(false);
 
@@ -32,18 +33,19 @@ const Dp = ({ setShowPrescription, patientID }) => {
   const [frequency, setFrequency] = useState("");
   const [Duration, setDuration] = useState("")
   const [selectedDrug, setSelectedDrug] = useState({});
+  console.log(selectedDrug)
   const [patientInfo, setPatientInfo] = useState({});
   // console.log(patientInfo);
 
   const getFilteredDrug = async (e) => {
     let response = (await axios.get(`${testUrl}/drugs?name=${drug}`)).data;
-    console.log(response);
     let filterList = [];
     response.data.map((drug) =>
       filterList.push({
         id: drug?._id,
         drugName: drug?.name,
         strength: drug?.strength,
+        price:drug?.price
       })
     );
     setFilteredDrugs(filterList);
@@ -68,7 +70,8 @@ const Dp = ({ setShowPrescription, patientID }) => {
         name: selectedDrug?.drugName,
         strength: selectedDrug?.strength,
         frequency: frequency,
-        duration:Duration
+        duration:Duration,
+        price:selectedDrug?.price
       });
       setPrescribedDrugs(tempPrescribed);
     }
@@ -81,6 +84,7 @@ const Dp = ({ setShowPrescription, patientID }) => {
     e.preventDefault();
     prescription.patient_id = patientInfo._id;
     prescription.prescription = prescribedDrugs;
+    prescription.card_no = patientInfo.card_no
     try {
       axios
         .post("http://localhost:3001/prescription", prescription)
