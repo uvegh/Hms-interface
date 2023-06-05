@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 
-function Dashboard () {
+function Dashboard() {
   const {
     currentEmpId,
     handleGetDiagnosis,
@@ -26,7 +26,7 @@ function Dashboard () {
   useEffect(() => {
     handleGetDiagnosis()
     handleGetAppointment()
-    getPrescriptionsDeployed()
+    //getPrescriptionsDeployed()
   }, [])
 
   const handleRescheduleAppointment = async appointment => {

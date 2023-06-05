@@ -1,5 +1,8 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export const HmsContext = createContext();
 
@@ -31,6 +34,35 @@ function HmsProvider(props) {
   const [wardsInChargeOf, setWardsInChargeOf] = useState()
   const [wards, setWards] = useState()
 
+  const showLoggedInNotification = () => {
+    toast('Logged in!', {
+      position: toast.POSITION.TOP_RIGHT,
+      className: "loggedIn-notification",
+      theme: "colored",
+      autoClose: 2000,
+      hideProgressBar: true
+
+
+    })
+  }
+
+  const customAlertNotify = (info) => {
+    toast.success(info), {
+      position: toast.POSITION.TOP_RIGHT,
+      theme: "colored",
+      autoClose: 2000,
+      hideProgressBar: true
+    }
+  }
+
+  const customAlertWarning = (info) => {
+    toast.warn(info), {
+      position: toast.POSITION.TOP_RIGHT,
+      theme: "colored",
+      autoClose: 2000,
+      hideProgressBar: true
+    }
+  }
 
   const handleGetDiagnosis = async () => {
     let response = (await axios.get(`${baseUrl}/record`)).data;
@@ -219,7 +251,10 @@ function HmsProvider(props) {
         wardsInChargeOf,
         patientsInChargeOf,
         wardsInChargeOf,
-        wards
+        wards,
+        showLoggedInNotification,
+        customAlertNotify,
+        customAlertWarning
       }}
     >
 

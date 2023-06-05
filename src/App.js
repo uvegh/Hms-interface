@@ -62,7 +62,6 @@ export default function App() {
                 element={<ResetPasswordPatient />}
               />
 
-
               <Route path="/doctor" element={<DoctorLayout />}>
                 <Route
                   path="dashboard"

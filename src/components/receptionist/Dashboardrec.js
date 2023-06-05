@@ -2,17 +2,20 @@ import profile from '../../img/pexels-photo-6.jpg'
 import greater_than_icon from '../../img/greater-than.svg'
 import { Link } from 'react-router-dom'
 import Stethoscope from '../../img/stethoscope.svg'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { HmsContext } from '../../context/HmsContext'
 import { TiTimes } from 'react-icons/ti'
 import axios from 'axios'
 import { AiFillPhone } from 'react-icons/ai'
+import { ToastContainer } from 'react-toastify'
+
+
 
 
 
 function DashboardRec() {
   const baseUrl = "https://gavohms.onrender.com"
-  const { currentEmpId } = useContext(HmsContext)
+  const { currentEmpId, showLoggedInNotification, customAlertNotify, customAlertWarning } = useContext(HmsContext)
   const [addPatient, setAddPatient] = useState(false)
   const [isLoading, setIsloading] = useState(false);
   const [addedPatient, setAddedPatient] = useState({})
@@ -167,11 +170,29 @@ function DashboardRec() {
 
       }))).data
       console.log(response);
+      if (response?.code == "200") {
+        setFoundPatientIsShown(false)
+
+        setTimeout(() => {
+          customAlertNotify("Consultation added")
+        }, 1000)
+        customAlertNotify("Consultation added")
+        return
+      }
+      setFoundPatientIsShown(false)
+      setTimeout(() => {
+        customAlertWarning("failed to add consultation")
+      }, 1000)
+
     }
   }
 
+  useEffect(() => {
+    showLoggedInNotification()
+  }, [])
   return (
     <>
+      <ToastContainer />
 
       {isLoading && (
         <div className="container-fluid overlay">
@@ -704,7 +725,7 @@ function DashboardRec() {
               {/* Search box for patient */}
               <div className='search_box position-absolute m-auto ' style={{ left: "44%" }} >
 
-                <form action=''>
+                <form onSubmit={handleGetPatient} >
                   <input type='text'
                     onChange={(e) => {
                       setPatientCardNo(e.target.value

@@ -2132,11 +2132,15 @@ select {
   content: ">>";
 }
 
+.profile-nurse {
+  box-shadow: 0.5em 0.5em 0.5em #CCCCCC;
+}
 .profile-nurse p {
-  min-height: 2.4rem;
-  padding: 0.2rem;
-  text-transform: uppercase;
-  border: 0.2px solid rgb(180, 174, 174) !important;
+  font-weight: 400;
+  text-transform: capitalize;
+  padding-bottom: 0.8em;
+  min-height: 2.5em;
+  border-bottom: 0.2em solid #E1DCDC;
 }
 .profile-nurse .email {
   text-transform: lowercase !important;
@@ -2201,7 +2205,10 @@ select {
 }
 
 .user_view_icon {
-  width: 6rem;
+  min-width: 6rem;
+  min-height: 6rem;
+  max-width: 6.2rem;
+  max-height: 6.2rem;
   border-radius: 50%;
   border: 1px solid #E1DCDC;
 }
@@ -2233,6 +2240,72 @@ select {
 }
 .ward-select ::selection {
   background-color: #E1DCDC;
+}
+
+.assign-patient {
+  margin: auto;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.assign-patient thead {
+  background-color: #2B415C !important;
+  border-radius: 5px;
+  text-align: left;
+  border-radius: 0.5em;
+  text-transform: capitalize;
+  color: #ffffff;
+}
+.assign-patient th {
+  border: 1px solid #2B415C;
+}
+.assign-patient tbody {
+  color: #2B415C;
+  text-transform: capitalize;
+}
+.assign-patient tbody > tr:nth-child(even) {
+  background-color: #e9e9e9;
+}
+.assign-patient .delete {
+  border: none;
+  color: red;
+  text-align: center;
+}
+.assign-patient .card_no {
+  width: 10em !important;
+}
+
+.assign-ward {
+  min-width: 10em !important;
+  text-transform: capitalize;
+}
+
+.loggedin-notification {
+  background: #b7c6da !important;
+  color: #3b5779;
+  border-radius: 1em 0em 0em 1em;
+}
+
+.notification-user-icon {
+  width: 4rem;
+}
+
+.edit-profile-dropdown {
+  color: #2B415C;
+}
+.edit-profile-dropdown ul > :nth-child(2) {
+  background-color: #D9D9D9;
+}
+.edit-profile-dropdown .new-photo {
+  background-color: #D9D9D9 !important;
+}
+.edit-profile-dropdown img {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.live-video video {
+  margin: auto;
+  max-height: 50vh;
 }
 
 .notFound-container {

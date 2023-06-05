@@ -8,10 +8,10 @@ function ResetPassword() {
   const [isLoading, setIsloading] = useState(false)
   const [validate, setValidate] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
-  const { currentEmpId,setCurrentEmpId } = useContext(HmsContext)
+  const { currentEmpId, setCurrentEmpId } = useContext(HmsContext)
   const [match, setMatch] = useState(true)
   // setCurrentEmpId("i323232")
-console.log("employee id reset psswd",currentEmpId);
+  console.log("employee id reset psswd", currentEmpId);
   const [loginData, setLoginData] = useState({
     password1: "",
     password2: ""
@@ -34,22 +34,22 @@ console.log("employee id reset psswd",currentEmpId);
       return
     }
 
-    
+
     if (loginData.password1 === loginData.password2) {
       setIsloading(false)
       setMatch(true)
       setfinalPsswd(loginData.password2)
 
 
-      let  response = (await (axios.put(`${baseUrl}/employee/${currentEmpId?.data?._id}/pwd`, finalPsswd)).catch((err) => {
-          console.log(err)
-          setIsloading(false)
-          setErrorMessage("failed to login")
-        }))
-      
-     
+      let response = (await (axios.put(`${baseUrl}/employee/${currentEmpId?.data?._id}/pwd`, finalPsswd)).catch((err) => {
+        console.log(err)
+        setIsloading(false)
+        setErrorMessage("failed to login")
+      }))
 
-      
+
+
+
       if (response?.status == "200") {
         setIsloading(false)
         setValidate(false)
@@ -68,19 +68,19 @@ console.log("employee id reset psswd",currentEmpId);
         setErrorMessage("failed to reset password")
       }
 
-      
+
 
     }
     else {
       setMatch(false)
-setIsloading(false)
- setErrorMessage("")
+      setIsloading(false)
+      setErrorMessage("")
     }
 
 
   }
 
- 
+
 
   return (
     <>
@@ -143,7 +143,7 @@ setIsloading(false)
               </div>
               {/* {validate == true && !loginData.password ? (<p className='text-danger'>*empty</p>) : (null)} */}
               {match === false ? (<p className='text-danger'>passwords do not match </p>) : (null)}
-{errorMessage}
+              {errorMessage}
             </div>
 
           </div>
