@@ -18,7 +18,8 @@ function Patient() {
         handleGetNurseDetail,
         handleGetConsultation,
         patientsInChargeOf,
-        profileObj } = useContext(HmsContext)
+        profileObj,
+        reload } = useContext(HmsContext)
     console.log(patientsInChargeOf);
     const [patientDetails, setPatientDetails] = useState()
 
@@ -116,6 +117,7 @@ function Patient() {
 
         handleGetNurseDetail()
         handleGetConsultation()
+        reload()
     }, [foundPatient?.vitals?.weight, patientVitals])
     return (
         <>
@@ -759,8 +761,8 @@ function Patient() {
 
                                                 <tr>
                                                     <td>1</td>
-                                                    <td> {!foundPatient?.first_name && foundPatient?.last_name ? ("") : `${foundPatient?.first_name} ${foundPatient?.last_name}`} {foundPatient?.last_name} </td>
-                                                    <td>{`# ${foundPatient?.card_no}`}</td>
+                                                    <td> {!foundPatient?.first_name || foundPatient?.last_name ? ("") : `${foundPatient?.first_name} ${foundPatient?.last_name}`} {foundPatient?.last_name} </td>
+                                                    <td>{!foundPatient?.card_no ? ("") : `# ${foundPatient?.card_no}`}</td>
 
 
                                                     <td>{!foundPatient?.vitals?.blood_pressure ? ("N/A") : foundPatient?.vitals?.blood_pressure}</td>

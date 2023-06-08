@@ -19,12 +19,16 @@ function BedAllotment() {
 
         wards,
         profileObj,
-        setIsLoggedIn
+        setIsLoggedIn,
+        reload
         //showLoggedInNotification
 
     } = useContext(HmsContext);
 
     console.log(wards)
+    useEffect(() => {
+        reload()
+    })
 
     return (
         <>

@@ -28,7 +28,7 @@ function SingleWard() {
     const {
         currentEmpId,
         handleGetNurseDetail,
-
+        reload,
         wards,
         bedsInWard,
         profileObj,
@@ -138,7 +138,7 @@ function SingleWard() {
     useEffect(() => {
         handleGetSingleWard()
         HandleGetAllBeds(id)
-
+        reload()
     }, [ward, bedsInWard])
     return (
         <>

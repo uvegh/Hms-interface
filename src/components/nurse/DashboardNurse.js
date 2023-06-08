@@ -32,7 +32,8 @@ function DashboardNurse() {
 
         isLoggedIn,
         profileObj,
-        setIsLoggedIn
+        setIsLoggedIn,
+        reload
         //showLoggedInNotification
 
     } = useContext(HmsContext);
@@ -148,7 +149,7 @@ function DashboardNurse() {
         if (isLoggedIn == true) {
             showLoggedInNotification()
         }
-
+        reload()
     }, [])
 
 

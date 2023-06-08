@@ -26,7 +26,8 @@ function Management() {
         wards,
         profileObj,
         customAlertNotify,
-        setIsLoggedIn } = useContext(HmsContext)
+        setIsLoggedIn,
+        reload } = useContext(HmsContext)
     const [showEdit, setShowEdit] = useState(false)
     const [assignNurse, setAssignNurse] = useState(false)
     const [foundNurse, setFoundNurse] = useState()
@@ -257,6 +258,7 @@ function Management() {
     useEffect(() => {
         // console.log(currentEmpId)
         // console.log(nurseObj)
+        reload()
         handleGetNurseDetail()
         handleGetConsultation()
         handleGetAllDoctors()
