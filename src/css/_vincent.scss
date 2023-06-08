@@ -375,7 +375,7 @@ select {
 .loggedin-notification {
 
 
-  background: #b7c6da !important;
+
 
   color: #3b5779;
   border-radius: 1em 0em 0em 1em;
@@ -406,11 +406,102 @@ select {
 }
 
 .live-video {
-  video {
-    margin: auto;
-    max-height: 50vh;
+
+  margin: auto;
+  max-height: 50vh;
+  left: 50%
+}
+
+.bed-allotment {
+  h5 {
+    color: $loginBlue;
   }
 
+  .ward {
+    color: rgba(255, 255, 255, 1);
+    border-radius: 1em;
+
+    text-align: center;
+    min-height: 30rem;
+    background-color: $wardBg;
+
+    .name {
+      text-transform: capitalize;
+    }
+
+    .ward_details {
+      text-align: left;
+      text-transform: capitalize;
+      font-weight: 400;
+      padding-left: 0.5em;
+      min-height: 50%;
+      line-height: 0.8em;
+
+    }
+
+    .ward-icon {
+      text-align: center;
+      font-size: 3em;
+      width: 2em;
+      border: #4d6b91;
+      margin: auto;
+      color: $loginBlue;
+    }
+
+
+  }
+}
+
+.ward {
+  .bed_icon {
+    width: 110.5rem;
+    background: rgba(255, 255, 255, 1);
+    filter: invert(100);
+  }
+
+  .bed-btns {
+    margin: auto;
+    margin-top: 2em;
+
+    font-size: large;
+    padding-inline: 2px;
+
+    button {
+      padding: 0px;
+      color: #FFFFFF;
+      border-radius: 0.3em;
+      background-color: $wardBg;
+      border: 0.87px solid #FFFFFF;
+    }
+
+  }
+
+}
+
+.ward-upt {
+  min-height: 22rem !important;
+}
+
+.current-tab {
+  a {
+    color: $loginBlue
+  }
+
+  span {
+    color: rgba(173, 216, 220, 1);
+  }
+
+}
+
+.single-bed {
+  color: #ffffff;
+  background-color: $wardBg;
+
+  input {
+    border-radius: 0.3em;
+    min-height: 1.5em;
+    border: none
+  }
 }
 
 // .nurse_search_box {

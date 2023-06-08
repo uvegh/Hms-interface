@@ -24,7 +24,9 @@ function Management() {
         additionalNurseDetail,
         handlegetNurseAddInfo,
         wards,
-        customAlertNotify } = useContext(HmsContext)
+        profileObj,
+        customAlertNotify,
+        setIsLoggedIn } = useContext(HmsContext)
     const [showEdit, setShowEdit] = useState(false)
     const [assignNurse, setAssignNurse] = useState(false)
     const [foundNurse, setFoundNurse] = useState()
@@ -314,7 +316,7 @@ function Management() {
                                     <ul className='list-group'>
                                         {
                                             additionalNurseDetail?.patients_incharge_of?.length == 0 || !additionalNurseDetail?.patients_incharge_of ? (<ul>
-                                                <li className='list-group-item'>None</li>
+                                                <li className='list-group-item'>N/A</li>
                                             </ul>) :
                                                 additionalNurseDetail?.patients_incharge_of.map((patient) => (
                                                     <li className='list-group-item'>#{patient?.card_no} {patient?.first_name} {patient?.last_name}</li>
@@ -331,7 +333,7 @@ function Management() {
                                     <ul className='list-group'>
                                         {
                                             additionalNurseDetail?.data?.ward_no?.length == 0 || !additionalNurseDetail?.data?.ward_no ? (<ul>
-                                                <li className='list-group-item'>None</li>
+                                                <li className='list-group-item'>N/A</li>
                                             </ul>) :
                                                 additionalNurseDetail?.data?.ward_no?.map((ward) => (
                                                     <li className='list-group-item'>{ward?.name} {ward?.type} </li>
@@ -363,12 +365,6 @@ function Management() {
                 </div>
             )
             }
-
-
-
-
-
-
 
             {viewFoundNurse && (
 
@@ -415,7 +411,7 @@ function Management() {
                                     <ul className='list-group'>
                                         {
                                             additionalNurseDetail?.patients_incharge_of?.length == 0 || !additionalNurseDetail?.patients_incharge_of ? (<ul>
-                                                <li className='list-group-item'>None</li>
+                                                <li className='list-group-item'>N/A</li>
                                             </ul>) :
                                                 additionalNurseDetail?.patients_incharge_of.map((patient) => (
                                                     <li className='list-group-item'>#{patient?.card_no} {patient?.first_name} {patient?.last_name}</li>
@@ -432,7 +428,7 @@ function Management() {
                                     <ul className='list-group'>
                                         {
                                             additionalNurseDetail?.data?.ward_no?.length == 0 || !additionalNurseDetail?.data?.ward_no ? (<ul>
-                                                <li className='list-group-item'>None</li>
+                                                <li className='list-group-item'>N/A</li>
                                             </ul>) :
                                                 additionalNurseDetail?.data?.ward_no?.map((ward) => (
                                                     <li className='list-group-item'>{ward?.name} {ward?.type} </li>
@@ -563,7 +559,7 @@ function Management() {
 
                                                     type="text" placeholder='enter card no' /></td>
 
-                                                <td>{!foundPatient?.first_name && !foundPatient?.last_name || patientCardNo == "" ? ("none") : `${foundPatient?.first_name} ${foundPatient?.last_name}`}
+                                                <td>{!foundPatient?.first_name && !foundPatient?.last_name || patientCardNo == "" ? ("N/A") : `${foundPatient?.first_name} ${foundPatient?.last_name}`}
                                                 </td>
                                                 <td> </td>
                                                 <td> <button className='btn btn-secondary rounded-0 border-1 '
@@ -640,7 +636,7 @@ function Management() {
                                                 </select>
                                                 </td>
 
-                                                <td>{!foundPatient?.first_name && !foundPatient?.last_name || patientCardNo == "" ? ("none") : `${foundPatient?.first_name} ${foundPatient?.last_name}`}
+                                                <td>{!foundPatient?.first_name && !foundPatient?.last_name || patientCardNo == "" ? ("N/A") : `${foundPatient?.first_name} ${foundPatient?.last_name}`}
                                                 </td>
                                                 <td> </td>
                                                 <td> <button className='btn btn-secondary rounded-0 border-1 '
@@ -855,23 +851,29 @@ function Management() {
                                 </h2>
                             </div>
                         </div>
-                        <ul className='sidebar_link_btns'>
-                            <li className='sidebar_btn active'>
-
+                        <ul className="sidebar_link_btns">
+                            <li className="sidebar_btn active">
                                 <Link to="/nurse/dashboard"> Dashboard </Link>
-
                             </li>
-                            <li className='sidebar_btn'>
+                            <li className="sidebar_btn">
                                 <Link to="/nurse/patient"> Patients </Link>
                             </li>
+                            <li className="sidebar_btn">
+                                <Link to="/nurse/bedAllotment"> Wards </Link>
+                            </li>
 
-                            <li className='sidebar_btn'>
+                            <li className="sidebar_btn">
                                 <Link to="/nurse/management"> Management </Link>
                             </li>
-                            <li className='sidebar_btn'>
+                            <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
-                            <li className='sidebar_btn'>
+                            <li className='sidebar_btn'
+                                onClick={() => {
+                                    navigate("/stafflogin");
+                                    setIsLoggedIn(false)
+                                }}
+                            >
                                 <div> Logout </div>
                             </li>
                         </ul>
@@ -884,7 +886,7 @@ function Management() {
                         </div>
                         <div className='profile_avi_box'>
                             <div className='profile_avi'>
-                                <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt='avatar' />
+                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt='avatar' />
                             </div>
                             <div className='profile_name'>
                                 <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>

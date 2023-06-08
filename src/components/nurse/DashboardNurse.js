@@ -23,14 +23,16 @@ function DashboardNurse() {
         nurseObj,
         handleGetConsultation,
         handleGetAllDoctors,
-        doctors,
+        patientsInChargeOf,
+        wardsInChargeOf,
         consultationNurse,
         departments,
         getAvaialbelConsultantByDepartment,
         avaialableConsultants,
-        patientsInChargeOf,
-        wardsInChargeOf,
-        isLoggedIn
+
+        isLoggedIn,
+        profileObj,
+        setIsLoggedIn
         //showLoggedInNotification
 
     } = useContext(HmsContext);
@@ -110,8 +112,8 @@ function DashboardNurse() {
     }
     const showLoggedInNotification = () => {
         toast.info(`Welcome ${currentEmpId?.first_name}
-         you have ${patientsInChargeOf?.length}  new patients and
-         ${wardsInChargeOf?.length} new ward under your care
+         you have ${!patientsInChargeOf?.length ? ("0") : patientsInChargeOf?.length}  new patients and
+         ${wardsInChargeOf?.length ? ("0") : wardsInChargeOf?.length} new ward under your care
          
          assigned under your care.
         
@@ -219,7 +221,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.weight
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.weight}
                                         </p>
                                     )}
@@ -249,7 +251,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.blood_pressure
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.blood_pressure}
                                         </p>
                                     )}
@@ -280,7 +282,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.temperature
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.temperature}
                                         </p>
                                     )}
@@ -310,7 +312,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.heart_rate
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.heart_rate}
                                         </p>
                                     )}
@@ -340,7 +342,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.respiratory_rate
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.respiratory_rate}
                                         </p>
                                     )}
@@ -370,7 +372,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.height
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.height}
                                         </p>
                                     )}
@@ -393,7 +395,7 @@ function DashboardNurse() {
                                     >
                                         <option value="" className="select-department"> Select Department </option>
                                         {!departments ? (
-                                            <option value="">none</option>
+                                            <option value="">N/A</option>
                                         ) : departments.length == 0 ? (
                                             <option className="text-center" value="">
                                                 Not available
@@ -424,7 +426,7 @@ function DashboardNurse() {
                                     >
                                         <option value=""> select Doctor </option>
                                         {!avaialableConsultants ? (
-                                            <option value="">none</option>
+                                            <option value="">N/A</option>
                                         ) : avaialableConsultants.length == 0 ? (
                                             <option className="text-center" value="">
                                                 Loading...
@@ -565,6 +567,9 @@ function DashboardNurse() {
                             <li className="sidebar_btn">
                                 <Link to="/nurse/patient"> Patients </Link>
                             </li>
+                            <li className="sidebar_btn">
+                                <Link to="/nurse/bedAllotment"> Wards </Link>
+                            </li>
 
                             <li className="sidebar_btn">
                                 <Link to="/nurse/management"> Management </Link>
@@ -572,7 +577,12 @@ function DashboardNurse() {
                             <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
-                            <li className="sidebar_btn">
+                            <li className='sidebar_btn'
+                                onClick={() => {
+                                    navigate("/stafflogin");
+                                    setIsLoggedIn(false)
+                                }}
+                            >
                                 <div> Logout </div>
                             </li>
                         </ul>
@@ -586,7 +596,7 @@ function DashboardNurse() {
                         </div>
                         <div className="profile_avi_box">
                             <div className="profile_avi">
-                                <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt="" />
+                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt="" />
                             </div>
                             <div className="profile_name">
                                 <p className="profile_name">
@@ -612,13 +622,13 @@ function DashboardNurse() {
                                 <FiUser className="icons" />
                                 <p className="counts">
 
-                                    {nurseObj?.data?.patients_incharge_of?.length}
+                                    {patientsInChargeOf?.length}
                                 </p>
                                 <p>Patients Assigned</p>
                             </div>
                             <div className="tab">
                                 <BsFillHouseAddFill className="icons" />
-                                <p className="counts">{nurseObj?.data?.ward_no?.length}</p>
+                                <p className="counts">{wardsInChargeOf?.length}</p>
                                 <p>Ward Assigned</p>
                             </div>
                             <div className="tab">
@@ -675,20 +685,20 @@ function DashboardNurse() {
                                                     <td>#{consultation?.patient_id?.card_no}</td>
                                                     <td>
                                                         {!consultation?.patient_id?.vitals?.blood_pressure
-                                                            ? "none"
+                                                            ? "N/A"
                                                             : consultation?.patient_id?.vitals
                                                                 ?.blood_pressure}{" "}
                                                     </td>
                                                     <td>
                                                         {!consultation?.patient_id?.vitals?.weight
-                                                            ? "none"
+                                                            ? "N/A"
                                                             : consultation?.patient_id?.vitals?.weight}{" "}
                                                     </td>
 
                                                     <td>
                                                         {!consultation?.physician?.first_name ||
                                                             !consultation?.physician?.last_name
-                                                            ? "none"
+                                                            ? "N/A"
                                                             : `${consultation?.physician?.first_name} ${consultation?.physician?.last_name} `}
 
                                                     </td>

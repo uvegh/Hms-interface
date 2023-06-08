@@ -2280,7 +2280,6 @@ select {
 }
 
 .loggedin-notification {
-  background: #b7c6da !important;
   color: #3b5779;
   border-radius: 1em 0em 0em 1em;
 }
@@ -2303,9 +2302,80 @@ select {
   height: 1.2em;
 }
 
-.live-video video {
+.live-video {
   margin: auto;
   max-height: 50vh;
+  left: 50%;
+}
+
+.bed-allotment h5 {
+  color: #2B415C;
+}
+.bed-allotment .ward {
+  color: rgb(255, 255, 255);
+  border-radius: 1em;
+  text-align: center;
+  min-height: 30rem;
+  background-color: rgb(43, 65, 92);
+}
+.bed-allotment .ward .name {
+  text-transform: capitalize;
+}
+.bed-allotment .ward .ward_details {
+  text-align: left;
+  text-transform: capitalize;
+  font-weight: 400;
+  padding-left: 0.5em;
+  min-height: 50%;
+  line-height: 0.8em;
+}
+.bed-allotment .ward .ward-icon {
+  text-align: center;
+  font-size: 3em;
+  width: 2em;
+  border: #4d6b91;
+  margin: auto;
+  color: #2B415C;
+}
+
+.ward .bed_icon {
+  width: 110.5rem;
+  background: rgb(255, 255, 255);
+  filter: invert(100);
+}
+.ward .bed-btns {
+  margin: auto;
+  margin-top: 2em;
+  font-size: large;
+  padding-inline: 2px;
+}
+.ward .bed-btns button {
+  padding: 0px;
+  color: #FFFFFF;
+  border-radius: 0.3em;
+  background-color: rgb(43, 65, 92);
+  border: 0.87px solid #FFFFFF;
+}
+
+.ward-upt {
+  min-height: 22rem !important;
+}
+
+.current-tab a {
+  color: #2B415C;
+}
+.current-tab span {
+  color: rgb(173, 216, 220);
+}
+
+.single-bed {
+  color: #ffffff;
+  background-color: rgb(43, 65, 92);
+}
+.single-bed input {
+  border-radius: 0.3em;
+  min-height: 1.5em;
+  border: none;
 }
 
 .notFound-container {

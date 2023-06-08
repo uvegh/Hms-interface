@@ -16,7 +16,15 @@ import { ToastContainer } from 'react-toastify'
 import { TiTimes } from 'react-icons/ti'
 import Webcam from 'react-webcam'
 function ProfileNurse() {
-    const { currentEmpId, nurseObj, setIsLoggedIn, customAlertNotify, customAlertWarning } = useContext(HmsContext)
+    const { currentEmpId,
+        nurseObj,
+        setIsLoggedIn,
+        customAlertNotify,
+        customAlertWarning,
+        setCurrentEmpId,
+        reload,
+        profileObj,
+        removePfp } = useContext(HmsContext)
     const baseUrl = "https://gavohms.onrender.com"
 
     const [isLoading, setIsloading] = useState(false);
@@ -26,6 +34,7 @@ function ProfileNurse() {
     const [viewFullPfp, setViewFullPfp] = useState(false)
     const [liveSelfie, setLiveSelfie] = useState(false)
     const [viewphoto, setViewPhoto] = useState(false)
+
     const navigate = useNavigate()
     const [loginData, setLoginData] = useState({
         emailOrPhone: currentEmpId?.email,
@@ -160,16 +169,34 @@ function ProfileNurse() {
         ctx.drawImage(video, 0, 0, photo.width, photo.height)//pass  video tag through ref and x,y height and width coordinates
 
     }
-    useEffect(() => {
-
-        //console.log(baseUrl);
-    }, [vidRef])
 
     const cancelImg = () => {
         let photo = photoRef.current
         let ctx = photo.getContext('2d')
         ctx.clearRect(0, 0, photo.width, photo.height)//clear current photo
     }
+
+
+
+
+    useEffect(() => {
+
+        reload()
+        //console.log(baseUrl);
+    }, [profileObj])
+
+
+
+    const webcamStyle = {
+        width: '100%',
+        maxWidth: '500px',
+        borderRadius: '46%',
+        height: '100%',
+
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+        marginLeft: '35%',
+        textAlign: 'center'
+    };
 
     return (
         <>
@@ -218,16 +245,38 @@ function ProfileNurse() {
                         </div> */}
                         <div>
                             {
+                                imageSrc == null ? (
+                                    <>
+                                        <section className='live-video'>
+                                            <Webcam className=''
+                                                audio={false}
+                                                ref={webcamRef}
+                                                style={webcamStyle}
 
+                                            /> <br />
+                                            <div className='text-center'>
+                                                <button className='rounded btn btn-primary border-0 p-3' onClick={capture}><FiCamera /></button>
+                                            </div>
+                                        </section>
+                                    </>
+                                ) : (null)
                             }
-                            <Webcam className='text-center'
-                                audio={false}
-                                ref={webcamRef}
 
-                            />
-                            <button className='rounded btn btn-primary' onClick={capture}><FiCamera /></button>
-                            {imageSrc && (
-                                <img src={imageSrc} alt="Captured" />
+
+                            {imageSrc && (<>
+                                <div className="m-auto text-center mt-2">
+                                    <img src={imageSrc} alt="Captured" /> <br />
+                                    <div className="m-auto text-center mt-2">
+                                        <button className='col-1 btn btn-primary bg-white border-2 text-dark '
+                                            onClick={() => {
+                                                setImageSrc(null)
+                                            }}
+                                        >Retake </button>
+                                        <button className='btn btn-primary border-0 col-1'>Use </button>
+                                    </div>
+                                </div>
+                            </>
+
                             )}
                         </div>
                     </div>
@@ -271,18 +320,21 @@ function ProfileNurse() {
                                 </h2>
                             </div>
                         </div>
-                        <ul className='sidebar_link_btns'>
-                            <li className='sidebar_btn active'>
-
+                        <ul className="sidebar_link_btns">
+                            <li className="sidebar_btn active">
                                 <Link to="/nurse/dashboard"> Dashboard </Link>
-
                             </li>
-                            {/* <li className='sidebar_btn'>
-                                <Link to="/doctor/patient"> Patients </Link>
-                            </li> */}
+                            <li className="sidebar_btn">
+                                <Link to="/nurse/patient"> Patients </Link>
+                            </li>
+                            <li className="sidebar_btn">
+                                <Link to="/nurse/bedAllotment"> Wards </Link>
+                            </li>
 
-
-                            <li className='sidebar_btn'>
+                            <li className="sidebar_btn">
+                                <Link to="/nurse/management"> Management </Link>
+                            </li>
+                            <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
                             <li className='sidebar_btn'
@@ -303,7 +355,7 @@ function ProfileNurse() {
                         </div>
                         <div className='profile_avi_box'>
                             <div className='profile_avi'>
-                                <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt='avatar' />
+                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt='avatar' />
                             </div>
                             <div className='profile_name'>
                                 <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
@@ -326,7 +378,7 @@ function ProfileNurse() {
                                             setViewFullPfp(true)
                                         }}
 
-                                        className='user_view_icon border-1' src={`${baseUrl}/${currentEmpId?.avatar}`} alt="avatar" />
+                                        className='user_view_icon border-1' src={`${baseUrl}/${profileObj?.avatar}`} alt="avatar" />
 
                                     <div className="dropdown align-bottom pt-5">
                                         <Link className="btn bg-white border-0   fs-4 text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -358,7 +410,9 @@ function ProfileNurse() {
 
                                             <li
                                                 onClick={() => { }}
-                                            ><Link className="dropdown-item " >
+                                            ><Link className="dropdown-item"
+                                                onClick={removePfp}
+                                            >
                                                     <img className='me-2' src={removePhoto} alt="" />
                                                     Remove picture</Link></li>
                                         </ul>

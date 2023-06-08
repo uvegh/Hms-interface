@@ -572,7 +572,7 @@ function DashboardRec() {
                   {/* if inpatient show ward */}
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">WARD/ROOM</label>
-                    {!foundPatient?.ward ? (<p className='bg-white rounded p-2'> NONE</p>) : (
+                    {!foundPatient?.ward ? (<p className='bg-white rounded p-2'> N/A</p>) : (
                       <p className=' '>{foundPatient?.ward} </p>
                     )}
                   </div>
@@ -582,14 +582,14 @@ function DashboardRec() {
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">NAME</label>
-                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.emergency_contact?.first_name} {!foundPatient?.emergency_contact?.last_name ? ("NONE") : foundPatient?.emergency_contact?.last_name} </p>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.emergency_contact?.first_name} {!foundPatient?.emergency_contact?.last_name ? ("N/A") : foundPatient?.emergency_contact?.last_name} </p>
                   </div>
 
                   {foundPatient?.emergency_contact?.phone?.length == "0" ? (<>
                     <div className="col-md-4">
                       <label htmlFor='' className="form-label ">PHONE</label>
                       <p className='bg-white rounded p-2 ' >
-                        NONE
+                        N/A
                       </p>
                     </div>
 
@@ -597,7 +597,7 @@ function DashboardRec() {
                     <div className="col-md-4">
                       <label htmlFor='' className="form-label ">PHONE{i + 1}</label>
                       <p className='bg-white rounded p-2 ' >
-                        {!phone ? ("none") : phone}
+                        {!phone ? ("N/A") : phone}
                       </p>
                     </div>
                   ))}
@@ -605,7 +605,7 @@ function DashboardRec() {
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">EMAIL</label>
-                    <p className='bg-white rounded p-2 '>{foundPatient?.emergency_contact?.email ? (foundPatient?.emergency_contact?.email) : ("NONE")}</p>
+                    <p className='bg-white rounded p-2 '>{foundPatient?.emergency_contact?.email ? (foundPatient?.emergency_contact?.email) : ("N/A")}</p>
                   </div>
 
 
