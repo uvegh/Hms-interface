@@ -784,7 +784,6 @@ function Patient() {
 
 
 
-
             </section>
         </>
     )
