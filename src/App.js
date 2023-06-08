@@ -38,6 +38,8 @@ import Appointment from "./components/receptionist/Appointment";
 import Pharmacy from "./components/Pharmacy/Pharmacy";
 import ViewPatients from "./components/Pharmacy/ViewPatients";
 import Dispense from "./components/Pharmacy/Dispense";
+import BedAllotment from "./components/nurse/BedAllotment";
+import SingleWard from "./components/nurse/SingleWard";
 
 export default function App() {
   return (
@@ -61,7 +63,6 @@ export default function App() {
                 path="/resetpassword-patient"
                 element={<ResetPasswordPatient />}
               />
-
 
               <Route path="/doctor" element={<DoctorLayout />}>
                 <Route
@@ -101,6 +102,8 @@ export default function App() {
                 <Route path="patient" element={<Patient />} />
                 <Route path="profile" element={<ProfileNurse />} />
                 <Route path="management" element={<Management />} />
+                <Route path="bedAllotment" element={<BedAllotment />} />
+                <Route path="bedAllotment/:id" element={<SingleWard />} />
 
               </Route>
 

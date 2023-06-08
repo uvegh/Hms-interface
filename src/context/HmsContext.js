@@ -1,5 +1,8 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export const HmsContext = createContext();
 
@@ -30,7 +33,37 @@ function HmsProvider(props) {
   const [patientsInChargeOf, setPatientsInChargeOf] = useState()
   const [wardsInChargeOf, setWardsInChargeOf] = useState()
   const [wards, setWards] = useState()
+  const [profileObj, setProfileObj] = useState()
+  const [bedsInWard, setBedsInWard] = useState()
+  const showLoggedInNotification = () => {
+    toast('Logged in!', {
+      position: toast.POSITION.TOP_RIGHT,
+      className: "loggedIn-notification",
+      theme: "colored",
+      autoClose: 2000,
+      hideProgressBar: true
 
+
+    })
+  }
+
+  const customAlertNotify = (info) => {
+    toast.success(info), {
+      position: toast.POSITION.TOP_RIGHT,
+      theme: "colored",
+      autoClose: 2000,
+      hideProgressBar: true
+    }
+  }
+
+  const customAlertWarning = (info) => {
+    toast.warn(info), {
+      position: toast.POSITION.TOP_RIGHT,
+      theme: "colored",
+      autoClose: 2000,
+      hideProgressBar: true
+    }
+  }
 
   const handleGetDiagnosis = async () => {
     let response = (await axios.get(`${baseUrl}/record`)).data;
@@ -41,13 +74,13 @@ function HmsProvider(props) {
     });
 
     setDiagnosis(filterDiagnosis);
-    console.log(diagnosis);
+    //console.log(diagnosis);
   };
 
   const handleGetAppointment = async () => {
     let response = (await axios.get(`${baseUrl}/appointment`)).data;
     setAppt(response?.appointment)
-    console.log("appointment", response?.appointment);
+    //console.log("appointment", response?.appointment);
 
     let filterAppointment = response?.appointment.filter((doctor) => {
       return doctor?.appointment?.physician?.emp_id?._id == currentEmpId?._id;
@@ -73,11 +106,10 @@ function HmsProvider(props) {
 
   const handleGetNurseDetail = async () => {
     let response = (await axios.get(`${baseUrl}/nurse/${currentEmpId?.id}`))
-    console.log(currentEmpId?.id);
+    //console.log(currentEmpId?.id);
     setPatientsInChargeOf(response?.data?.data?.patients_incharge_of)
     setWardsInChargeOf(response?.data?.data?.ward_no)
-    console.log(response?.data?.data?.patients_incharge_of
-    );
+    // console.log(response?.data?.data?.patients_incharge_of);
     setNurseObj(response);
   };
 
@@ -141,23 +173,70 @@ function HmsProvider(props) {
   const handlegetNurseAddInfo = async (id) => {
     let response = (await axios.get(`${baseUrl}/nurse/${id}`))
       .data;
-    console.log(response?.data);
+    //console.log(response?.data);
     setAdditionalNurseDetail(response?.data);
   }
 
   const handleGetAllWards = async () => {
     let response = (await axios.get(`${baseUrl}/ward`))
       .data;
-    console.log(response?.data);
+    // console.log(response?.data);
     setWards(response?.data);
 
   }
+
+  const reload = async () => {
+    let response = await axios
+      .get(`${baseUrl}/employee/${currentEmpId?.id}`)
+
+      .catch((err) => {
+
+        //console.log(err);
+        // alert("failed to reload");
+
+      });
+
+    // console.log(response);
+    if (response?.status == "200") {
+
+
+      setIsLoggedIn(true)
+      //console.log(response?.data?.data)
+      setProfileObj(response?.data?.data);
+      return
+    }
+  }
+  const removePfp = async () => {
+    let response = await (axios.put(`${baseUrl}/employee/${currentEmpId?.id}`, {
+      avatar: "img/user.png"
+    }))
+    //console.log(response);
+    if (response?.status == "200") {
+      customAlertNotify("profile deleted")
+      reload()
+      return
+    }
+    customAlertWarning("failed to remove profile")
+  }
+  const HandleGetAllBeds = async (wardId) => {
+    let response = (await axios.get(`${baseUrl}/bed`)).data
+    //console.log(response?.data);
+
+    let filterByWard = response?.data?.filter((bed) => {
+      return bed?.ward_id?._id == wardId
+    })
+    // console.log(filterByWard);
+    setBedsInWard(filterByWard)
+  }
+
 
   useEffect(() => {
     handleGetDepartments()
     handleGetAllNurses()
     handleGetNurseDetail()
     handleGetAllWards()
+    reload()
+
   }, [])
 
 
@@ -216,10 +295,18 @@ function HmsProvider(props) {
         nurses,
         additionalNurseDetail,
         handlegetNurseAddInfo,
-        wardsInChargeOf,
+
         patientsInChargeOf,
         wardsInChargeOf,
-        wards
+        wards,
+        showLoggedInNotification,
+        customAlertNotify,
+        customAlertWarning,
+        reload,
+        profileObj,
+        removePfp,
+        HandleGetAllBeds,
+        bedsInWard
       }}
     >
 

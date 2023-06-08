@@ -10,13 +10,15 @@ import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 import { TiTimes } from 'react-icons/ti'
 import SpinnerLoader from '../SpinnerLoader'
+import { AiOutlineEllipsis } from 'react-icons/ai'
 function Patient() {
     const baseUrl = "https://gavohms.onrender.com"
     const { currentEmpId,
         nurseObj,
         handleGetNurseDetail,
         handleGetConsultation,
-        patientsInChargeOf } = useContext(HmsContext)
+        patientsInChargeOf,
+        profileObj } = useContext(HmsContext)
     console.log(patientsInChargeOf);
     const [patientDetails, setPatientDetails] = useState()
 
@@ -70,7 +72,7 @@ function Patient() {
         if (response) {
             setIsloading(false)
             setFoundPatient(response?.data[0])
-            setFoundPatientIsShown(true)
+
             console.log(foundPatient)
             return
         }
@@ -173,7 +175,7 @@ function Patient() {
                                     {/* if inpatient show ward */}
                                     <div className="col-md-4">
                                         <label htmlFor='' className="form-label">Ward/Room</label>
-                                        {!foundPatient?.ward ? (<p className='bg-white rounded p-2'> none</p>) : (
+                                        {!foundPatient?.ward ? (<p className='bg-white rounded p-2'> N/A</p>) : (
                                             <p className=' '>{foundPatient?.ward} </p>
                                         )}
                                     </div>
@@ -181,7 +183,7 @@ function Patient() {
 
                                     <div className="col-md-4">
                                         <label htmlFor='' className="form-label">Blood Group</label>
-                                        <p className='bg-white rounded p-2 '>{!foundPatient?.vitals?.blood_group ? ("none") : foundPatient?.vitals.blood_group}</p>
+                                        <p className='bg-white rounded p-2 '>{!foundPatient?.vitals?.blood_group ? ("N/A") : foundPatient?.vitals.blood_group}</p>
                                     </div>
                                     <h5 className="">Patients Vitals</h5>
                                     <div className="col-md-4 col-lg-4 col-sm-10 m-auto mb-3">
@@ -208,7 +210,7 @@ function Patient() {
                                             <div className='d-flex kg_ibs_btn'>
                                                 <p className='col-md-8' >
                                                     {!foundPatient?.vitals?.weight
-                                                        ? "none"
+                                                        ? "N/A"
                                                         : foundPatient?.vitals?.weight && weight == "" ? foundPatient?.vitals?.weight : weight}
                                                 </p> <select className='form-control'
                                                     onChange={(e) => {
@@ -260,7 +262,7 @@ function Patient() {
                                         ) : (
                                             <p>
                                                 {!foundPatient?.vitals?.blood_pressure
-                                                    ? "none"
+                                                    ? "N/A"
                                                     : foundPatient?.vitals?.blood_pressure}
                                             </p>
                                         )}
@@ -292,7 +294,7 @@ function Patient() {
                                         ) : (
                                             <p>
                                                 {!foundPatient?.temperature
-                                                    ? "none"
+                                                    ? "N/A"
                                                     : foundPatient?.temperature}
                                             </p>
                                         )}
@@ -323,7 +325,7 @@ function Patient() {
                                         ) : (
                                             <p>
                                                 {!foundPatient?.heart_rate
-                                                    ? "none"
+                                                    ? "N/A"
                                                     : foundPatient?.vitals?.heart_rate}
                                             </p>
                                         )}
@@ -354,7 +356,7 @@ function Patient() {
                                         ) : (
                                             <p>
                                                 {!foundPatient?.vitals?.respiratory_rate
-                                                    ? "none"
+                                                    ? "N/A"
                                                     : foundPatient?.vitals?.respiratory_rate}
                                             </p>
                                         )}
@@ -385,7 +387,7 @@ function Patient() {
                                         ) : (
                                             <p>
                                                 {!foundPatient?.vitals?.height
-                                                    ? "none"
+                                                    ? "N/A"
                                                     : foundPatient?.vitals?.height}
                                             </p>
                                         )}
@@ -492,7 +494,7 @@ function Patient() {
                                 </div>
                                 <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3">
                                     <label htmlFor="">Name</label>
-                                    <p className='bg-white p-2'> {!patientDetails?.first_name && !patientDetails?.last_name ? ("none") : `${patientDetails?.first_name} ${patientDetails?.last_name}`} </p>
+                                    <p className='bg-white p-2'> {!patientDetails?.first_name && !patientDetails?.last_name ? ("N/A") : `${patientDetails?.first_name} ${patientDetails?.last_name}`} </p>
                                 </div>
 
                                 <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3">
@@ -542,7 +544,7 @@ function Patient() {
                         <form className=" container  col-lg-11 col-md-10 m-auto mt-5 rounded  nurse-view ">
                             <div className="d-flex fs-3 col-12 justify-content-end">
                                 <span onClick={() => {
-                                    setviewPatient(false)
+                                    setViewPatient(false)
                                 }}> <TiTimes /> </span>
                             </div>
 
@@ -579,7 +581,7 @@ function Patient() {
                                     <ul className='list-group'>
                                         {
                                             additionalNurseDetail?.patients_incharge_of?.length == 0 || !additionalNurseDetail?.patients_incharge_of ? (<ul>
-                                                <li className='list-group-item'>none</li>
+                                                <li className='list-group-item'>N/A</li>
                                             </ul>) :
                                                 additionalNurseDetail?.patients_incharge_of.map((patient) => (
                                                     <li className='list-group-item'>#{patient?.card_no} {patient?.first_name} {patient?.last_name}</li>
@@ -596,7 +598,7 @@ function Patient() {
                                     <ul className='list-group'>
                                         {
                                             additionalNurseDetail?.data?.ward_no?.length == 0 || !additionalNurseDetail?.data?.ward_no ? (<ul>
-                                                <li className='list-group-item'>none</li>
+                                                <li className='list-group-item'>N/A</li>
                                             </ul>) :
                                                 additionalNurseDetail?.data?.ward_no?.map((ward) => (
                                                     <li className='list-group-item'>{ward?.name} {ward?.type} </li>
@@ -643,20 +645,29 @@ function Patient() {
                                 </h2>
                             </div>
                         </div>
-                        <ul className='sidebar_link_btns'>
-                            <li className='sidebar_btn active'>
-
+                        <ul className="sidebar_link_btns">
+                            <li className="sidebar_btn active">
                                 <Link to="/nurse/dashboard"> Dashboard </Link>
-
                             </li>
-                            <li className='sidebar_btn'>
+                            <li className="sidebar_btn">
                                 <Link to="/nurse/patient"> Patients </Link>
                             </li>
+                            <li className="sidebar_btn">
+                                <Link to="/nurse/bedAllotment"> Wards </Link>
+                            </li>
 
-                            <li className='sidebar_btn'>
+                            <li className="sidebar_btn">
+                                <Link to="/nurse/management"> Management </Link>
+                            </li>
+                            <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
-                            <li className='sidebar_btn'>
+                            <li className='sidebar_btn'
+                                onClick={() => {
+                                    navigate("/stafflogin");
+                                    setIsLoggedIn(false)
+                                }}
+                            >
                                 <div> Logout </div>
                             </li>
                         </ul>
@@ -670,7 +681,7 @@ function Patient() {
                         </div>
                         <div className='profile_avi_box'>
                             <div className='profile_avi'>
-                                <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt='' />
+                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt='' />
                             </div>
                             <div className='profile_name'>
                                 <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
@@ -714,7 +725,97 @@ function Patient() {
                             </div>
                         </div>
 
-                        {/* appointment table */}
+                        <div className='appointment_table'>
+                            <div className='appointment_list'>
+                                <div className='left'>
+                                    <p>Found Patient</p>
+                                </div>
+                                <div className='right'>
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div className='appointment_table_holder'  >
+                                <table className='table-responsive' >
+                                    <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Name</th>
+                                            <th>ID</th>
+
+
+                                            <th>BP </th>
+                                            <th>Weight</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+
+
+                                    <tbody>
+                                        {!foundPatient ?
+                                            (<p className='text-center'> Card number does not exist</p>)
+                                            : (
+
+
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td> {!foundPatient?.first_name && foundPatient?.last_name ? ("") : `${foundPatient?.first_name} ${foundPatient?.last_name}`} {foundPatient?.last_name} </td>
+                                                    <td>{`# ${foundPatient?.card_no}`}</td>
+
+
+                                                    <td>{!foundPatient?.vitals?.blood_pressure ? ("N/A") : foundPatient?.vitals?.blood_pressure}</td>
+                                                    <td> {!foundPatient?.vitals?.weight ? ("N/A") : foundPatient?.vitals?.weight}</td>
+                                                    <td className='text-decoration-underline'
+
+                                                    >
+
+
+
+                                                        <div className="dropdown">
+                                                            <Link className="btn bg-white border-0 " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <AiOutlineEllipsis />
+                                                            </Link>
+
+                                                            <ul className="dropdown-menu">
+                                                                <li
+                                                                    onClick={() => {
+
+
+                                                                        setFoundPatientIsShown(true)
+                                                                    }}
+                                                                ><Link className="dropdown-item" >View</Link>
+                                                                </li>
+
+                                                                <li
+                                                                    onClick={() => {
+
+
+                                                                        setFoundPatientIsShown(true)
+                                                                    }}
+                                                                ><Link className="dropdown-item" >View History</Link>
+                                                                </li>
+
+
+                                                            </ul>
+                                                        </div>
+
+
+                                                    </td>
+                                                </tr>
+
+                                            )}
+
+
+
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+
+                        {/* Assigned patientd table */}
                         <div className='appointment_table'>
                             <div className='appointment_list'>
                                 <div className='left'>
@@ -781,6 +882,8 @@ function Patient() {
                         </div>
                     </div>
                 </div>
+
+
 
 
 

@@ -22,7 +22,7 @@ function StaffLogin() {
     password: "",
   });
   const navigate = useNavigate();
-  const { staffGoogleObj, setStaffGoogleObj, setIsLoggedIn, setCurrentEmpId, currentEmpId } =
+  const { staffGoogleObj, setStaffGoogleObj, setIsLoggedIn, setCurrentEmpId, currentEmpId, showLoggedInNotification } =
     useContext(HmsContext);
   const handleLogin = async () => {
     setIsloading(true);
@@ -54,6 +54,8 @@ function StaffLogin() {
       //   emailOrPhone: '',
       //   password: ''
       // })
+      showLoggedInNotification()
+
       setErrorMessage("");
       setCurrentEmpId(response?.data?.data);
 

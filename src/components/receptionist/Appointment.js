@@ -37,7 +37,7 @@ function Appointment() {
         status: "booking",
         date: "",
         time: "",
-        notes: "none"
+        notes: "N/A"
     });
     const [doctorDetails, setDoctorDetails] = useState({
         first_name: "",
@@ -71,7 +71,7 @@ function Appointment() {
             {
                 card_no: foundPatient?._id,
                 physician: newAppointmentData.physician,
-                notes: "none",
+                notes: "N/A",
                 status: "booking",
                 date: newAppointmentData.date,
                 time: newAppointmentData.time
@@ -277,7 +277,7 @@ function Appointment() {
                                         {" "}
                                         {foundPatient?.first_name
                                             ? foundPatient?.first_name
-                                            : "none"}
+                                            : "N/A"}
                                     </p>
                                 </div>
 
@@ -287,7 +287,7 @@ function Appointment() {
                                     </label>
                                     <p className="bg-white ">
                                         {" "}
-                                        {foundPatient?.last_name ? foundPatient?.last_name : "none"}
+                                        {foundPatient?.last_name ? foundPatient?.last_name : "N/A"}
                                     </p>
                                 </div>
 
@@ -297,7 +297,7 @@ function Appointment() {
                                     </label>
                                     <p className="bg-white ">
                                         {" "}
-                                        {foundPatient?.gender ? foundPatient?.gender : "none"}
+                                        {foundPatient?.gender ? foundPatient?.gender : "N/A"}
                                     </p>
                                 </div>
 
@@ -328,7 +328,7 @@ function Appointment() {
 
                                             }}
                                         >
-                                            <option value="none"> select Doctor</option>
+                                            <option value="N/A"> select Doctor</option>
                                             {avaialabeGeneralDoctors?.length == 0
                                                 ? "loading.." : !avaialabeGeneralDoctors ? ("unavailable")
                                                     : avaialabeGeneralDoctors?.map((doctor, i) => (
