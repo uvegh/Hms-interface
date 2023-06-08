@@ -233,6 +233,11 @@ select {
   .nurse_view_details {
     text-align: left;
 
+    .assign_Patient_btn {
+      color: $loginBlue;
+      font-weight: 600;
+    }
+
     label {
       text-transform: capitalize;
     }
@@ -500,7 +505,8 @@ select {
   input {
     border-radius: 0.3em;
     min-height: 1.5em;
-    border: none
+    border: none;
+
   }
 }
 

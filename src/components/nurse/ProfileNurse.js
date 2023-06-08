@@ -421,7 +421,7 @@ function ProfileNurse() {
                                 </section>
 
 
-                                <p>#{currentEmpId?.id?.substring(0, 18)}/Nr </p>
+                                <p className='text-uppercase'>#{currentEmpId?.id?.substring(18, 24)}/Nr </p>
                             </div>
 
 

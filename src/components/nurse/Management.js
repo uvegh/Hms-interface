@@ -142,7 +142,7 @@ function Management() {
             setIsloadingForm(false)
         }
         else if (response?.msg == "Already exist") {
-            alert("Patient already assigned")
+            alert("ward already assigned")
             handlegetNurseAddInfo(nurseId)
             setIsloadingForm(false)
         }
@@ -381,7 +381,7 @@ function Management() {
                             <div className=" text-center mb-3">
                                 <img className='user_view_icon' src={` ${baseUrl}/${foundNurse[viewFoundNurseIndex]?.avatar}`} alt="" />
                                 <h6> {foundNurse[viewFoundNurseIndex]?.first_name} {foundNurse[viewFoundNurseIndex]?.last_name}  </h6>
-                                <p>#{foundNurse[viewFoundNurseIndex]?._id} </p>
+                                <p className='text-uppercase'>#{foundNurse[viewFoundNurseIndex]?._id.substring(18, 24)}/Nr </p>
                             </div>
 
                             <section className="row nurse_view_details m-auto col-lg-10 col-sm-12 col-md-10">
@@ -478,7 +478,7 @@ function Management() {
                                 <div className=" text-center mb-3">
                                     <img className='user_view_icon' src={` ${baseUrl}/${nurses[viewNurseIndex]?.avatar}`} alt="avatar" />
                                     <h6> {nurses[viewNurseIndex]?.first_name} {nurses[viewNurseIndex]?.last_name}  </h6>
-                                    <p>#{nurses[viewNurseIndex]?._id} </p>
+                                    <p className='text-uppercase'>#{nurses[viewNurseIndex]?._id.substring(18, 24)}/Nr </p>
                                 </div>
 
                                 <section className="row nurse_view_details m-auto col-lg-10 col-sm-12 col-md-10">
@@ -514,13 +514,25 @@ function Management() {
                                     </div>
 
                                     <section className='d-flex justify-content-between mb-2'>
-                                        <h4>Assign Patient</h4>
-                                        <button type='button' className='btn btn-primary rounded-0'
-                                            onClick={() => {
+                                        <h5>Assign Patient</h5>
 
-                                                setAddPatient(true)
-                                            }}
-                                        >+ Add</button>
+
+                                        {addPatient == true ? (
+
+                                            <button type='button' className='btn fs-5 assign_Patient_btn  rounded-0'
+                                                onClick={() => {
+
+                                                    setAddPatient(false)
+                                                }}
+                                            ><TiTimes /> </button>) : (
+
+                                            <button type='button' className='btn fs-5 assign_Patient_btn  rounded-0'
+                                                onClick={() => {
+
+                                                    setAddPatient(true)
+                                                }}
+                                            > +Add</button>
+                                        )}
                                     </section>
 
 
@@ -542,7 +554,7 @@ function Management() {
                                             {addPatient && (<tr>
 
                                                 <td> </td>
-                                                <td> <input className='form-control card_no'
+                                                <td> <input className='form-control border-0  card_no'
                                                     onChange={(e) => {
                                                         setPatientCardNo(e.target.value
                                                         )
@@ -562,7 +574,7 @@ function Management() {
                                                 <td>{!foundPatient?.first_name && !foundPatient?.last_name || patientCardNo == "" ? ("N/A") : `${foundPatient?.first_name} ${foundPatient?.last_name}`}
                                                 </td>
                                                 <td> </td>
-                                                <td> <button className='btn btn-secondary rounded-0 border-1 '
+                                                <td> <button className='btn assign_Patient_btn rounded-0 text-decoration-underline '
                                                     onClick={(e) => {
                                                         e.preventDefault()
                                                         handleAssignNursePatient(nurses[viewNurseIndex]?._id, foundPatient?._id)
@@ -602,13 +614,25 @@ function Management() {
                                     </table>
 
                                     <section className='d-flex justify-content-between mb-2 mt-4'>
-                                        <h4>Assign Ward</h4>
-                                        <button type='button' className='btn btn-primary rounded-0'
-                                            onClick={() => {
+                                        <h5>Assign Ward</h5>
+                                        {addWard == true ? (
 
-                                                setAddWard(true)
-                                            }}
-                                        >+ Add</button>
+                                            <button type='button' className='btn fs-5 assign_Patient_btn  rounded-0'
+                                                onClick={() => {
+
+                                                    setAddWard(false)
+                                                }}
+                                            ><TiTimes /> </button>) : (
+
+                                            <button type='button' className='btn fs-5 assign_Patient_btn  rounded-0'
+                                                onClick={() => {
+
+                                                    setAddWard(true)
+                                                }}
+                                            > +Add</button>
+                                        )}
+
+
                                     </section>
 
                                     <table className="table container col-lg-10 assign-patient">
@@ -622,7 +646,7 @@ function Management() {
                                             {addWard && (<tr>
 
                                                 <td> </td>
-                                                <td><select className='form-control assign-ward'
+                                                <td><select className='form-control border-0 bg-light assign-ward'
                                                     onChange={(e) => {
                                                         setWardNo(e.target.value)
                                                     }}
@@ -638,8 +662,8 @@ function Management() {
 
                                                 <td>{!foundPatient?.first_name && !foundPatient?.last_name || patientCardNo == "" ? ("N/A") : `${foundPatient?.first_name} ${foundPatient?.last_name}`}
                                                 </td>
-                                                <td> </td>
-                                                <td> <button className='btn btn-secondary rounded-0 border-1 '
+
+                                                <td> <button className='btn text-decoration-underline  assign_Patient_btn rounded-0  '
                                                     onClick={(e) => {
                                                         e.preventDefault()
                                                         handleAssignNurseWard(nurses[viewNurseIndex]?._id)
@@ -935,11 +959,7 @@ function Management() {
                                 <div className='left'>
                                     <p> Nurse Details</p>
                                 </div>
-                                {/* <div className='right mt-1'>
-                                    <button className='btn btn-secondary'>
-                                        Assign ward
-                                    </button>
-                                </div> */}
+
                             </div>
                             <div className='appointment_table_holder' >
                                 <table className='table-responsive' >
@@ -965,7 +985,7 @@ function Management() {
                                                         <tr key={i}>
                                                             <td>{i + 1}</td>
                                                             <td className='nurse_name'> <img className='user-icon rounded-circle' src={`${baseUrl}/${nurses?.avatar}`} alt="" />  {nurses?.first_name} {nurses?.last_name}</td>
-                                                            <td> {nurses?._id}</td>
+                                                            <td className='text-uppercase'> {nurses?._id.substring(18, 24)}/Nr</td>
 
                                                             <td >{nurses?.department?.name}</td>
 
@@ -979,7 +999,7 @@ function Management() {
 
 
                                                                 <div className="dropdown">
-                                                                    <Link className="btn bg-white border-0 dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <Link className="btn bg-white border-0 " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         <AiOutlineEllipsis />
                                                                     </Link>
 
@@ -1040,7 +1060,7 @@ function Management() {
                                                         <tr key={i}>
                                                             <td>{i + 1}</td>
                                                             <td className='nurse_name'> <img className='user-icon rounded-circle' src={`${baseUrl}/${nurses?.avatar}`} alt="" />  {nurses?.first_name} {nurses?.last_name}</td>
-                                                            <td> {nurses?._id}</td>
+                                                            <td className='text-uppercase'> {nurses?._id.substring(18, 24)}/Nr</td>
 
                                                             <td >{nurses?.department?.name}</td>
 
@@ -1051,7 +1071,7 @@ function Management() {
 
 
                                                                 <div className="dropdown">
-                                                                    <Link className="btn bg-white border-0 dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <Link className="btn bg-white border-0 " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         <AiOutlineEllipsis />
                                                                     </Link>
 

@@ -2232,6 +2232,10 @@ select {
 .nurse-view .nurse_view_details {
   text-align: left;
 }
+.nurse-view .nurse_view_details .assign_Patient_btn {
+  color: #2B415C;
+  font-weight: 600;
+}
 .nurse-view .nurse_view_details label {
   text-transform: capitalize;
 }

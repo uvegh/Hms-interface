@@ -12,6 +12,7 @@ import { HmsContext } from "../../context/HmsContext";
 import { TiTimes } from "react-icons/ti";
 import { Link, useParams } from "react-router-dom";
 import { format } from "date-fns";
+import SpinnerLoader from "../SpinnerLoader";
 
 function SingleWard() {
 
@@ -175,6 +176,7 @@ function SingleWard() {
                                             } alt="" />
                                         )
                                     }
+                                    <h3>Bed {bedsInWard[editIndex]?.bed_no}</h3>
                                 </section>
 
 
@@ -194,9 +196,9 @@ function SingleWard() {
     
 N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                                     }     </p>
-                                    <p>Patient ID
+                                    <p className="d-flex "><span>Patient ID</span>
 
-                                        <div className="col-md-5 ms-1 col-lg-4 "> <input
+                                        <div className="col-md-5 col-sm-10 ms-1 col-lg-4 "> <input
                                             className="form-control  "
                                             type='text' onSubmit={handleGetPatient}
                                             onChange={(e) => {
@@ -304,7 +306,7 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                     <div className="doctors_header">
 
                         <div className="present_section current-tab">
-                            <h3> <Link to="/nurse/bedAllotment" className="text-decoration-N/A">
+                            <h3> <Link to="/nurse/bedAllotment" className="text-decoration-none">
 
                                 Bed Allotment
                             </Link>  <span> <MdArrowForwardIos /> </span> <span>{ward?.name}</span></h3>
@@ -331,9 +333,10 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
 
                                 {
                                     bedsInWard?.length == 0 ? (<>
-                                        <div className="vh-100">
+                                        <SpinnerLoader />
+                                        {/* <div className="vh-100">
                                             <h3 className="m-auto text-center"> No Beds </h3>
-                                        </div>
+                                        </div> */}
 
                                     </>) :
                                         bedsInWard?.map((bed, i) => (
@@ -351,15 +354,15 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                                                             } alt="" />
                                                         )
                                                     }
-
+                                                    <h3 className="text-center">Bed {bed?.bed_no}</h3>
 
 
 
 
                                                     <h5 className="text-light name">{bed?.name}</h5>
                                                     <section className="ward_details    ps-4 fw-lighter fs-5 mt-5 mt-3">
-                                                        <p>Status: {bed?.status}</p>
-                                                        <p>Bed Number: {bed?.bed_no} </p>
+                                                        <p className="text-capitalize">Status: {bed?.status}</p>
+
                                                         <p>Bed Type: {bed?.type} </p>
 
 
