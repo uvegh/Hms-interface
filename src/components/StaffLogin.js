@@ -75,7 +75,10 @@ function StaffLogin() {
         navigate("/nurse/dashboard");
       }
       else if (response?.data?.data?.role == "pharmacist") {
-        navigate("/nurse/dashboard");
+        navigate("/pharmacy/dashboard");
+      }
+      else if (response?.data?.data?.role == "pharmacistAdmin") {
+        navigate("/pharmacy/dashboard");
       }
 
     } else {
