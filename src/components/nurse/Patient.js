@@ -14,7 +14,7 @@ import { AiOutlineEllipsis } from 'react-icons/ai'
 function Patient() {
     const baseUrl = "https://gavohms.onrender.com"
     const { currentEmpId,
-        nurseObj,
+        wardsInChargeOf,
         handleGetNurseDetail,
         handleGetConsultation,
         patientsInChargeOf,
@@ -45,6 +45,7 @@ function Patient() {
     const [patientCardNo, setPatientCardNo] = useState()
     const [foundPatientIsShown, setFoundPatientIsShown] = useState(false)
     const [isLoading, setIsloading] = useState(false);
+    const [viewPatientHistory, setViewPatientHistory] = useState(false)
     const [weight, setWeight] = useState("")
     const handleEditPatientVitals = async (id) => {
         console.log(patientVitals);
@@ -535,9 +536,6 @@ function Patient() {
             }
 
 
-
-
-
             {viewPatient && (
 
                 <div className="overlay">
@@ -634,6 +632,164 @@ function Patient() {
             }
 
 
+
+            {viewPatientHistory && (
+
+                <div className="overlay patient-history-overlay container-fluid">
+                    <div className="  view-patient-history">
+
+                        <section className="  bg-light col-lg-9 col-md-10 m-auto scrollhist rounded mt-5 ">
+                            <div className="d-flex fs-3 col-12 justify-content-end">
+                                <span onClick={() => {
+                                    setViewPatientHistory(false)
+                                }}> <TiTimes /> </span>
+                            </div>
+                            <h3 className='text-center'> </h3>
+
+                            <div className=" text-center mb-3 sticky-pfp">
+                                <img className='user_view_icon' src={`${baseUrl}/${foundPatient?.avatar}`} alt="" />
+                                <h5> {foundPatient?.first_name} {foundPatient?.last_name}  </h5>
+                                <p>#{foundPatient?.card_no} </p>
+                            </div>
+
+                            <section className="row  m-auto bg-white mb-3  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
+
+                                <h5 className='text-start mt-2 mb-2'>Monday 5th June, 2023</h5>
+                                <div className="col-md-4  m-auto mb-3">
+                                    <label htmlFor="" >Weight(kg)</label>
+                                    <p className=''></p>
+
+                                </div>
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Temperature</label>
+                                    <p className=''> </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Blood Pressure </label>
+                                    <p className=''> </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Heart Rate (bpm)</label>
+                                    <p className='border-bottom-0'> </p>
+                                </div>
+
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">     Respiratory Rate (bpm)</label>
+                                    <p className='border-bottom-0'> </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">  Pulse (bpm)</label>
+                                    <p className='border-bottom-0'> </p>
+                                </div>
+
+
+
+
+                            </section>
+
+                            <section className="row  m-auto bg-white mb-3  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
+
+                                <h5 className='text-start mt-2 mb-2'>Monday 5th June, 2023</h5>
+                                <div className="col-md-4  m-auto mb-3">
+                                    <label htmlFor="" >Weight(kg)</label>
+                                    <p className=''></p>
+
+                                </div>
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Temperature</label>
+                                    <p className=''> </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Blood Pressure </label>
+                                    <p className=''> </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Heart Rate (bpm)</label>
+                                    <p className='border-bottom-0'> </p>
+                                </div>
+
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">     Respiratory Rate (bpm)</label>
+                                    <p className='border-bottom-0'> </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">  Pulse (bpm)</label>
+                                    <p className='border-bottom-0'> </p>
+                                </div>
+
+
+
+
+                            </section>
+                            <section className="row  m-auto bg-white  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
+
+                                <h5 className='text-start mt-2 mb-2'>Monday 5th June, 2023</h5>
+                                <div className="col-md-4  m-auto mb-3">
+                                    <label htmlFor="" >Weight(kg)</label>
+                                    <p className=''></p>
+
+                                </div>
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Temperature</label>
+                                    <p className=''> </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Blood Pressure </label>
+                                    <p className=''> </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">Heart Rate (bpm)</label>
+                                    <p className='border-bottom-0'> </p>
+                                </div>
+
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">     Respiratory Rate (bpm)</label>
+                                    <p className='border-bottom-0'> </p>
+                                </div>
+
+                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                    <label htmlFor="">  Pulse (bpm)</label>
+                                    <p className='border-bottom-0'> </p>
+                                </div>
+
+
+
+
+                            </section>
+
+                            <div className='text-center  mt-3 pb-3'>
+                                <button type='button' className='btn btn-primary col-lg-4 col-md-4 col-sm-10' onClick={() => {
+
+                                    setViewPatientHistory(false)
+                                }
+
+
+                                }>
+                                    Close
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            )
+            }
+
+
+
+
+
+
             <section className='doctor__dashboard'>
                 <div className='doctor_sidebar'>
                     <div className='links_display_box'>
@@ -681,15 +837,7 @@ function Patient() {
                         <div className='present_section'>
                             <h2>Patients</h2>
                         </div>
-                        <div className='profile_avi_box'>
-                            <div className='profile_avi'>
-                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt='' />
-                            </div>
-                            <div className='profile_name'>
-                                <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
-                                <span className='profile_occupation'>Nurse</span>
-                            </div>
-                        </div>
+                      
                     </div>
                     <div className='doctors_container_content'>
 
@@ -741,8 +889,8 @@ function Patient() {
                                     <thead>
                                         <tr>
                                             <th>S/N</th>
-                                            <th>Name</th>
-                                            <th>ID</th>
+                                            <th>Patiennt Name</th>
+                                            <th> Pateint ID</th>
 
 
                                             <th>BP </th>
@@ -761,7 +909,7 @@ function Patient() {
 
                                                 <tr>
                                                     <td>1</td>
-                                                    <td> {!foundPatient?.first_name || foundPatient?.last_name ? ("") : `${foundPatient?.first_name} ${foundPatient?.last_name}`} {foundPatient?.last_name} </td>
+                                                    <td> {!foundPatient?.first_name || !foundPatient?.last_name ? ("") : `${foundPatient?.first_name} ${foundPatient?.last_name}`}  </td>
                                                     <td>{!foundPatient?.card_no ? ("") : `# ${foundPatient?.card_no}`}</td>
 
 
@@ -792,7 +940,7 @@ function Patient() {
                                                                     onClick={() => {
 
 
-                                                                        setFoundPatientIsShown(true)
+                                                                        setViewPatientHistory(true)
                                                                     }}
                                                                 ><Link className="dropdown-item" >View History</Link>
                                                                 </li>
@@ -832,8 +980,8 @@ function Patient() {
                                     <thead>
                                         <tr>
                                             <th>S/N</th>
-                                            <th>Name</th>
-                                            <th>ID</th>
+                                            <th>Pateint Name</th>
+                                            <th> Pateint ID</th>
                                             <th>Ward</th>
 
                                             <th>BP </th>
@@ -882,6 +1030,67 @@ function Patient() {
                                 </table>
                             </div>
                         </div>
+
+                        <div className='appointment_table'>
+                            <div className='appointment_list'>
+                                <div className='left'>
+                                    <p>Assigned Wards</p>
+                                </div>
+                                <div className='right'>
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div className='appointment_table_holder' style={{ overflowX: "scroll" }} >
+                                <table className='table-responsive' >
+                                    <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Ward Name</th>
+                                            <th> Ward Type</th>
+                                            <th>Duration</th>
+
+
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+
+
+                                    <tbody>
+                                        {!wardsInChargeOf ?
+                                            (<p> No Ward assigned</p>)
+                                            : wardsInChargeOf?.map((ward, i) => (
+
+
+                                                <tr>
+                                                    <td>{i + 1}</td>
+                                                    <td>{ward?.name}  </td>
+                                                    <td>{ward?.type}</td>
+                                                    <td>Ward </td>
+
+                                                    <td
+                                                        onClick={() => {
+
+                                                        }}
+                                                    >
+
+
+
+
+                                                    </td>
+                                                </tr>
+
+                                            ))}
+
+
+
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

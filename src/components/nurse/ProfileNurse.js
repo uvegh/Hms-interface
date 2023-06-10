@@ -353,15 +353,7 @@ function ProfileNurse() {
                         <div className='present_section'>
                             <h2>Profile</h2>
                         </div>
-                        <div className='profile_avi_box'>
-                            <div className='profile_avi'>
-                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt='avatar' />
-                            </div>
-                            <div className='profile_name'>
-                                <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
-                                <span className='profile_occupation'>Nurse</span>
-                            </div>
-                        </div>
+                        
                     </div>
 
 

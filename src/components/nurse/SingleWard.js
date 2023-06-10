@@ -157,9 +157,9 @@ function SingleWard() {
                 <div className="overlay">
                     <div className="container ">
 
-                        <section className=" container single-bed col-lg-6 col-md-10 m-auto mt-5 rounded  nurse-view ">
+                        <section className=" container single-bed col-lg-5 col-md-10 m-auto mt-5 rounded  nurse-view ">
                             <div className="d-flex fs-3 col-12 justify-content-end">
-                                <span onClick={() => {
+                                <span className="close-btn" onClick={() => {
                                     setEditMode(false)
                                 }}> <TiTimes /> </span>
                             </div>
@@ -169,10 +169,10 @@ function SingleWard() {
                                 <section className="text-center">
                                     {
                                         bedsInWard[editIndex]?.status == "OCCUPIED" ? (
-                                            <img className="bed-icon" src={
+                                            <img className="single-bed-icon" src={
                                                 bedOccupied} alt="" />
                                         ) : (
-                                            <img className="bed-icon" src={bedEmpty
+                                            <img className="single-bed-icon" src={bedEmpty
                                             } alt="" />
                                         )
                                     }
@@ -311,18 +311,7 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                                 Bed Allotment
                             </Link>  <span> <MdArrowForwardIos /> </span> <span>{ward?.name}</span></h3>
                         </div>
-                        <div className="profile_avi_box">
-                            <div className="profile_avi">
-                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt="" />
-                            </div>
-                            <div className="profile_name">
-                                <p className="profile_name">
 
-                                    {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`}{" "}
-                                </p>
-                                <span className="profile_occupation">{currentEmpId?.role}</span>
-                            </div>
-                        </div>
                     </div>
                     <h5>Bed Count :{!bedsInWard?.length ? ("0") : bedsInWard.length}</h5>
                     <br />
@@ -382,7 +371,7 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
 
                                                     </section>
                                                     <div className="text-center bed-btns pb-5 col-10  ">
-                                                        <button className="  border-light col-lg-6"
+                                                        <button className="me-1  border-light col-lg-6"
                                                             onClick={() => {
                                                                 setEditMode(true)
 
@@ -390,11 +379,11 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                                                             }}
 
                                                         >Edit</button>
-                                                        <button type="button" className=" border-light col-lg-6"
+                                                        <button type="button" className=" ms-1 border-light col-lg-6"
                                                             onClick={() => {
                                                                 handleSetAsVacant(bed?._id)
                                                             }}
-                                                        > set as Vacant</button>
+                                                        > Set as Vacant</button>
                                                     </div>
 
                                                 </div>

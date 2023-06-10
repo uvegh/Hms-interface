@@ -63,13 +63,19 @@ function StaffLogin() {
       if (response?.data?.data?.role == "doctor") {
         navigate("/doctor/dashboard");
       }
-      if (response?.data?.data?.role == "receptionist") {
+      else if (response?.data?.data?.role == "receptionist") {
         navigate("/receptionist/dashboard");
       }
-      if (response?.data?.data?.role == "nurse") {
+      else if (response?.data?.data?.role == "nurse") {
         navigate("/nurse/dashboard");
       }
 
+      else if (response?.data?.data?.role == "nurseAdmin") {
+        navigate("/nurse/dashboard");
+      }
+      else if (response?.data?.data?.role == "pharmacist") {
+        navigate("/nurse/dashboard");
+      }
 
     } else {
       setIsloading(false);

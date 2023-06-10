@@ -595,18 +595,7 @@ function DashboardNurse() {
                         <div className="present_section">
                             <h2>Dashboard</h2>
                         </div>
-                        <div className="profile_avi_box">
-                            <div className="profile_avi">
-                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt="" />
-                            </div>
-                            <div className="profile_name">
-                                <p className="profile_name">
 
-                                    {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`}{" "}
-                                </p>
-                                <span className="profile_occupation">{currentEmpId?.role}</span>
-                            </div>
-                        </div>
                     </div>
                     <div className="doctors_container_content">
                         <div className="doctors_info_wrap">
