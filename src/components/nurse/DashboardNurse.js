@@ -5,10 +5,16 @@ import { TbPrescription, TbCalendarEvent } from "react-icons/tb";
 import Calender from "react-calendar";
 import Stethoscope from "../../img/stethoscope.svg";
 import profile from "../../img/pexels-photo-6.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { HmsContext } from "../../context/HmsContext";
 import { TiTimes } from "react-icons/ti";
+import SpinnerLoader from "../SpinnerLoader";
+import { ToastContainer, toast } from "react-toastify";
+
+import 'react-toastify/dist/ReactToastify.css';
+
+import { useNotificationCenter } from 'react-toastify/addons/use-notification-center';
 function DashboardNurse() {
     const baseUrl = "https://gavohms.onrender.com";
     const {
@@ -17,12 +23,20 @@ function DashboardNurse() {
         nurseObj,
         handleGetConsultation,
         handleGetAllDoctors,
-        doctors,
+        patientsInChargeOf,
+        wardsInChargeOf,
         consultationNurse,
         departments,
         getAvaialbelConsultantByDepartment,
         avaialableConsultants,
+
+        isLoggedIn,
+        profileObj,
+        setIsLoggedIn
+        //showLoggedInNotification
+
     } = useContext(HmsContext);
+    const { notifications, clear, markAllAsRead, markAsRead } = useNotificationCenter()
     const [viewConsultation, setViewConsultation] = useState(false);
 
     const [patientVitals, setPatientVitals] = useState({
@@ -43,6 +57,9 @@ function DashboardNurse() {
     const [consultant, setConsultant] = useState({
         employees_id: "",
     });
+
+    const navigate = useNavigate()
+
     const handleUpdatePatientvitals = async (id) => {
         if (!patientVitals.blood_pressure || !patientVitals.weight) {
             setValidate(true);
@@ -79,18 +96,43 @@ function DashboardNurse() {
             return;
         }
 
-        let response = (axios.put(`${baseUrl}/consultation/${consultationId}`, {
+        let response = (await (axios.put(`${baseUrl}/consultation/${consultationId}`, {
             nurse_seen: true, employees_id: consultant.employees_id,
-        })).data;
+        }))).data;
 
-        console.log(response);
-        if (response?.code == "200") {
-            alert("pateint posted to doctor");
+        console.log(response?.data);
+        if (response?.data) {
+            alert("patient posted to doctor");
+            setViewConsultation(false)
             setIsloading(false);
             return;
         }
+        alert("something went wrong")
         setIsloading(false);
     }
+    const showLoggedInNotification = () => {
+        toast.info(`Welcome ${currentEmpId?.first_name}
+         you have ${!patientsInChargeOf?.length ? ("0") : patientsInChargeOf?.length}  new patients and
+         ${wardsInChargeOf?.length ? ("0") : wardsInChargeOf?.length} new ward under your care
+         
+         assigned under your care.
+        
+        ` , {
+            position: toast.POSITION.TOP_RIGHT,
+            draggable: true,
+
+            className: 'loggedin-notification'
+        })
+    }
+
+
+
+
+
+
+
+
+
 
     useEffect(() => {
         // console.log(currentEmpId)
@@ -98,29 +140,24 @@ function DashboardNurse() {
         handleGetNurseDetail();
         handleGetConsultation();
         handleGetAllDoctors();
+
     }, [consultationNurse]); //
+
+
+    useEffect(() => {
+        if (isLoggedIn == true) {
+            showLoggedInNotification()
+        }
+
+    }, [])
+
 
     return (
         <>
+
+
             {isLoading && (
-                <div className="container-fluid overlay">
-                    <div className="loader m-auto">
-                        <div className="lds-spinner text-center m-auto">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                </div>
+                <SpinnerLoader />
             )}
 
             {viewConsultation && (
@@ -133,10 +170,14 @@ function DashboardNurse() {
                                         setViewConsultation(false);
                                     }}
                                 >
-                                    {" "}
-                                    <TiTimes />{" "}
+
+
+                                    <TiTimes />
                                 </span>
                             </div>
+
+
+
                             <section className="row col-md-10 m-auto">
                                 <div className="col-md-6 col-lg-6 col-sm-10 m-auto mb-3">
                                     <label htmlFor="" className="">
@@ -180,7 +221,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.weight
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.weight}
                                         </p>
                                     )}
@@ -210,7 +251,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.blood_pressure
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.blood_pressure}
                                         </p>
                                     )}
@@ -241,7 +282,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.temperature
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.temperature}
                                         </p>
                                     )}
@@ -271,7 +312,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.heart_rate
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.heart_rate}
                                         </p>
                                     )}
@@ -301,7 +342,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.respiratory_rate
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.respiratory_rate}
                                         </p>
                                     )}
@@ -331,7 +372,7 @@ function DashboardNurse() {
                                     ) : (
                                         <p>
                                             {!patientConsultationDetails?.patient_id?.vitals?.height
-                                                ? "none"
+                                                ? "N/A"
                                                 : patientConsultationDetails?.patient_id?.vitals?.height}
                                         </p>
                                     )}
@@ -354,14 +395,14 @@ function DashboardNurse() {
                                     >
                                         <option value="" className="select-department"> Select Department </option>
                                         {!departments ? (
-                                            <option value="">none</option>
+                                            <option value="">N/A</option>
                                         ) : departments.length == 0 ? (
                                             <option className="text-center" value="">
                                                 Not available
                                             </option>
                                         ) : (
                                             departments?.map((department, i) => (
-                                                <option value={department?._id} className="">
+                                                <option key={i} value={department?._id} className="">
 
                                                     {department?.name}
                                                 </option>
@@ -385,7 +426,7 @@ function DashboardNurse() {
                                     >
                                         <option value=""> select Doctor </option>
                                         {!avaialableConsultants ? (
-                                            <option value="">none</option>
+                                            <option value="">N/A</option>
                                         ) : avaialableConsultants.length == 0 ? (
                                             <option className="text-center" value="">
                                                 Loading...
@@ -437,16 +478,38 @@ function DashboardNurse() {
                                     {
                                         editMode == false ? (
 
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary col-4  post m-auto "
-                                                onClick={() => {
-                                                    handleConsultationStatus(patientConsultationDetails?.id);
-                                                    console.log(patientConsultationDetails?._id)
-                                                }}
-                                            >
-                                                Post
-                                            </button>
+                                            isLoading == true ? (
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-primary col-4  post m-auto "
+
+                                                    onClick={() => {
+                                                        handleConsultationStatus(patientConsultationDetails?._id)
+                                                    }}
+
+                                                >
+                                                    <div className="spinner-border fs-6" role="status">
+                                                        <span className="visually-hidden">Loading...</span>
+                                                    </div>
+                                                </button>
+
+
+                                            ) : (
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-primary col-4  post m-auto "
+
+                                                    onClick={() => {
+                                                        handleConsultationStatus(patientConsultationDetails?._id)
+                                                    }}
+
+                                                >
+                                                    Post
+                                                </button>
+
+                                            )
+
+
                                         ) : (
 
 
@@ -477,6 +540,13 @@ function DashboardNurse() {
                 </div>
             )}
 
+            <ToastContainer
+                className="loggedin-notification"
+
+                autoClose={false}
+                theme="colored"
+                hideProgressBar={true}
+            />
             <section className="doctor__dashboard">
                 <div className="doctor_sidebar">
                     <div className="links_display_box">
@@ -497,6 +567,9 @@ function DashboardNurse() {
                             <li className="sidebar_btn">
                                 <Link to="/nurse/patient"> Patients </Link>
                             </li>
+                            <li className="sidebar_btn">
+                                <Link to="/nurse/bedAllotment"> Wards </Link>
+                            </li>
 
                             <li className="sidebar_btn">
                                 <Link to="/nurse/management"> Management </Link>
@@ -504,7 +577,12 @@ function DashboardNurse() {
                             <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
-                            <li className="sidebar_btn">
+                            <li className='sidebar_btn'
+                                onClick={() => {
+                                    navigate("/stafflogin");
+                                    setIsLoggedIn(false)
+                                }}
+                            >
                                 <div> Logout </div>
                             </li>
                         </ul>
@@ -512,16 +590,17 @@ function DashboardNurse() {
                 </div>
                 <div className="doctor_daily_info">
                     <div className="doctors_header">
+
                         <div className="present_section">
                             <h2>Dashboard</h2>
                         </div>
                         <div className="profile_avi_box">
                             <div className="profile_avi">
-                                <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt="" />
+                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt="" />
                             </div>
                             <div className="profile_name">
                                 <p className="profile_name">
-                                    {" "}
+
                                     {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`}{" "}
                                 </p>
                                 <span className="profile_occupation">{currentEmpId?.role}</span>
@@ -532,6 +611,7 @@ function DashboardNurse() {
                         <div className="doctors_info_wrap">
                             <div className="overview">
                                 <div>
+
                                     <h2>Activity Overview</h2>
                                 </div>
                                 <div className="week_select">
@@ -541,14 +621,14 @@ function DashboardNurse() {
                             <div className="tab ">
                                 <FiUser className="icons" />
                                 <p className="counts">
-                                    {" "}
-                                    {nurseObj?.data?.patients_incharge_of?.length}
+
+                                    {patientsInChargeOf?.length}
                                 </p>
                                 <p>Patients Assigned</p>
                             </div>
                             <div className="tab">
                                 <BsFillHouseAddFill className="icons" />
-                                <p className="counts">{nurseObj?.data?.ward_no?.length}</p>
+                                <p className="counts">{wardsInChargeOf?.length}</p>
                                 <p>Ward Assigned</p>
                             </div>
                             <div className="tab">
@@ -579,7 +659,9 @@ function DashboardNurse() {
                                 <table className="table-responsive">
                                     <thead>
                                         <tr>
-                                            <th>S/N</th>
+                                            <th>S/N
+
+                                            </th>
                                             <th>Name</th>
                                             <th>ID</th>
                                             <th>BP</th>
@@ -587,13 +669,14 @@ function DashboardNurse() {
 
                                             <th>Consultant </th>
                                             <th>Actions</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {consultationNurse?.length == 0
                                             ? "no consultation"
                                             : consultationNurse?.map((consultation, i) => (
-                                                <tr>
+                                                <tr key={i}>
                                                     <td>{i + 1}</td>
                                                     <td>
                                                         {consultation?.patient_id?.first_name}{" "}
@@ -602,43 +685,22 @@ function DashboardNurse() {
                                                     <td>#{consultation?.patient_id?.card_no}</td>
                                                     <td>
                                                         {!consultation?.patient_id?.vitals?.blood_pressure
-                                                            ? "none"
+                                                            ? "N/A"
                                                             : consultation?.patient_id?.vitals
                                                                 ?.blood_pressure}{" "}
                                                     </td>
                                                     <td>
                                                         {!consultation?.patient_id?.vitals?.weight
-                                                            ? "none"
+                                                            ? "N/A"
                                                             : consultation?.patient_id?.vitals?.weight}{" "}
                                                     </td>
 
                                                     <td>
                                                         {!consultation?.physician?.first_name ||
                                                             !consultation?.physician?.last_name
-                                                            ? "none"
+                                                            ? "N/A"
                                                             : `${consultation?.physician?.first_name} ${consultation?.physician?.last_name} `}
 
-                                                        {/* <select className="form-select form-select-sm col-12"  >
-
-                                                            <option value=""
-                                                                onChange={(e) => {
-                                                                    setConsultant({
-                                                                        ...consultant, employees_id: e.target.value
-                                                                    })
-                                                                }}
-                                                            >  consultant</option>
-                                                            {doctors?.length == 0 ? (<option value="">No consultant</option>) : doctors?.map((doctor) => (
-                                                                <option
-                                                                    onChange={(e) => {
-                                                                        setConsultant({
-                                                                            ...consultant, employees_id: e.target.value
-                                                                        })
-                                                                    }}
-                                                                    value={doctor?.emp_id?._id}>{doctor?.emp_id?.first_name} {doctor?.emp_id?.last_name}</option>
-                                                            ))}
-
-
-                                                        </select> */}
                                                     </td>
                                                     <td
                                                         className="text-decoration-underline"
@@ -648,37 +710,20 @@ function DashboardNurse() {
                                                         }}
                                                     >
                                                         view
-                                                        {/* {
-                                                            consultation?.payment_status == "notpaid" ? (
-                                                                <button style={{
-                                                                    backgoundColor
-                                                                        : "#2B415C"
-                                                                }}
-                                                                    onClick={() => {
-                                                                        alert("cannot edit or post patient without payment")
-                                                                    }}
-                                                                >Post</button>
-                                                            ) : (
 
-                                                                <button style={{
-                                                                    backgoundColor
-                                                                        : "#2B415C"
-                                                                }}
-                                                                    onClick={() => {
-                                                                        handleConsultationStatus(consultation?._id)
-                                                                    }}
-                                                                >Post</button>
-                                                            )
-                                                        } */}
                                                     </td>
+
+
                                                 </tr>
                                             ))}
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
                     </div>
                 </div>
+
             </section>
         </>
     );

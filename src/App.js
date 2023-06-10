@@ -41,6 +41,8 @@ import Dispense from "./components/Pharmacy/Dispense";
 import PharmacyAdmin from "./components/Pharmacy/PharmacyAdmin";
 import PharmacyLayout from "./components/Pharmacy/PharmacyLayout";
 import Drugs from "./components/Pharmacy/Drugs";
+import BedAllotment from "./components/nurse/BedAllotment";
+import SingleWard from "./components/nurse/SingleWard";
 
 export default function App() {
   return (
@@ -91,11 +93,6 @@ export default function App() {
                 <Route path="dispense" element={<Dispense />} />
                 <Route path="drugs" element={<Drugs/>}/>
               </Route>
-
-              {/* <Route path="/pharmacy" element={<Pharmacy/>}>
-                  <Route path="admin" element={<PharmacyAdmin/>}/>
-                </Route> */}
-
               <Route path="/viewPatient" element={<ViewPatients />} />
               <Route path="/dispense" element={<Dispense />} />
 
@@ -111,6 +108,8 @@ export default function App() {
                 <Route path="patient" element={<Patient />} />
                 <Route path="profile" element={<ProfileNurse />} />
                 <Route path="management" element={<Management />} />
+                <Route path="bedAllotment" element={<BedAllotment />} />
+                <Route path="bedAllotment/:id" element={<SingleWard />} />
               </Route>
 
               <Route path="/admin" element={<AdminLayout />}></Route>

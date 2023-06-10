@@ -18,7 +18,7 @@ import { HmsContext } from '../../context/HmsContext'
 import Dp from './Dp'
 import Dd from './Dd'
 
-function PatientDashboard () {
+function PatientDashboard() {
   const baseUrl = 'https://gavohms.onrender.com'
   const [hideDisplay, setHideDisplay] = useState('patient_search_box')
   const [cardId, setCardId] = useState('')

@@ -3,7 +3,7 @@ import logo from "../img/ORBIS.png";
 import { Link, useNavigate } from "react-router-dom";
 import { HmsContext } from "../context/HmsContext";
 function LoginNav() {
-  const { isLoggedIn } = useContext(HmsContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(HmsContext);
   const navigate = useNavigate();
   return (
     <>
@@ -16,11 +16,20 @@ function LoginNav() {
             Home
           </Link>
 
-          {isLoggedIn == true ? null : (
+          {isLoggedIn == true ? (<button
+            className="btn btn-login btn-primary btn-lg border-0 "
+            onClick={() => {
+              navigate("/stafflogin");
+              setIsLoggedIn(false)
+            }}
+          >
+            Logout
+          </button>) : (
             <button
               className="btn btn-login btn-primary btn-lg border-0 "
               onClick={() => {
                 navigate("/stafflogin");
+
               }}
             >
               Login

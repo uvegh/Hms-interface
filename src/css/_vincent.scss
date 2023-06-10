@@ -130,10 +130,15 @@ select {
   input {
     min-height: 2rem;
   }
+
+  .email {
+    text-transform: lowercase !important;
+  }
 }
 
 .user-icon {
   width: 2.5em;
+  border-radius: 50%;
 }
 
 .recently-added-receptionist-view {
@@ -178,3 +183,333 @@ select {
 .select-department::after {
   content: ">>";
 }
+
+.profile-nurse {
+
+  box-shadow: 0.5em 0.5em 0.5em #CCCCCC;
+
+  p {
+    font-weight: 400;
+    text-transform: capitalize;
+    padding-bottom: 0.8em;
+    min-height: 2.5em;
+    border-bottom: 0.2em solid $gavoNav;
+  }
+
+  .email {
+    text-transform: lowercase !important;
+  }
+}
+
+.nurse_search_box {
+
+  margin-right: 10rem !important;
+}
+
+.nurse_table {
+  width: 100%;
+
+  .table-responsive {
+    overflow-y: scroll;
+
+    .nurse_name {
+      min-width: 16rem;
+    }
+  }
+}
+
+.nurse-view {
+  .user_view_icon {
+    width: 6rem;
+    border-radius: 50%;
+    border: 1px solid $gavoNav;
+  }
+
+  h6 {
+    text-transform: capitalize;
+    font-size: 1.5em;
+  }
+
+  .nurse_view_details {
+    text-align: left;
+
+    .assign_Patient_btn {
+      color: $loginBlue;
+      font-weight: 600;
+    }
+
+    label {
+      text-transform: capitalize;
+    }
+
+    p {
+      font-weight: 400;
+      text-transform: capitalize;
+      padding-bottom: 0.8em;
+      border-bottom: 0.2em solid $gavoNav;
+    }
+
+    span {
+      margin-top: 1rem;
+      min-width: inherit;
+    }
+
+    label {
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background-color: $loginBlue;
+      border: $loginBlue;
+    }
+  }
+}
+
+
+.table_loader {
+  margin: auto;
+}
+
+.doctor__dashboard {
+
+
+  .doctor_daily_info {
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+}
+
+
+.user_view_icon {
+  min-width: 6rem;
+  min-height: 6rem;
+  max-width: 6.2rem;
+  max-height: 6.2rem;
+  border-radius: 50%;
+  border: 1px solid $gavoNav;
+}
+
+.btn-primary {
+  background-color: #2B415C;
+
+  &:hover {
+    background-color: #37414e;
+    transition: all ease-in-out 1s;
+  }
+}
+
+.kg_ibs_btn {
+  .form-control {
+    height: 2.4rem !important;
+    border-left: none !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+  }
+
+}
+
+.ward-select {
+  text-transform: capitalize;
+
+  span {
+    color:$loginBlue span {
+      font-size: 0.5rem;
+    }
+  }
+
+
+  ::selection {
+    background-color: $gavoNav;
+  }
+}
+
+.assign-patient {
+
+  margin: auto;
+  overflow: hidden;
+  overflow-y: scroll;
+
+  thead {
+    background-color: $loginBlue !important;
+    border-radius: 5px;
+    text-align: left;
+    border-radius: 0.5em;
+    text-transform: capitalize;
+    color: #ffffff;
+  }
+
+  th {
+    border: 1px solid $loginBlue;
+  }
+
+
+
+  tbody {
+    color: $loginBlue;
+    text-transform: capitalize;
+
+    >tr:nth-child(even) {
+      background-color: #e9e9e9;
+    }
+  }
+
+  .delete {
+    border: none;
+    color: red;
+    text-align: center;
+
+
+  }
+
+  .card_no {
+    width: 10em !important;
+  }
+
+
+}
+
+.assign-ward {
+  min-width: 10em !important;
+  text-transform: capitalize;
+}
+
+.loggedin-notification {
+
+
+
+
+  color: #3b5779;
+  border-radius: 1em 0em 0em 1em;
+
+}
+
+.notification-user-icon {
+  width: 4rem;
+}
+
+.edit-profile-dropdown {
+  color: $loginBlue;
+
+  ul>:nth-child(2) {
+    background-color: #D9D9D9;
+  }
+
+  .new-photo {
+    background-color: #D9D9D9 !important;
+
+
+  }
+
+  img {
+    width: 1.2em;
+    height: 1.2em;
+  }
+}
+
+.live-video {
+
+  margin: auto;
+  max-height: 50vh;
+  left: 50%
+}
+
+.bed-allotment {
+  h5 {
+    color: $loginBlue;
+  }
+
+  .ward {
+    color: rgba(255, 255, 255, 1);
+    border-radius: 1em;
+
+    text-align: center;
+    min-height: 30rem;
+    background-color: $wardBg;
+
+    .name {
+      text-transform: capitalize;
+    }
+
+    .ward_details {
+      text-align: left;
+      text-transform: capitalize;
+      font-weight: 400;
+      padding-left: 0.5em;
+      min-height: 50%;
+      line-height: 0.8em;
+
+    }
+
+    .ward-icon {
+      text-align: center;
+      font-size: 3em;
+      width: 2em;
+      border: #4d6b91;
+      margin: auto;
+      color: $loginBlue;
+    }
+
+
+  }
+}
+
+.ward {
+  .bed_icon {
+    width: 110.5rem;
+    background: rgba(255, 255, 255, 1);
+    filter: invert(100);
+  }
+
+  .bed-btns {
+    margin: auto;
+    margin-top: 2em;
+
+    font-size: large;
+    padding-inline: 2px;
+
+    button {
+      padding: 0px;
+      color: #FFFFFF;
+      border-radius: 0.3em;
+      background-color: $wardBg;
+      border: 0.87px solid #FFFFFF;
+    }
+
+  }
+
+}
+
+.ward-upt {
+  min-height: 22rem !important;
+}
+
+.current-tab {
+  a {
+    color: $loginBlue
+  }
+
+  span {
+    color: rgba(173, 216, 220, 1);
+  }
+
+}
+
+.single-bed {
+  color: #ffffff;
+  background-color: $wardBg;
+
+  input {
+    border-radius: 0.3em;
+    min-height: 1.5em;
+    border: none;
+
+  }
+}
+
+// .nurse_search_box {
+//   height: 2.5em !important;
+// }

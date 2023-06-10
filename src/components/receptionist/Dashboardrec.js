@@ -2,17 +2,20 @@ import profile from '../../img/pexels-photo-6.jpg'
 import greater_than_icon from '../../img/greater-than.svg'
 import { Link } from 'react-router-dom'
 import Stethoscope from '../../img/stethoscope.svg'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { HmsContext } from '../../context/HmsContext'
 import { TiTimes } from 'react-icons/ti'
 import axios from 'axios'
 import { AiFillPhone } from 'react-icons/ai'
+import { ToastContainer } from 'react-toastify'
+
+
 
 
 
 function DashboardRec() {
   const baseUrl = "https://gavohms.onrender.com"
-  const { currentEmpId } = useContext(HmsContext)
+  const { currentEmpId, showLoggedInNotification, customAlertNotify, customAlertWarning } = useContext(HmsContext)
   const [addPatient, setAddPatient] = useState(false)
   const [isLoading, setIsloading] = useState(false);
   const [addedPatient, setAddedPatient] = useState({})
@@ -167,11 +170,29 @@ function DashboardRec() {
 
       }))).data
       console.log(response);
+      if (response?.code == "200") {
+        setFoundPatientIsShown(false)
+
+        setTimeout(() => {
+          customAlertNotify("Consultation added")
+        }, 1000)
+        customAlertNotify("Consultation added")
+        return
+      }
+      setFoundPatientIsShown(false)
+      setTimeout(() => {
+        customAlertWarning("failed to add consultation")
+      }, 1000)
+
     }
   }
 
+  useEffect(() => {
+    showLoggedInNotification()
+  }, [])
   return (
     <>
+      <ToastContainer />
 
       {isLoading && (
         <div className="container-fluid overlay">
@@ -551,7 +572,7 @@ function DashboardRec() {
                   {/* if inpatient show ward */}
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">WARD/ROOM</label>
-                    {!foundPatient?.ward ? (<p className='bg-white rounded p-2'> NONE</p>) : (
+                    {!foundPatient?.ward ? (<p className='bg-white rounded p-2'> N/A</p>) : (
                       <p className=' '>{foundPatient?.ward} </p>
                     )}
                   </div>
@@ -561,14 +582,14 @@ function DashboardRec() {
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">NAME</label>
-                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.emergency_contact?.first_name} {!foundPatient?.emergency_contact?.last_name ? ("NONE") : foundPatient?.emergency_contact?.last_name} </p>
+                    <p className='bg-white rounded p-2 ' style={{ textTransform: 'uppercase' }}>{foundPatient?.emergency_contact?.first_name} {!foundPatient?.emergency_contact?.last_name ? ("N/A") : foundPatient?.emergency_contact?.last_name} </p>
                   </div>
 
                   {foundPatient?.emergency_contact?.phone?.length == "0" ? (<>
                     <div className="col-md-4">
                       <label htmlFor='' className="form-label ">PHONE</label>
                       <p className='bg-white rounded p-2 ' >
-                        NONE
+                        N/A
                       </p>
                     </div>
 
@@ -576,7 +597,7 @@ function DashboardRec() {
                     <div className="col-md-4">
                       <label htmlFor='' className="form-label ">PHONE{i + 1}</label>
                       <p className='bg-white rounded p-2 ' >
-                        {!phone ? ("none") : phone}
+                        {!phone ? ("N/A") : phone}
                       </p>
                     </div>
                   ))}
@@ -584,7 +605,7 @@ function DashboardRec() {
 
                   <div className="col-md-4">
                     <label htmlFor='' className="form-label">EMAIL</label>
-                    <p className='bg-white rounded p-2 '>{foundPatient?.emergency_contact?.email ? (foundPatient?.emergency_contact?.email) : ("NONE")}</p>
+                    <p className='bg-white rounded p-2 '>{foundPatient?.emergency_contact?.email ? (foundPatient?.emergency_contact?.email) : ("N/A")}</p>
                   </div>
 
 
@@ -704,7 +725,7 @@ function DashboardRec() {
               {/* Search box for patient */}
               <div className='search_box position-absolute m-auto ' style={{ left: "44%" }} >
 
-                <form action=''>
+                <form onSubmit={handleGetPatient} >
                   <input type='text'
                     onChange={(e) => {
                       setPatientCardNo(e.target.value
