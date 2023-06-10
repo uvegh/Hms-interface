@@ -30,12 +30,12 @@ function StaffLogin() {
     setIsloading(true);
     if (!loginData.emailOrPhone || !loginData.password) {
       setValidate(true);
-      console.log(loginData);
+      // console.log(loginData);
       setIsloading(false);
       setErrorMessage("");
       return;
     }
-    console.log("this is", loginData);
+    //console.log("this is", loginData);
     let response = await axios
       .post(`${baseUrl}/auth/employee`, loginData)
 
@@ -87,7 +87,7 @@ function StaffLogin() {
   let userDets = {};
   async function handleCallbackResponse(response) {
     setIsloading(true);
-    console.log("encoded response", response.credential);
+    // console.log("encoded response", response.credential);
     userDets = jwt_decode(response.credential);
 
     setStaffGoogleObj(userDets)
@@ -109,6 +109,7 @@ function StaffLogin() {
         return;
       }
       alert("login successful");
+      setIsLoggedIn(true)
       setIsloading(false);
       setCurrentEmpId(findUser?.data?.employees?.data[0]);
       let loginObj = findUser?.data?.employees?.data[0]

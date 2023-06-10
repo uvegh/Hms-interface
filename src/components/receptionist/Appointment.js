@@ -669,7 +669,7 @@ function Appointment() {
                     <div className="doctors_container_content  mt-5">
                         <div className="appointment_table patient_appointment_table ht-inherit mt-5">
                             <div className=" appointment_table_holder patient_appointment_table_holder ">
-                                <h5>Recently added</h5>
+                                <h5>Recently Booked</h5>
                                 <table>
                                     <thead>
                                         <tr>
