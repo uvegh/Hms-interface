@@ -38,6 +38,9 @@ import Appointment from "./components/receptionist/Appointment";
 import Pharmacy from "./components/Pharmacy/Pharmacy";
 import ViewPatients from "./components/Pharmacy/ViewPatients";
 import Dispense from "./components/Pharmacy/Dispense";
+import PharmacyAdmin from "./components/Pharmacy/PharmacyAdmin";
+import PharmacyLayout from "./components/Pharmacy/PharmacyLayout";
+import Drugs from "./components/Pharmacy/Drugs";
 import BedAllotment from "./components/nurse/BedAllotment";
 import SingleWard from "./components/nurse/SingleWard";
 
@@ -72,29 +75,32 @@ export default function App() {
                     <DoctorDashboard />
                     // </DoctorProtected>
                   }
-
                 />
-                <Route path="patient" element={
-                  // <DoctorProtected>
-                  <PatientDashboard />
-                  // </DoctorProtected>
-                }
+                <Route
+                  path="patient"
+                  element={
+                    // <DoctorProtected>
+                    <PatientDashboard />
+                    // </DoctorProtected>
+                  }
                 />
                 <Route path="diagnosis" element={<DoctorDiagnosis />} />
                 <Route path="prescription" element={<DoctorPrescription />} />
               </Route>
-
-              <Route path="/pharmacy" element={<Pharmacy />} />
+              <Route path="/pharmacy" element={<PharmacyLayout />}>
+                <Route path="dashboard" element={<Pharmacy />} />
+                <Route path="admin" element={<PharmacyAdmin />} />
+                <Route path="dispense" element={<Dispense />} />
+                <Route path="drugs" element={<Drugs/>}/>
+              </Route>
               <Route path="/viewPatient" element={<ViewPatients />} />
               <Route path="/dispense" element={<Dispense />} />
 
               <Route path="/receptionist" element={<ReceptionistLayout />}>
                 <Route path="dashboard" element={<DashboardRec />} />
 
-
                 <Route path="profile" element={<Profile />} />
                 <Route path="appointment" element={<Appointment />} />
-
               </Route>
 
               <Route path="/nurse" element={<NurseLayout />}>
@@ -104,15 +110,12 @@ export default function App() {
                 <Route path="management" element={<Management />} />
                 <Route path="bedAllotment" element={<BedAllotment />} />
                 <Route path="bedAllotment/:id" element={<SingleWard />} />
-
               </Route>
 
               <Route path="/admin" element={<AdminLayout />}></Route>
               <Route path="/super" element={<SuperAdminLayout />}></Route>
 
               <Route path="/pharmacist" element={<PharmacistLayout />}></Route>
-
-
 
               <Route path="/lab" element={<LabLayout />}></Route>
             </Routes>

@@ -16,7 +16,7 @@ const Pharmacy = () => {
   const [patientID, setPatientID] = useState();
 
   const getPrescription = async () => {
-    if(!Prescription) return alert("Enter Patients Card Number")
+    if (!Prescription) return alert("Enter Patients Card Number");
     let response = (
       await axios.get(`${testUrl}/prescription?card_no=${Prescription}`)
     ).data;
@@ -109,44 +109,44 @@ const Pharmacy = () => {
             {patientPres ? (
               patientPres.map((Prescription) => (
                 <div
-                className="patients"
-                key={Prescription._id}
-                onClick={() => {
-                  // console.log(Prescription._id)
-                  setDispenser(true);
-                  setPatientID(Prescription._id);
-                }}
-              >
-                <div>
-                  <p>ID {Prescription.card_no}</p>
-                  <i>
-                    {format(
-                      new Date(Prescription.date_of_diagnosis),
-                      "d 'min' 'ago'"
-                    )}
-                  </i>
+                  className="patients"
+                  key={Prescription._id}
+                  onClick={() => {
+                    // console.log(Prescription._id)
+                    setDispenser(true);
+                    setPatientID(Prescription._id);
+                  }}
+                >
+                  <div>
+                    <p>ID {Prescription.card_no}</p>
+                    <i>
+                      {format(
+                        new Date(Prescription.date_of_diagnosis),
+                        "d 'min' 'ago'"
+                      )}
+                    </i>
+                  </div>
+                  <div>
+                    <p>Patients</p>
+                    <span>{Prescription.patient_id.first_name}</span>
+                  </div>
+                  <div>
+                    <p>Doctor</p>
+                    <span>{Prescription.doctor_id.first_name}</span>
+                  </div>
+                  <div>
+                    <p>Prescription</p>
+                    <span>{Prescription.prescription[0].name}</span>
+                  </div>
+                  <div>
+                    <p>Dosage</p>
+                    <span>{Prescription.prescription[0].frequency}</span>
+                  </div>
+                  <div>
+                    <p>Duration</p>
+                    <span>{Prescription.prescription[0].duration}</span>
+                  </div>
                 </div>
-                <div>
-                  <p>Patients</p>
-                  <span>{Prescription.patient_id.first_name}</span>
-                </div>
-                <div>
-                  <p>Doctor</p>
-                  <span>{Prescription.doctor_id.first_name}</span>
-                </div>
-                <div>
-                  <p>Prescription</p>
-                  <span>{Prescription.prescription[0].name}</span>
-                </div>
-                <div>
-                  <p>Dosage</p>
-                  <span>{Prescription.prescription[0].frequency}</span>
-                </div>
-                <div>
-                  <p>Duration</p>
-                  <span>{Prescription.prescription[0].duration}</span>
-                </div>
-              </div>
               ))
             ) : !Prescription ? (
               <p class="loader">Loading</p>
