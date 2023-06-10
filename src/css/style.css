@@ -1609,6 +1609,7 @@ abbr {
 .pharmacy * {
   padding: 0;
   margin: 0;
+  font-family: Roboto;
 }
 .pharmacy .doctor_sidebar {
   background-color: #2b415c;
@@ -1705,7 +1706,7 @@ abbr {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: #e9e9e9;
+  background: #add8dc;
   box-shadow: 4px 4px 4px #cccccc;
   border-radius: 5px;
   align-items: center;
@@ -1788,8 +1789,8 @@ abbr {
 
 .viewPatient {
   width: 100%;
-  height: 100vh;
-  padding-top: 80px;
+  height: auto;
+  padding: 80px 0px 10px 0px;
 }
 .viewPatient * {
   padding: 0;
@@ -1996,6 +1997,22 @@ abbr {
   margin: 10px auto;
   color: #2b415c;
 }
+.dispense .dispenseMain .bottom table tr td button:nth-child(2) {
+  border: none;
+  width: 96px;
+  height: 24px;
+  border: 1px solid #df4937;
+  border-radius: 5px;
+  color: #df4937;
+}
+.dispense .dispenseMain .bottom table tr td button:nth-child(1) {
+  border: none;
+  width: 96px;
+  height: 24px;
+  border: 1px solid #2b415c;
+  border-radius: 5px;
+  color: #2b415c;
+}
 
 .loader {
   font-size: 48px;
@@ -2035,7 +2052,7 @@ abbr {
   display: inline-block;
   letter-spacing: 2px;
   font-family: Arial, Helvetica, sans-serif;
-  color: #FFF;
+  color: #fff;
   box-sizing: border-box;
   animation: spotlight 2s linear infinite alternate;
   display: flex;
@@ -2054,6 +2071,325 @@ abbr {
     letter-spacing: 32px;
   }
 }
+.pharmAdmin {
+  width: 100%;
+  height: 100vh;
+  max-width: 1440px;
+  display: grid;
+  grid-template-columns: 270px 1170px;
+  position: relative;
+  top: 70px;
+  margin: auto;
+  margin-bottom: 70px;
+}
+.pharmAdmin .createDrug {
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: auto;
+  margin-top: 20px;
+}
+.pharmAdmin .createDrug button {
+  width: 326px;
+  height: 40px;
+  background: #2b415c;
+  border-radius: 5px;
+  color: #ffffff;
+}
+.pharmAdmin .doctor_sidebar {
+  background-color: #2b415c;
+}
+.pharmAdmin .doctor_sidebar .loggedIn {
+  display: flex;
+  color: #ffffff;
+  padding: 5px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+}
+.pharmAdmin .doctor_sidebar .loggedIn div {
+  width: 70px;
+  height: 70px;
+  background: white;
+  border-radius: 50px;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .clinic_name {
+  width: 100%;
+  height: 106px;
+  background-color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 15px;
+  padding-left: 17px;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .clinic_name .organization_image {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .clinic_name .organization_image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: center;
+     object-fit: center;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .clinic_name .organization_name {
+  color: #ffffff;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .clinic_name .organization_name h2 {
+  line-height: 29px;
+  font-size: 20px;
+  font-weight: 400;
+  cursor: pointer;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .clinic_name .organization_name h2 span {
+  color: #add8dc;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .sidebar_link_btns {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 17px;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn {
+  height: 56px;
+  width: 100%;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn a {
+  text-decoration: none;
+  color: white;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn:hover,
+.pharmAdmin .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn :active {
+  background-color: #526479;
+  border-radius: 2px;
+}
+.pharmAdmin .doctor_sidebar .links_display_box .sidebar_link_btns .sidebar_btn div {
+  font-size: 18px;
+  color: #ffffff;
+  line-height: 21px;
+  cursor: pointer;
+}
+.pharmAdmin .pharmTops {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: auto;
+  padding-top: 40px;
+}
+.pharmAdmin .pharmTops div {
+  width: 30%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #add8dc;
+  box-shadow: 4px 4px 4px #cccccc;
+  border-radius: 5px;
+  align-items: center;
+  padding: 0;
+}
+.pharmAdmin table {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  margin-top: 20px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+.pharmAdmin table tbody {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+}
+.pharmAdmin table tbody tr:nth-of-type(even) {
+  background: #e9e9e9;
+  border-radius: 5px;
+}
+.pharmAdmin table thead {
+  background: #2b415c;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 10px;
+}
+.pharmAdmin table th {
+  padding: 10px 0px;
+}
+.pharmAdmin table tr,
+.pharmAdmin table td {
+  padding: 10px;
+}
+.pharmAdmin table tr button,
+.pharmAdmin table td button {
+  border: none;
+  width: 120px;
+  height: 24px;
+  border: 1px solid #2b415c;
+  border-radius: 5px;
+}
+
+.drug {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  padding-top: 100px;
+  position: absolute;
+  top: 50px;
+}
+.drug .section {
+  background: #f6f6f6;
+  width: 720px;
+  height: 777px;
+  margin: auto;
+  border-radius: 10px;
+  padding: 32px;
+  margin-left: 30%;
+}
+.drug .section .topSection {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+.drug .section .topSection p {
+  color: #2b415c;
+  font-size: 24px;
+  font-weight: 400;
+  font-family: "Roboto";
+}
+.drug .section .topSection p span {
+  color: #add8dc;
+  font-size: 24px;
+  font-weight: 400;
+  font-family: "Roboto";
+}
+.drug .section .drugFrom {
+  width: 656px;
+  height: 535px;
+  border: 1px solid #e9e9e9;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  margin-top: 14px;
+  margin-bottom: 20px;
+}
+.drug .section .drugFrom h3 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 35px;
+  color: #2b415c;
+  padding: 18px 0px 0px 13px;
+}
+.drug .section .drugFrom form {
+  padding: 16px;
+  width: 100%;
+}
+.drug .section .drugFrom form .drugFromgroup {
+  margin: auto auto 24px auto;
+}
+.drug .section .drugFrom form .drugFromgroup label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2b415c;
+  padding-bottom: 8px;
+}
+.drug .section .drugFrom form .drugFromgroup div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+.drug .section .drugFrom form .drugFromgroup div input {
+  width: 307px;
+  height: 26px;
+  border: none;
+  outline: none;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 92, 0.64);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+}
+.drug .section .drugFrom form .drugFromgroup div input ::-moz-placeholder {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(0, 0, 0, 0.4);
+}
+.drug .section .drugFrom form .drugFromgroup div input ::placeholder {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(0, 0, 0, 0.4);
+}
+.drug .section .drugbtns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.drug .section .drugbtns .disableDrug {
+  cursor: not-allowed;
+}
+.drug .section .drugbtns .enableDrug {
+  cursor: pointer;
+}
+.drug .section .drugbtns button {
+  width: 307px;
+  height: 40px;
+  border: none;
+  outline: none;
+  border: 1px solid #2b415c;
+  border-radius: 5px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #2b415c;
+}
+.drug .section .drugbtns button:nth-child(even) {
+  background: #2b415c;
+  border-radius: 5px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #ffffff;
+}
+.drug .section .drugbtns .noInput {
+  cursor: not-allowed;
+  background-color: #526479 !important;
+}
+.drug .section .drugbtns .allowInput {
+  cursor: pointer;
+  background: #2b415c !important;
+}
+
 .add-patient-form {
   color: #2B415C;
 }

@@ -15,7 +15,9 @@ const Dispense = ({ setDispenser, patientID }) => {
   const getPatients = async () => {
     const response = (await axios.get(`${testUrl}/prescription/${patientID}`))
       .data;
-    setTimeout(() => {setPatient(response)}, 10000);
+    setTimeout(() => {
+      setPatient(response);
+    }, 10000);
     setPatient(response);
   };
 
@@ -51,19 +53,18 @@ const Dispense = ({ setDispenser, patientID }) => {
                 <p>Payment Status</p>
                 <span>Pending</span>
               </div>
-              {/* <div>
-             <p>Schedule</p>
-             <span>every 2 hours</span>
-           </div>
-           <div>
-             <p>Duration</p>
-             <span>4 weeks</span>
-           </div> */}
               <div>
                 <p>Total Cost</p>
-                {patient?.data?.prescription.map((totalCost)=>(
-                  <span>N{totalCost.price}</span>
-                ))}
+                <span>
+                  N
+                  {patient?.data?.prescription
+                    .map((totalCost) => {
+                      return parseInt(totalCost.price);
+                    })
+                    .reduce((a, b) => {
+                      return a + b;
+                    })}
+                </span>
               </div>
               <div>
                 <button
@@ -91,6 +92,7 @@ const Dispense = ({ setDispenser, patientID }) => {
                   <th>Allegies</th>
                   <th>Date</th>
                   <th>Cost</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -113,11 +115,15 @@ const Dispense = ({ setDispenser, patientID }) => {
                         )}
                       </td>
                       <td>N{pres.price}</td>
+                      <td><button type="btn" onClick={()=>{
+                        alert("Edited")
+                      }}>Edit</button> <button type="btn" onClick={()=>{
+                        alert("deleted")
+                      }}>Delete</button></td>
                     </tr>
                   ))
                 )}
               </tbody>
-              
             </table>
           </div>
           {/* <div className="pending">
