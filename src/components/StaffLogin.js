@@ -23,7 +23,8 @@ function StaffLogin() {
     password: "",
   });
   const navigate = useNavigate();
-  const { staffGoogleObj, setStaffGoogleObj, setIsLoggedIn, setCurrentEmpId, currentEmpId, showLoggedInNotification } =
+  const { staffGoogleObj, setStaffGoogleObj, setIsLoggedIn, setCurrentEmpId,
+    currentEmpId, showLoggedInNotification } =
     useContext(HmsContext);
   const handleLogin = async () => {
     setIsloading(true);
@@ -89,7 +90,7 @@ function StaffLogin() {
     console.log("encoded response", response.credential);
     userDets = jwt_decode(response.credential);
 
-    //setStaffGoogleObj({userDets})
+    setStaffGoogleObj(userDets)
     verifyGoogleLogin();
   }
 
@@ -109,7 +110,27 @@ function StaffLogin() {
       }
       alert("login successful");
       setIsloading(false);
-      setCurrentEmpId(findUser?.data?.employees);
+      setCurrentEmpId(findUser?.data?.employees?.data[0]);
+      let loginObj = findUser?.data?.employees?.data[0]
+      //console.log(currentEmpId)
+      //console.log(findUser?.data?.employees?.data[0]);
+
+      if (loginObj?.role == "doctor") {
+        navigate("/doctor/dashboard");
+      }
+      else if (loginObj?.role == "receptionist") {
+        navigate("/receptionist/dashboard");
+      }
+      else if (loginObj?.role == "nurse") {
+        navigate("/nurse/dashboard");
+      }
+
+      else if (loginObj?.role == "nurseAdmin") {
+        navigate("/nurse/dashboard");
+      }
+      else if (loginObj?.role == "pharmacist") {
+        navigate("/nurse/dashboard");
+      }
     } else {
       setIsloading(false);
       setErrorMessage("invalid email");
@@ -126,10 +147,12 @@ function StaffLogin() {
   }, []);
   google.accounts.id.renderButton(document.getElementById("signInGoogle"), {
     size: "large",
+    theme: "outline"
   });
-
+  const clientID = "357757074966 - ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com"
   return (
     <>
+
       {isLoading && (
         <SpinnerLoader />
       )}
@@ -307,6 +330,8 @@ function StaffLogin() {
               <div className="optional-login col-9  text-center  m-auto mt-5">
                 <div>
                   <div className="col-12">
+
+
                     <div
                       className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center"
                       id="signInGoogle"
