@@ -1,6 +1,6 @@
 import profile from "../../img/pexels-photo-6.jpg";
 import greater_than_icon from "../../img/greater-than.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Stethoscope from "../../img/stethoscope.svg";
 import { useContext, useEffect, useState } from "react";
 import { HmsContext } from "../../context/HmsContext";
@@ -13,6 +13,7 @@ function Appointment() {
     const baseUrl = "https://gavohms.onrender.com";
     const {
         currentEmpId,
+        setIsLoggedIn,
         departments,
         getAvaialbelConsultantByDepartment,
         avaialableConsultants,
@@ -31,6 +32,7 @@ function Appointment() {
     const [showDoctors, setShowDoctors] = useState(false);
     const [foundAppt, setFoundAppt] = useState()
     const [foundIndex, setFoundIndex] = useState()
+    const navigate = useNavigate()
     const [newAppointmentData, setNewAppointmentData] = useState({
         card_no: foundPatient?._id,
         physician: "",
@@ -182,7 +184,7 @@ function Appointment() {
     return (
         <>
             {isLoading && (
-              <SpinnerLoader/>
+                <SpinnerLoader />
             )}
 
             {addAppointment && (
@@ -530,18 +532,25 @@ function Appointment() {
                                 </h2>
                             </div>
                         </div>
-                        <ul className="sidebar_link_btns">
-                            <li className="sidebar_btn active">
-                                <Link to="/receptionist/dashboard"> Dashboard </Link>
+                        <ul className='sidebar_link_btns'>
+                            <li className='sidebar_btn active'>
+                                <Link to='/receptionist/dashboard'> Dashboard </Link>
                             </li>
 
-                            <li className="sidebar_btn">
-                                <Link to="/receptionist/profile"> Profile </Link>
+
+
+                            <li className='sidebar_btn'>
+                                <Link to='/receptionist/profile'> Profile </Link>
                             </li>
                             <li className="sidebar_btn">
                                 <Link to="/receptionist/appointment"> Appointment </Link>
                             </li>
-                            <li className="sidebar_btn">
+                            <li className='sidebar_btn'
+                                onClick={() => {
+                                    navigate("/stafflogin");
+                                    setIsLoggedIn(false)
+                                }}
+                            >
                                 <div> Logout </div>
                             </li>
                         </ul>
@@ -564,17 +573,7 @@ function Appointment() {
                                     </button>
                                 </div>
 
-                                <div className="profile_avi_box">
-                                    <div className="profile_avi">
-                                        <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt="" />
-                                    </div>
-                                    <div className="profile_name">
-                                        <p className="profile_name">
-                                            {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`}{" "}
-                                        </p>
-                                        <span className="profile_occupation">Receptionist</span>
-                                    </div>
-                                </div>
+
                             </div>
 
                             <div className="organization_name text-center fs-1 mt-5 pt-5">

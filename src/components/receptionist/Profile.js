@@ -21,8 +21,9 @@ function Profile() {
         setIsLoggedIn,
         customAlertNotify,
         customAlertWarning,
-        setCurrentEmpId,
+
         reload,
+
         profileObj,
         removePfp } = useContext(HmsContext)
     const baseUrl = "https://gavohms.onrender.com"
@@ -320,22 +321,18 @@ function Profile() {
                                 </h2>
                             </div>
                         </div>
-                        <ul className="sidebar_link_btns">
-                            <li className="sidebar_btn active">
-                                <Link to="/receptionist/dashboard"> Dashboard </Link>
-                            </li>
-                            <li className="sidebar_btn">
-                                <Link to="/receptionist/patient"> Patients </Link>
-                            </li>
-                            <li className="sidebar_btn">
-                                <Link to="/receptionist/bedAllotment"> Wards </Link>
+                        <ul className='sidebar_link_btns'>
+                            <li className='sidebar_btn active'>
+                                <Link to='/receptionist/dashboard'> Dashboard </Link>
                             </li>
 
-                            <li className="sidebar_btn">
-                                <Link to="/receptionist/management"> Management </Link>
+
+
+                            <li className='sidebar_btn'>
+                                <Link to='/receptionist/profile'> Profile </Link>
                             </li>
                             <li className="sidebar_btn">
-                                <Link to="/receptionist/profile"> Profile </Link>
+                                <Link to="/receptionist/appointment"> Appointment </Link>
                             </li>
                             <li className='sidebar_btn'
                                 onClick={() => {
@@ -353,15 +350,7 @@ function Profile() {
                         <div className='present_section'>
                             <h2>Profile</h2>
                         </div>
-                        <div className='profile_avi_box'>
-                            <div className='profile_avi'>
-                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt='avatar' />
-                            </div>
-                            <div className='profile_name'>
-                                <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
-                                <span className='profile_occupation'>Receptionist</span>
-                            </div>
-                        </div>
+
                     </div>
 
 

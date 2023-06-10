@@ -18,6 +18,7 @@ html {
 }
 
 .lds-spinner {
+  transform: translateX(-50%) translateY(50%);
   color: official;
   display: inline-block;
   position: relative;
@@ -2738,10 +2739,8 @@ select {
   color: #2B415C;
 }
 
-.ward .bed_icon {
-  width: 110.5rem;
-  background: rgb(255, 255, 255);
-  filter: invert(100);
+.ward .single-bed-icon {
+  width: 5.6rem !important;
 }
 .ward .bed-btns {
   margin: auto;
@@ -2776,6 +2775,64 @@ select {
   border-radius: 0.3em;
   min-height: 1.5em;
   border: none;
+}
+
+.close-btn:hover {
+  cursor: pointer;
+}
+
+.view-patient-history .scrollhist {
+  color: #2B415C;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+}
+.view-patient-history .scrollhist ::-webkit-scrollbar {
+  width: 100px;
+}
+.view-patient-history .scrollhist ::-webkit-scrollbar-thumb {
+  background: #37414e;
+  border-radius: 0.5em;
+}
+.view-patient-history .scrollhist ::-webkit-scrollbar-thumb:hover {
+  background: #1d2735;
+}
+.view-patient-history .scrollhist ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+.view-patient-history .patient-history {
+  border: 0.1em solid #E9E9E9;
+  box-shadow: 0px 0.2em 0.2em rgba(0, 0, 0, 0.25);
+  border-radius: 1em;
+  margin-bottom: 1em;
+  color: #2B415C;
+}
+.view-patient-history .patient-history p {
+  color: #2B415C;
+  border-bottom: 1px solid rgba(43, 65, 92, 0.64);
+  min-height: 2em;
+  padding-bottom: 0.5em;
+}
+
+.logged-in-profile {
+  color: #2B415C;
+}
+.logged-in-profile .profile_avi {
+  width: 4em;
+  height: 3.6em;
+  border-radius: 50%;
+}
+.logged-in-profile .logged-in-profile-details {
+  line-height: 0.2em;
+  margin-left: 0.5em;
+  margin-top: 0.7em;
+}
+.logged-in-profile .logged-in-profile-details p {
+  font-weight: 500;
+}
+.logged-in-profile .logged-in-profile-details span {
+  font-style: italic;
+  font-weight: 400;
 }
 
 .notFound-container {
@@ -2860,7 +2917,7 @@ select {
 nav {
   background-color: #E1DCDC;
   display: flex;
-  height: 8rem;
+  height: 8.5rem;
   padding: 0 60px 0 60px !important;
   height: 70px;
 }

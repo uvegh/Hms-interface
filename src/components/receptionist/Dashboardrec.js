@@ -1,6 +1,6 @@
 import profile from '../../img/pexels-photo-6.jpg'
 import greater_than_icon from '../../img/greater-than.svg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Stethoscope from '../../img/stethoscope.svg'
 import { useContext, useEffect, useState } from 'react'
 import { HmsContext } from '../../context/HmsContext'
@@ -15,7 +15,7 @@ import { ToastContainer } from 'react-toastify'
 
 function DashboardRec() {
   const baseUrl = "https://gavohms.onrender.com"
-  const { currentEmpId, showLoggedInNotification, customAlertNotify, customAlertWarning } = useContext(HmsContext)
+  const { currentEmpId, showLoggedInNotification, customAlertNotify, customAlertWarning, setIsLoggedIn } = useContext(HmsContext)
   const [addPatient, setAddPatient] = useState(false)
   const [isLoading, setIsloading] = useState(false);
   const [addedPatient, setAddedPatient] = useState({})
@@ -49,6 +49,7 @@ function DashboardRec() {
 
   })
   const [validate, setValidate] = useState(false)
+  const navigate = useNavigate()
   const [phone, setPhone] = useState({
 
     phone2: ""
@@ -686,7 +687,12 @@ function DashboardRec() {
               <li className="sidebar_btn">
                 <Link to="/receptionist/appointment"> Appointment </Link>
               </li>
-              <li className='sidebar_btn'>
+              <li className='sidebar_btn'
+                onClick={() => {
+                  navigate("/stafflogin");
+                  setIsLoggedIn(false)
+                }}
+              >
                 <div> Logout </div>
               </li>
             </ul>
@@ -704,15 +710,7 @@ function DashboardRec() {
                   > + Add</button>
                 </div>
 
-                <div className='profile_avi_box'>
-                  <div className='profile_avi'>
-                    <img src={`${baseUrl}/${currentEmpId?.avatar}`} alt='' />
-                  </div>
-                  <div className='profile_name'>
-                    <p className='profile_name'>{` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
-                    <span className='profile_occupation'>Receptionist</span>
-                  </div>
-                </div>
+
               </div>
 
 

@@ -11,6 +11,7 @@ import { HmsContext } from "../context/HmsContext";
 import { FiSmartphone } from "react-icons/fi";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { CiMail } from "react-icons/ci"
+import SpinnerLoader from "./SpinnerLoader";
 function StaffLogin() {
   const baseUrl = "https://gavohms.onrender.com";
   const [isLoading, setIsloading] = useState(false);
@@ -62,13 +63,19 @@ function StaffLogin() {
       if (response?.data?.data?.role == "doctor") {
         navigate("/doctor/dashboard");
       }
-      if (response?.data?.data?.role == "receptionist") {
+      else if (response?.data?.data?.role == "receptionist") {
         navigate("/receptionist/dashboard");
       }
-      if (response?.data?.data?.role == "nurse") {
+      else if (response?.data?.data?.role == "nurse") {
         navigate("/nurse/dashboard");
       }
 
+      else if (response?.data?.data?.role == "nurseAdmin") {
+        navigate("/nurse/dashboard");
+      }
+      else if (response?.data?.data?.role == "pharmacist") {
+        navigate("/nurse/dashboard");
+      }
 
     } else {
       setIsloading(false);
@@ -124,24 +131,7 @@ function StaffLogin() {
   return (
     <>
       {isLoading && (
-        <div className="container-fluid overlay">
-          <div className="loader m-auto">
-            <div className="lds-spinner text-center m-auto">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        </div>
+        <SpinnerLoader />
       )}
       <div className="containerbg  container-fluid">
         <main className="login-banner m-auto    ">

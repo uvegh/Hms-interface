@@ -19,12 +19,16 @@ function BedAllotment() {
 
         wards,
         profileObj,
-        setIsLoggedIn
+        setIsLoggedIn,
+        reload
         //showLoggedInNotification
 
     } = useContext(HmsContext);
 
     console.log(wards)
+    useEffect(() => {
+        reload()
+    })
 
     return (
         <>
@@ -86,18 +90,7 @@ function BedAllotment() {
                         <div className="present_section">
                             <h2>Wards</h2>
                         </div>
-                        <div className="profile_avi_box">
-                            <div className="profile_avi">
-                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt="" />
-                            </div>
-                            <div className="profile_name">
-                                <p className="profile_name">
 
-                                    {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`}{" "}
-                                </p>
-                                <span className="profile_occupation">{currentEmpId?.role}</span>
-                            </div>
-                        </div>
                     </div>
                     <h5>Total wards :{!wards?.length ? ("0") : wards.length}</h5>
                     <br />

@@ -186,6 +186,10 @@ function HmsProvider(props) {
   }
 
   const reload = async () => {
+    if (!currentEmpId?.id) {
+      //navigate("/staflogin")
+      return
+    }
     let response = await axios
       .get(`${baseUrl}/employee/${currentEmpId?.id}`)
 

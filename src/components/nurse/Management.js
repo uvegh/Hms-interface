@@ -26,7 +26,8 @@ function Management() {
         wards,
         profileObj,
         customAlertNotify,
-        setIsLoggedIn } = useContext(HmsContext)
+        setIsLoggedIn,
+        reload } = useContext(HmsContext)
     const [showEdit, setShowEdit] = useState(false)
     const [assignNurse, setAssignNurse] = useState(false)
     const [foundNurse, setFoundNurse] = useState()
@@ -257,6 +258,7 @@ function Management() {
     useEffect(() => {
         // console.log(currentEmpId)
         // console.log(nurseObj)
+        reload()
         handleGetNurseDetail()
         handleGetConsultation()
         handleGetAllDoctors()
@@ -908,15 +910,7 @@ function Management() {
                         <div className='present_section'>
                             <h2>Management</h2>
                         </div>
-                        <div className='profile_avi_box'>
-                            <div className='profile_avi'>
-                                <img src={`${baseUrl}/${profileObj?.avatar}`} alt='avatar' />
-                            </div>
-                            <div className='profile_name'>
-                                <p className='profile_name'> {` ${currentEmpId?.first_name} ${currentEmpId?.last_name}`} </p>
-                                <span className='profile_occupation'>{currentEmpId?.role}</span>
-                            </div>
-                        </div>
+                       
                     </div>
                     <div className='doctors_container_content'>
                         <div className='patient_search_box nurse_search_box'>
