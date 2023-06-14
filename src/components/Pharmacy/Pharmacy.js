@@ -6,6 +6,8 @@ import axios from "axios";
 import { format } from "date-fns";
 import Dispense from "./Dispense";
 import { TbRuler } from "react-icons/tb";
+import { HmsContext } from "../../context/HmsContext";
+import { useContext } from "react";
 const Pharmacy = () => {
   const baseUrl = "https://gavohms.onrender.com";
   const testUrl = "http://localhost:3001";
@@ -14,6 +16,8 @@ const Pharmacy = () => {
   const [patientPres, setPatientPres] = useState();
   const [dispenser, setDispenser] = useState(false);
   const [patientID, setPatientID] = useState();
+  const {PharmacistId} = useContext(HmsContext);
+  console.log(PharmacistId)
 
   const getPrescription = async () => {
     if (!Prescription) return alert("Enter Patients Card Number");
@@ -23,14 +27,12 @@ const Pharmacy = () => {
     setPatientPres(response.data);
   };
 
+  
   const handlePrescription = () => {
     console.log("handled");
   };
 
-  // useEffect(() => {
-  //   getPrescription()
-  // }, [Prescription]);
-
+  
   return (
     <div>
       <div className="pharmacy">
@@ -48,7 +50,9 @@ const Pharmacy = () => {
             </div>
             <div className="loggedIn">
               <div></div>
-              <p>Phamacist name</p>
+             {PharmacistId ? (
+               <p>{PharmacistId.first_name} {PharmacistId.last_name}</p>
+             ):( <p>Phamacist name</p>)}
             </div>
             <ul className="sidebar_link_btns">
               <li className="sidebar_btn active">
@@ -149,7 +153,7 @@ const Pharmacy = () => {
                 </div>
               ))
             ) : !Prescription ? (
-              <p class="loader">Loading</p>
+              <p class="loaders">Loading</p>
             ) : (
               <p>no prescription found</p>
             )}
