@@ -597,6 +597,71 @@ select {
   }
 }
 
+.notifications-bar {
+  list-style: none;
+  color: $loginBlue;
+  top: 13%;
+  position: fixed;
+  right: 0;
+  z-index: 1000;
+  // min-width: 50%;
+
+  .notifications-header {
+    padding: 0.5em;
+
+    p,
+    img {
+      margin: auto;
+    }
+
+    img {
+      width: 0.8em;
+      height: 0.8em;
+    }
+
+    background-color: $gavoNav;
+  }
+
+  .notification-body {
+    overflow-y: scroll;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+
+
+    color: $loginBlue;
+
+    section {
+      p {
+        text-justify: newspaper;
+      }
+
+      min-height: 7em;
+
+
+      .closeBtn {
+        width: 0.7em;
+        height: 0.7em;
+      }
+    }
+
+    .user-icon {
+      width: 4em;
+      height: 3.6em;
+
+      border-radius: 50%;
+    }
+
+
+
+  }
+}
 
 // .patient-history-overlay {
 

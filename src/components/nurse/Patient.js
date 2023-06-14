@@ -46,7 +46,10 @@ function Patient() {
     const [foundPatientIsShown, setFoundPatientIsShown] = useState(false)
     const [isLoading, setIsloading] = useState(false);
     const [viewPatientHistory, setViewPatientHistory] = useState(false)
+
     const [weight, setWeight] = useState("")
+    const [appointmentHistory, setAppointmentHistory] = useState()
+    const [consultationHistory, setConsultationHistory] = useState()
     const handleEditPatientVitals = async (id) => {
         console.log(patientVitals);
         if (!patientVitals.vitals.blood_pressure || !patientVitals.vitals.weight) {
@@ -114,6 +117,32 @@ function Patient() {
         }
     }
 
+    const handlGetPatientsHistory = async (patientId) => {
+        setIsloading(true)
+        let response = (await (axios.get(`${baseUrl}/consultation?patient_id=${patientId}&nurse_seen=true`))).data
+        let response2 = (await (axios.get(`${baseUrl}/appointment?card_no=${patientId}&nurse_seen=true`))).data
+        console.log(response);
+        console.log(response2);
+        if (response?.code == "200") {
+            setConsultationHistory(response?.data)
+
+
+            setIsloading(false)
+
+        }
+        if (response2?.code == "200") {
+            setIsloading(false)
+            setAppointmentHistory(response2?.appointment)
+        }
+
+        setIsloading(false)
+
+        console.log(appointmentHistory)
+        console.log(consultationHistory)
+
+    }
+
+
     useEffect(() => {
 
         handleGetNurseDetail()
@@ -122,9 +151,9 @@ function Patient() {
     }, [foundPatient?.vitals?.weight, patientVitals])
     return (
         <>
-            {isLoading && (
+            {/* {isLoading && (
                 <SpinnerLoader />
-            )}
+            )} */}
             {foundPatientIsShown && (<div className="overlay">
                 <div className="container  add-patient-form">
                     {
@@ -651,122 +680,124 @@ function Patient() {
                                 <h5> {foundPatient?.first_name} {foundPatient?.last_name}  </h5>
                                 <p>#{foundPatient?.card_no} </p>
                             </div>
-
-                            <section className="row  m-auto bg-white mb-3  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
-
-                                <h5 className='text-start mt-2 mb-2'>Monday 5th June, 2023</h5>
-                                <div className="col-md-4  m-auto mb-3">
-                                    <label htmlFor="" >Weight(kg)</label>
-                                    <p className=''></p>
-
+                            {/* {isLoading && (
+                                <div className="histLoader">
+                                    <div className="lds-spinner fs-6 text-center m-auto bg-dark">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
                                 </div>
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Temperature</label>
-                                    <p className=''> </p>
-                                </div>
+                            )
 
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Blood Pressure </label>
-                                    <p className=''> </p>
-                                </div>
+                            } */}
 
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Heart Rate (bpm)</label>
-                                    <p className='border-bottom-0'> </p>
-                                </div>
+                            {
+                                consultationHistory?.length == 0 && appointmentHistory?.length == 0 ? (
+                                    <p className='text-center'> No History</p>
+                                ) :
+                                    consultationHistory?.length == 0 ? ("") :
+                                        consultationHistory?.map((patient) => (
+                                            <section className="row  m-auto bg-white mb-3  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
 
+                                                <h5 className='text-start mt-2 mb-2'>Monday 5th June, 2023</h5>
+                                                <div className="col-md-4  m-auto mb-3">
+                                                    <label htmlFor="" > weight(kg)</label>
+                                                    <p className=''> {!patient?.patient_id?.vitals?.weight ? ("N/A") : patient?.patient_id?.vitals?.weight}</p>
 
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">     Respiratory Rate (bpm)</label>
-                                    <p className='border-bottom-0'> </p>
-                                </div>
+                                                </div>
+                                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                    <label htmlFor="">Temperature</label>
+                                                    <p className=''> {!patient?.patient_id?.vitals?.temperature ? ("N/A") : patient?.patient_id?.vitals?.temperature}</p>
+                                                </div>
 
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">  Pulse (bpm)</label>
-                                    <p className='border-bottom-0'> </p>
-                                </div>
+                                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                    <label htmlFor="">Blood Pressure </label>
+                                                    <p className=''>{!patient?.patient_id?.vitals?.blood_pressure ? ("N/A") : patient?.patient_id?.vitals?.blood_pressure} </p>
+                                                </div>
 
-
-
-
-                            </section>
-
-                            <section className="row  m-auto bg-white mb-3  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
-
-                                <h5 className='text-start mt-2 mb-2'>Monday 5th June, 2023</h5>
-                                <div className="col-md-4  m-auto mb-3">
-                                    <label htmlFor="" >Weight(kg)</label>
-                                    <p className=''></p>
-
-                                </div>
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Temperature</label>
-                                    <p className=''> </p>
-                                </div>
-
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Blood Pressure </label>
-                                    <p className=''> </p>
-                                </div>
-
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Heart Rate (bpm)</label>
-                                    <p className='border-bottom-0'> </p>
-                                </div>
+                                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                    <label htmlFor="">Heart Rate (bpm)</label>
+                                                    <p className='border-bottom-0'>{!patient?.patient_id?.vitals?.heart_rate ? ("N/A") : patient?.patient_id?.vitals?.heart_rate} </p>
+                                                </div>
 
 
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">     Respiratory Rate (bpm)</label>
-                                    <p className='border-bottom-0'> </p>
-                                </div>
+                                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                    <label htmlFor="">     Respiratory Rate (bpm)</label>
+                                                    <p className='border-bottom-0'> {!patient?.patient_id?.vitals?.respiratory_rate ? ("N/A") : patient?.patient_id?.vitals?.respiratory_rate}</p>
+                                                </div>
 
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">  Pulse (bpm)</label>
-                                    <p className='border-bottom-0'> </p>
-                                </div>
+                                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                    <label htmlFor="">  Pulse (bpm)</label>
+                                                    <p className='border-bottom-0'>{!patient?.patient_id?.vitals?.pulse ? ("N/A") : patient?.patient_id?.vitals?.pulse} </p>
+                                                </div>
 
 
 
 
-                            </section>
-                            <section className="row  m-auto bg-white  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
+                                            </section>
+                                        )
 
-                                <h5 className='text-start mt-2 mb-2'>Monday 5th June, 2023</h5>
-                                <div className="col-md-4  m-auto mb-3">
-                                    <label htmlFor="" >Weight(kg)</label>
-                                    <p className=''></p>
+                                        )
 
-                                </div>
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Temperature</label>
-                                    <p className=''> </p>
-                                </div>
-
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Blood Pressure </label>
-                                    <p className=''> </p>
-                                </div>
-
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Heart Rate (bpm)</label>
-                                    <p className='border-bottom-0'> </p>
-                                </div>
-
-
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">     Respiratory Rate (bpm)</label>
-                                    <p className='border-bottom-0'> </p>
-                                </div>
-
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">  Pulse (bpm)</label>
-                                    <p className='border-bottom-0'> </p>
-                                </div>
+                            }
 
 
 
+                            {
+                                appointmentHistory?.length == 0 ? ("") :
+                                    appointmentHistory?.map((patient) => (
+                                        <section className="row  m-auto bg-white mb-3  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
 
-                            </section>
+                                            <h5 className='text-start mt-2 mb-2'>{patient?.createdAt}Monday 5th June, 2023</h5>
+                                            <div className="col-md-4  m-auto mb-3">
+                                                <label htmlFor="" > weight(kg)</label>
+                                                <p className=''> {!patient?.card_no?.vitals?.weight ? ("N/A") : patient?.card_no?.vitals?.weight}</p>
+
+                                            </div>
+                                            <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                <label htmlFor="">Temperature</label>
+                                                <p className=''> {!patient?.card_no?.vitals?.temperature ? ("N/A") : patient?.card_no?.vitals?.temperature}</p>
+                                            </div>
+
+                                            <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                <label htmlFor="">Blood Pressure </label>
+                                                <p className=''>{!patient?.card_no?.vitals?.blood_pressure ? ("N/A") : patient?.card_no?.vitals?.blood_pressure} </p>
+                                            </div>
+
+                                            <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                <label htmlFor="">Heart Rate (bpm)</label>
+                                                <p className='border-bottom-0'>{!patient?.card_no?.vitals?.heart_rate ? ("N/A") : patient?.card_no?.vitals?.heart_rate} </p>
+                                            </div>
+
+
+                                            <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                <label htmlFor="">     Respiratory Rate (bpm)</label>
+                                                <p className='border-bottom-0'> {!patient?.card_no?.vitals?.respiratory_rate ? ("N/A") : patient?.card_no?.vitals?.respiratory_rate}</p>
+                                            </div>
+
+                                            <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                <label htmlFor="">  Pulse (bpm)</label>
+                                                <p className='border-bottom-0'>{!patient?.card_no?.vitals?.pulse ? ("N/A") : patient?.card_no?.vitals?.pulse} </p>
+                                            </div>
+
+
+
+
+                                        </section>
+                                    )
+
+                                    )
+                            }
 
                             <div className='text-center  mt-3 pb-3'>
                                 <button type='button' className='btn btn-primary col-lg-4 col-md-4 col-sm-10' onClick={() => {
@@ -814,9 +845,11 @@ function Patient() {
                                 <Link to="/nurse/bedAllotment"> Wards </Link>
                             </li>
 
-                            <li className="sidebar_btn">
+                            {
+    currentEmpId?.role=="nurseAdmin"?(  <li className="sidebar_btn">
                                 <Link to="/nurse/management"> Management </Link>
-                            </li>
+                            </li>):null
+}
                             <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
@@ -837,7 +870,7 @@ function Patient() {
                         <div className='present_section'>
                             <h2>Patients</h2>
                         </div>
-                      
+
                     </div>
                     <div className='doctors_container_content'>
 
@@ -941,6 +974,7 @@ function Patient() {
 
 
                                                                         setViewPatientHistory(true)
+                                                                        handlGetPatientsHistory(foundPatient?._id)
                                                                     }}
                                                                 ><Link className="dropdown-item" >View History</Link>
                                                                 </li>

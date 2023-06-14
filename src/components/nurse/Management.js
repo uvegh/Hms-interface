@@ -888,9 +888,11 @@ function Management() {
                                 <Link to="/nurse/bedAllotment"> Wards </Link>
                             </li>
 
-                            <li className="sidebar_btn">
+                            {
+    currentEmpId?.role=="nurseAdmin"?(  <li className="sidebar_btn">
                                 <Link to="/nurse/management"> Management </Link>
-                            </li>
+                            </li>):null
+}
                             <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>

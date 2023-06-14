@@ -35,6 +35,9 @@ function HmsProvider(props) {
   const [wards, setWards] = useState()
   const [profileObj, setProfileObj] = useState()
   const [bedsInWard, setBedsInWard] = useState()
+  const [userNotifications, setUserNotifications] = useState()
+  const [viewNotification, setViewNotification] = useState(false)
+  const [notificationIsOpen, setNotificationIsOpen] = useState(false);
   const showLoggedInNotification = () => {
     toast('Logged in!', {
       position: toast.POSITION.TOP_RIGHT,
@@ -212,10 +215,11 @@ function HmsProvider(props) {
   }
   const removePfp = async () => {
     let response = await (axios.put(`${baseUrl}/employee/${currentEmpId?.id}`, {
-      avatar: "img/user.png"
+      avatar: "https://res.cloudinary.com/df9o0bto4/image/upload/v1686672390/userAvatars/1686672389691.png"
     }))
     //console.log(response);
     if (response?.status == "200") {
+      //console.log(response)
       customAlertNotify("profile deleted")
       reload()
       return
@@ -233,8 +237,30 @@ function HmsProvider(props) {
     setBedsInWard(filterByWard)
   }
 
+  const handleGetNotifications = async () => {
+    //get logged in users notification
+    let response = await (await (axios.get(`${baseUrl}/notification?reciever=${currentEmpId?.id}`))).data
+    //console.log(response)
+    if (response?.code == "200") {
+      setUserNotifications(response?.data)
+    }
+
+
+  }
+  //remove notification
+  const removeNotification = async (id) => {
+    let response = (await (axios.put(`${baseUrl}/notification/${id}`, { seen: true }))).data
+    console.log(response)
+    if (response?.code == "200") {
+
+      handleGetNotifications()
+    }
+  }
+
+
 
   useEffect(() => {
+    handleGetNotifications()
     handleGetDepartments()
     handleGetAllNurses()
     handleGetNurseDetail()
@@ -310,7 +336,15 @@ function HmsProvider(props) {
         profileObj,
         removePfp,
         HandleGetAllBeds,
-        bedsInWard
+        bedsInWard,
+        handleGetNotifications,
+        userNotifications,
+
+        viewNotification,
+        setViewNotification,
+        removeNotification,
+        notificationIsOpen,
+        setNotificationIsOpen
       }}
     >
 

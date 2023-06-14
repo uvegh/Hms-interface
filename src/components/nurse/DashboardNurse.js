@@ -5,6 +5,7 @@ import { TbPrescription, TbCalendarEvent } from "react-icons/tb";
 import Calender from "react-calendar";
 import Stethoscope from "../../img/stethoscope.svg";
 import profile from "../../img/pexels-photo-6.jpg";
+
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { HmsContext } from "../../context/HmsContext";
@@ -29,7 +30,6 @@ function DashboardNurse() {
         departments,
         getAvaialbelConsultantByDepartment,
         avaialableConsultants,
-
         isLoggedIn,
         profileObj,
         setIsLoggedIn,
@@ -131,16 +131,13 @@ function DashboardNurse() {
 
 
 
-
-
-
-
     useEffect(() => {
         // console.log(currentEmpId)
         // console.log(nurseObj)
         handleGetNurseDetail();
-        handleGetConsultation();
+
         handleGetAllDoctors();
+
 
     }, [consultationNurse]); //
 
@@ -150,12 +147,14 @@ function DashboardNurse() {
             showLoggedInNotification()
         }
         reload()
+
+
+        // handleGetNotifications(loadNotifi)
     }, [])
 
 
     return (
         <>
-
 
             {isLoading && (
                 <SpinnerLoader />
@@ -541,13 +540,13 @@ function DashboardNurse() {
                 </div>
             )}
 
-            <ToastContainer
+            {/* <ToastContainer
                 className="loggedin-notification"
 
                 autoClose={false}
                 theme="colored"
                 hideProgressBar={true}
-            />
+            /> */}
             <section className="doctor__dashboard">
                 <div className="doctor_sidebar">
                     <div className="links_display_box">
@@ -572,9 +571,11 @@ function DashboardNurse() {
                                 <Link to="/nurse/bedAllotment"> Wards </Link>
                             </li>
 
-                            <li className="sidebar_btn">
-                                <Link to="/nurse/management"> Management </Link>
-                            </li>
+                            {
+                                currentEmpId?.role == "nurseAdmin" ? (<li className="sidebar_btn">
+                                    <Link to="/nurse/management"> Management </Link>
+                                </li>) : null
+                            }
                             <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>

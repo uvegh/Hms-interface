@@ -22,10 +22,12 @@ function StaffLogin() {
     emailOrPhone: "",
     password: "",
   });
+
   const navigate = useNavigate();
-  const { staffGoogleObj, setStaffGoogleObj, setIsLoggedIn, setCurrentEmpId,
-    currentEmpId, showLoggedInNotification } =
+  const { staffGoogleObj, setStaffGoogleObj, setIsLoggedIn, setCurrentEmpId, handleGetNotifications,
+    currentEmpId, showLoggedInNotification, setViewNotification } =
     useContext(HmsContext);
+
   const handleLogin = async () => {
     setIsloading(true);
     if (!loginData.emailOrPhone || !loginData.password) {
@@ -57,7 +59,7 @@ function StaffLogin() {
       //   password: ''
       // })
       showLoggedInNotification()
-
+      handleGetNotifications()
       setErrorMessage("");
       setCurrentEmpId(response?.data?.data);
 
@@ -141,6 +143,14 @@ function StaffLogin() {
     }
   };
 
+  google.accounts.id.renderButton(document.getElementById("signInGoogle"), {
+    size: "large",
+    theme: "outline"
+  });
+
+
+  const clientID = "357757074966 - ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com"
+
   //global google
   useEffect(() => {
     google.accounts.id.initialize({
@@ -149,11 +159,8 @@ function StaffLogin() {
       callback: handleCallbackResponse,
     });
   }, []);
-  google.accounts.id.renderButton(document.getElementById("signInGoogle"), {
-    size: "large",
-    theme: "outline"
-  });
-  const clientID = "357757074966 - ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com"
+
+
   return (
     <>
 

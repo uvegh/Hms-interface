@@ -279,9 +279,11 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                                 <Link to="/nurse/patient"> Patients </Link>
                             </li>
 
-                            <li className="sidebar_btn">
-                                <Link to="/nurse/management"> Management </Link>
-                            </li>
+                            {
+                                currentEmpId?.role == "nurseAdmin" ? (<li className="sidebar_btn">
+                                    <Link to="/nurse/management"> Management </Link>
+                                </li>) : null
+                            }
 
 
                             <li className="sidebar_btn">

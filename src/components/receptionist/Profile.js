@@ -298,7 +298,7 @@ function Profile() {
                             }}> <TiTimes /> </span>
                         </div>
                         <div className="text-center">
-                            <img className='img-fluid' src={`${baseUrl}/${currentEmpId?.avatar}`} alt="" />
+                            <img className='img-fluid' src={profileObj?.avatar} alt="" />
                         </div>
 
                     </div>

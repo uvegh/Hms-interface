@@ -60,13 +60,33 @@ function ProfileNurse() {
         setImageSrc(imageSrc);
         console.log(imageSrc);
     };
+    const [updateAvatarFile, setUpdateAvatarFile] = useState({
+        avatar: ""
+    })
+    const formData = new FormData()
+
+    //handle file change on update avatar
 
     const handleImgChange = (e) => {
-        const fileObj = e.target.files && e.target.files[0]
+        console.log("yooo its working")
+        const fileObj = e.target.files[0]
+        console.log(fileObj)
         if (!fileObj) {
+            console.log(fileObj)
             return
         }
         console.log(fileObj);
+        setUpdateAvatarFile(fileObj)
+        console.log(updateAvatarFile)
+        handleUpdateAvatarFile()
+    }
+
+    //update avatar through file
+    const handleUpdateAvatarFile = async () => {
+        formData.append("avatar", updateAvatarFile)
+        console.log(formData)
+        let response = await (axios.put(`${baseUrl}/employee/pfp/${currentEmpId?.id}`, formData)).data
+        console.log(response)
     }
 
 
@@ -297,7 +317,7 @@ function ProfileNurse() {
                             }}> <TiTimes /> </span>
                         </div>
                         <div className="text-center">
-                            <img className='img-fluid' src={`${baseUrl}/${currentEmpId?.avatar}`} alt="" />
+                            <img className='img-fluid' src={profileObj?.avatar} alt="" />
                         </div>
 
                     </div>
@@ -331,9 +351,11 @@ function ProfileNurse() {
                                 <Link to="/nurse/bedAllotment"> Wards </Link>
                             </li>
 
-                            <li className="sidebar_btn">
+                            {
+    currentEmpId?.role=="nurseAdmin"?(  <li className="sidebar_btn">
                                 <Link to="/nurse/management"> Management </Link>
-                            </li>
+                            </li>):null
+}
                             <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
@@ -353,7 +375,7 @@ function ProfileNurse() {
                         <div className='present_section'>
                             <h2>Profile</h2>
                         </div>
-                        
+
                     </div>
 
 
@@ -370,7 +392,7 @@ function ProfileNurse() {
                                             setViewFullPfp(true)
                                         }}
 
-                                        className='user_view_icon border-1' src={`${baseUrl}/${profileObj?.avatar}`} alt="avatar" />
+                                        className='user_view_icon border-1' src={profileObj?.avatar} alt="avatar" />
 
                                     <div className="dropdown align-bottom pt-5">
                                         <Link className="btn bg-white border-0   fs-4 text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">

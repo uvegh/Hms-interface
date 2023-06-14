@@ -17,6 +17,12 @@ html {
   left: 45%;
 }
 
+.histLoader {
+  top: 35%;
+  position: absolute;
+  left: 50%;
+}
+
 .lds-spinner {
   transform: translateX(-50%) translateY(50%);
   color: official;
@@ -2833,6 +2839,52 @@ select {
 .logged-in-profile .logged-in-profile-details span {
   font-style: italic;
   font-weight: 400;
+}
+
+.notifications-bar {
+  list-style: none;
+  color: #2B415C;
+  top: 13%;
+  position: fixed;
+  right: 0;
+  z-index: 1000;
+}
+.notifications-bar .notifications-header {
+  padding: 0.5em;
+  background-color: #E1DCDC;
+}
+.notifications-bar .notifications-header p,
+.notifications-bar .notifications-header img {
+  margin: auto;
+}
+.notifications-bar .notifications-header img {
+  width: 0.8em;
+  height: 0.8em;
+}
+.notifications-bar .notification-body {
+  overflow-y: scroll;
+  color: #2B415C;
+}
+.notifications-bar .notification-body ::-webkit-scrollbar {
+  display: none;
+}
+.notifications-bar .notification-body ul {
+  list-style: none;
+}
+.notifications-bar .notification-body section {
+  min-height: 7em;
+}
+.notifications-bar .notification-body section p {
+  text-justify: newspaper;
+}
+.notifications-bar .notification-body section .closeBtn {
+  width: 0.7em;
+  height: 0.7em;
+}
+.notifications-bar .notification-body .user-icon {
+  width: 4em;
+  height: 3.6em;
+  border-radius: 50%;
 }
 
 .notFound-container {
