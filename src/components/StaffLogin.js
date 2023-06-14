@@ -10,22 +10,29 @@ import jwt_decode from "jwt-decode";
 import { HmsContext } from "../context/HmsContext";
 import { FiSmartphone } from "react-icons/fi";
 import { BsFillTelephoneFill } from "react-icons/bs";
-import { CiMail } from "react-icons/ci"
+import { CiMail } from "react-icons/ci";
 import SpinnerLoader from "./SpinnerLoader";
 function StaffLogin() {
   const baseUrl = "https://gavohms.onrender.com";
   const [isLoading, setIsloading] = useState(false);
   const [validate, setValidate] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-  const [loginWithPhone, setLoginWithPhone] = useState(false)
+  const [loginWithPhone, setLoginWithPhone] = useState(false);
   const [loginData, setLoginData] = useState({
     emailOrPhone: "",
     password: "",
   });
   const navigate = useNavigate();
-  const { staffGoogleObj, setStaffGoogleObj, setIsLoggedIn, setCurrentEmpId,
-    currentEmpId, showLoggedInNotification } =
-    useContext(HmsContext);
+  const {
+    staffGoogleObj,
+    setStaffGoogleObj,
+    setIsLoggedIn,
+    setCurrentEmpId,
+    currentEmpId,
+    showLoggedInNotification,
+    setPharmacistID,
+    setPharmacyAdmin,
+  } = useContext(HmsContext);
   const handleLogin = async () => {
     setIsloading(true);
     if (!loginData.emailOrPhone || !loginData.password) {
@@ -46,38 +53,36 @@ function StaffLogin() {
         setIsloading(false);
       });
 
-    console.log(response);
+    console.log(response?.data?.data);
     if (response?.status == "200") {
       setIsloading(false);
       setValidate(false);
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
       alert("logged in");
+      setPharmacistID(response?.data?.data);
+      setPharmacyAdmin(response?.data?.data);
       // setLoginData({
       //   emailOrPhone: '',
       //   password: ''
       // })
-      showLoggedInNotification()
+      showLoggedInNotification();
 
       setErrorMessage("");
       setCurrentEmpId(response?.data?.data);
 
       if (response?.data?.data?.role == "doctor") {
         navigate("/doctor/dashboard");
-      }
-      else if (response?.data?.data?.role == "receptionist") {
+      } else if (response?.data?.data?.role == "receptionist") {
         navigate("/receptionist/dashboard");
-      }
-      else if (response?.data?.data?.role == "nurse") {
+      } else if (response?.data?.data?.role == "nurse") {
         navigate("/nurse/dashboard");
-      }
-
-      else if (response?.data?.data?.role == "nurseAdmin") {
+      } else if (response?.data?.data?.role == "nurseAdmin") {
         navigate("/nurse/dashboard");
+      } else if (response?.data?.data?.role == "pharmacist") {
+        navigate("/pharmacy/dashboard");
+      } else if (response?.data?.data?.role == "pharmacy_admin") {
+        navigate("/pharmacy/admin");
       }
-      else if (response?.data?.data?.role == "pharmacist") {
-        navigate("/nurse/dashboard");
-      }
-
     } else {
       setIsloading(false);
       setValidate(false);
@@ -90,7 +95,7 @@ function StaffLogin() {
     console.log("encoded response", response.credential);
     userDets = jwt_decode(response.credential);
 
-    setStaffGoogleObj(userDets)
+    setStaffGoogleObj(userDets);
     verifyGoogleLogin();
   }
 
@@ -111,25 +116,20 @@ function StaffLogin() {
       alert("login successful");
       setIsloading(false);
       setCurrentEmpId(findUser?.data?.employees?.data[0]);
-      let loginObj = findUser?.data?.employees?.data[0]
+      let loginObj = findUser?.data?.employees?.data[0];
       //console.log(currentEmpId)
       //console.log(findUser?.data?.employees?.data[0]);
 
       if (loginObj?.role == "doctor") {
         navigate("/doctor/dashboard");
-      }
-      else if (loginObj?.role == "receptionist") {
+      } else if (loginObj?.role == "receptionist") {
         navigate("/receptionist/dashboard");
-      }
-      else if (loginObj?.role == "nurse") {
+      } else if (loginObj?.role == "nurse") {
         navigate("/nurse/dashboard");
-      }
-
-      else if (loginObj?.role == "nurseAdmin") {
+      } else if (loginObj?.role == "nurseAdmin") {
         navigate("/nurse/dashboard");
-      }
-      else if (loginObj?.role == "pharmacist") {
-        navigate("/nurse/dashboard");
+      } else if (loginObj?.role == "pharmacist") {
+        navigate("/pharmacy/dashboard");
       }
     } else {
       setIsloading(false);
@@ -147,15 +147,13 @@ function StaffLogin() {
   }, []);
   google.accounts.id.renderButton(document.getElementById("signInGoogle"), {
     size: "large",
-    theme: "outline"
+    theme: "outline",
   });
-  const clientID = "357757074966 - ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com"
+  const clientID =
+    "357757074966 - ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com";
   return (
     <>
-
-      {isLoading && (
-        <SpinnerLoader />
-      )}
+      {isLoading && <SpinnerLoader />}
       <div className="containerbg  container-fluid">
         <main className="login-banner m-auto    ">
           <div className="row">
@@ -191,8 +189,6 @@ function StaffLogin() {
               </header>
               <form className=" rounded-1 border border-1 p-3 col-9 m-auto mt-5">
                 <div className="col-9 m-auto">
-
-
                   {loginWithPhone == true ? (
                     <>
                       <label
@@ -205,8 +201,6 @@ function StaffLogin() {
                         Phone
                       </label>
                       <div className="form-floating mb-3">
-
-
                         <input
                           onChange={(e) => {
                             setLoginData({
@@ -240,8 +234,6 @@ function StaffLogin() {
                       </label>
 
                       <div className="form-floating mb-3">
-
-
                         <input
                           onChange={(e) => {
                             setLoginData({
@@ -262,7 +254,6 @@ function StaffLogin() {
                         <label htmlFor="floatingInput">Email address</label>
                       </div>
                     </>
-
                   )}
 
                   {/* {validate == true && !loginData.email ? (<p className='text-danger'>*empty</p>) : (null)} */}
@@ -330,8 +321,6 @@ function StaffLogin() {
               <div className="optional-login col-9  text-center  m-auto mt-5">
                 <div>
                   <div className="col-12">
-
-
                     <div
                       className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center"
                       id="signInGoogle"
@@ -341,27 +330,25 @@ function StaffLogin() {
                 <br />
 
                 <div className="mt-3 mb-5">
-                  {loginWithPhone == true ? (<button
-                    onClick={() => {
-                      setLoginWithPhone(false)
-                    }}
-                    className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center">
-
-                    <CiMail />  Login with
-                    mail
-                  </button>) : (
-
+                  {loginWithPhone == true ? (
                     <button
                       onClick={() => {
-                        setLoginWithPhone(true)
+                        setLoginWithPhone(false);
                       }}
-                      className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center">
-
-                      <BsFillTelephoneFill />  Login with
-                      phone
+                      className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center"
+                    >
+                      <CiMail /> Login with mail
                     </button>
-                  )
-                  }
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setLoginWithPhone(true);
+                      }}
+                      className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center"
+                    >
+                      <BsFillTelephoneFill /> Login with phone
+                    </button>
+                  )}
                 </div>
               </div>
             </section>

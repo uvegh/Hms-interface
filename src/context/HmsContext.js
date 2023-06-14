@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 export const HmsContext = createContext();
 
@@ -11,59 +11,61 @@ function HmsProvider(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPatientId, setCurrentPatientId] = useState({});
   const [appointments, setAppointments] = useState([]);
-  const [appt, setAppt] = useState()
+  const [appt, setAppt] = useState();
   // console.log(currentPatientId + "this is from the context api")
   const [patientGoogleObj, setPatientGoogleObj] = useState({});
   // console.log(patientGoogleObj);
-  const [staffGoogleObj, setStaffGoogleObj] = useState({})
-  const [prescriptionsDeployed, setPrescriptionsDeployed] = useState([])
-  const [diagnosis, setDiagnosis] = useState([])
-  const [nurseObj, setNurseObj] = useState({})
-  const [consultation, setConsultation] = useState([])
-  const [doctors, setDoctors] = useState()
-  const [consultationNurse, setConsultationNurse] = useState()
-  const [consultationDoctor, setConsultationDoctor] = useState()
-  const baseUrl = 'https://gavohms.onrender.com'
-  const [departments, setDepartments] = useState()
-  const [patientID, setPatientID] = useState({})
-  const [avaialableConsultants, setAvaialableConsultants] = useState()
-  const [avaialabeGeneralDoctors, setAvaialabeGeneralDoctors] = useState()
-  const [nurses, setNurses] = useState()
-  const [additionalNurseDetail, setAdditionalNurseDetail] = useState()
-  const [patientsInChargeOf, setPatientsInChargeOf] = useState()
-  const [wardsInChargeOf, setWardsInChargeOf] = useState()
-  const [wards, setWards] = useState()
-  const [profileObj, setProfileObj] = useState()
-  const [bedsInWard, setBedsInWard] = useState()
+  const [staffGoogleObj, setStaffGoogleObj] = useState({});
+  const [prescriptionsDeployed, setPrescriptionsDeployed] = useState([]);
+  const [diagnosis, setDiagnosis] = useState([]);
+  const [nurseObj, setNurseObj] = useState({});
+  const [consultation, setConsultation] = useState([]);
+  const [doctors, setDoctors] = useState();
+  const [consultationNurse, setConsultationNurse] = useState();
+  const [consultationDoctor, setConsultationDoctor] = useState();
+  const baseUrl = "https://gavohms.onrender.com";
+  const [departments, setDepartments] = useState();
+  const [patientID, setPatientID] = useState({});
+  const [avaialableConsultants, setAvaialableConsultants] = useState();
+  const [avaialabeGeneralDoctors, setAvaialabeGeneralDoctors] = useState();
+  const [nurses, setNurses] = useState();
+  const [additionalNurseDetail, setAdditionalNurseDetail] = useState();
+  const [patientsInChargeOf, setPatientsInChargeOf] = useState();
+  const [wardsInChargeOf, setWardsInChargeOf] = useState();
+  const [wards, setWards] = useState();
+  const [profileObj, setProfileObj] = useState();
+  const [bedsInWard, setBedsInWard] = useState();
+  const [PharmacistId, setPharmacistID] = useState();
+  const [PharmacyAdmin, setPharmacyAdmin] = useState();
   const showLoggedInNotification = () => {
-    toast('Logged in!', {
+    toast("Logged in!", {
       position: toast.POSITION.TOP_RIGHT,
       className: "loggedIn-notification",
       theme: "colored",
       autoClose: 2000,
-      hideProgressBar: true
-
-
-    })
-  }
+      hideProgressBar: true,
+    });
+  };
 
   const customAlertNotify = (info) => {
-    toast.success(info), {
-      position: toast.POSITION.TOP_RIGHT,
-      theme: "colored",
-      autoClose: 2000,
-      hideProgressBar: true
-    }
-  }
+    toast.success(info),
+      {
+        position: toast.POSITION.TOP_RIGHT,
+        theme: "colored",
+        autoClose: 2000,
+        hideProgressBar: true,
+      };
+  };
 
   const customAlertWarning = (info) => {
-    toast.warn(info), {
-      position: toast.POSITION.TOP_RIGHT,
-      theme: "colored",
-      autoClose: 2000,
-      hideProgressBar: true
-    }
-  }
+    toast.warn(info),
+      {
+        position: toast.POSITION.TOP_RIGHT,
+        theme: "colored",
+        autoClose: 2000,
+        hideProgressBar: true,
+      };
+  };
 
   const handleGetDiagnosis = async () => {
     let response = (await axios.get(`${baseUrl}/record`)).data;
@@ -79,7 +81,7 @@ function HmsProvider(props) {
 
   const handleGetAppointment = async () => {
     let response = (await axios.get(`${baseUrl}/appointment`)).data;
-    setAppt(response?.appointment)
+    setAppt(response?.appointment);
     //console.log("appointment", response?.appointment);
 
     let filterAppointment = response?.appointment.filter((doctor) => {
@@ -105,15 +107,13 @@ function HmsProvider(props) {
   };
 
   const handleGetNurseDetail = async () => {
-    let response = (await axios.get(`${baseUrl}/nurse/${currentEmpId?.id}`))
+    let response = await axios.get(`${baseUrl}/nurse/${currentEmpId?.id}`);
     //console.log(currentEmpId?.id);
-    setPatientsInChargeOf(response?.data?.data?.patients_incharge_of)
-    setWardsInChargeOf(response?.data?.data?.ward_no)
+    setPatientsInChargeOf(response?.data?.data?.patients_incharge_of);
+    setWardsInChargeOf(response?.data?.data?.ward_no);
     // console.log(response?.data?.data?.patients_incharge_of);
     setNurseObj(response);
   };
-
-
 
   const handleGetConsultation = async () => {
     let response = (await axios.get(`${baseUrl}/consultation`)).data;
@@ -121,7 +121,10 @@ function HmsProvider(props) {
     setConsultation(response?.data);
 
     let nurse_consult = response?.data?.filter((consultation) => {
-      return consultation?.nurse_seen == false && consultation?.payment_status == "paid";
+      return (
+        consultation?.nurse_seen == false &&
+        consultation?.payment_status == "paid"
+      );
     });
 
     setConsultationNurse(nurse_consult);
@@ -145,105 +148,97 @@ function HmsProvider(props) {
   const handleGetDepartments = async () => {
     let response = (await axios.get(`${baseUrl}/department`)).data;
     //console.log(response?.department);
-    setDepartments(response?.department)
-
-  }
+    setDepartments(response?.department);
+  };
 
   const getAvaialbelConsultantByDepartment = async (deptId) => {
-    let response = (await axios.get(`${baseUrl}/employee?role=doctor&department=${deptId}&status=available`)).data;
+    let response = (
+      await axios.get(
+        `${baseUrl}/employee?role=doctor&department=${deptId}&status=available`
+      )
+    ).data;
     //console.log(response.employees?.data);
-    setAvaialableConsultants(response?.employees?.data)
-
-
-  }
+    setAvaialableConsultants(response?.employees?.data);
+  };
 
   const getAvaialabeGeneralDoctors = async (deptId) => {
-    let response = (await axios.get(`${baseUrl}/employee?role=doctor&department=647213929f4ee94640c242a7&status=available`)).data;
+    let response = (
+      await axios.get(
+        `${baseUrl}/employee?role=doctor&department=647213929f4ee94640c242a7&status=available`
+      )
+    ).data;
     //console.log(response.employees?.data);
-    setAvaialabeGeneralDoctors(response?.employees?.data)
-
-
-  }
+    setAvaialabeGeneralDoctors(response?.employees?.data);
+  };
   const handleGetAllNurses = async () => {
     let response = (await axios.get(`${baseUrl}/employee?role=nurse`)).data;
     // console.log(response?.employees?.data);
-    setNurses(response?.employees?.data)
-  }
+    setNurses(response?.employees?.data);
+  };
 
   const handlegetNurseAddInfo = async (id) => {
-    let response = (await axios.get(`${baseUrl}/nurse/${id}`))
-      .data;
+    let response = (await axios.get(`${baseUrl}/nurse/${id}`)).data;
     //console.log(response?.data);
     setAdditionalNurseDetail(response?.data);
-  }
+  };
 
   const handleGetAllWards = async () => {
-    let response = (await axios.get(`${baseUrl}/ward`))
-      .data;
+    let response = (await axios.get(`${baseUrl}/ward`)).data;
     // console.log(response?.data);
     setWards(response?.data);
-
-  }
+  };
 
   const reload = async () => {
     if (!currentEmpId?.id) {
       //navigate("/staflogin")
-      return
+      return;
     }
     let response = await axios
       .get(`${baseUrl}/employee/${currentEmpId?.id}`)
 
       .catch((err) => {
-
         //console.log(err);
         // alert("failed to reload");
-
       });
 
     // console.log(response);
     if (response?.status == "200") {
-
-
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
       //console.log(response?.data?.data)
       setProfileObj(response?.data?.data);
-      return
+      return;
     }
-  }
+  };
   const removePfp = async () => {
-    let response = await (axios.put(`${baseUrl}/employee/${currentEmpId?.id}`, {
-      avatar: "img/user.png"
-    }))
+    let response = await axios.put(`${baseUrl}/employee/${currentEmpId?.id}`, {
+      avatar: "img/user.png",
+    });
     //console.log(response);
     if (response?.status == "200") {
-      customAlertNotify("profile deleted")
-      reload()
-      return
+      customAlertNotify("profile deleted");
+      reload();
+      return;
     }
-    customAlertWarning("failed to remove profile")
-  }
+    customAlertWarning("failed to remove profile");
+  };
   const HandleGetAllBeds = async (wardId) => {
-    let response = (await axios.get(`${baseUrl}/bed`)).data
+    let response = (await axios.get(`${baseUrl}/bed`)).data;
     //console.log(response?.data);
 
     let filterByWard = response?.data?.filter((bed) => {
-      return bed?.ward_id?._id == wardId
-    })
+      return bed?.ward_id?._id == wardId;
+    });
     // console.log(filterByWard);
-    setBedsInWard(filterByWard)
-  }
-
+    setBedsInWard(filterByWard);
+  };
 
   useEffect(() => {
-    handleGetDepartments()
-    handleGetAllNurses()
-    handleGetNurseDetail()
-    handleGetAllWards()
-    reload()
-
-  }, [])
-
-
+    handleGetDepartments();
+    handleGetAllNurses();
+    handleGetNurseDetail();
+    handleGetAllWards();
+    reload();
+  }, []);
 
   return (
     <HmsContext.Provider
@@ -310,10 +305,13 @@ function HmsProvider(props) {
         profileObj,
         removePfp,
         HandleGetAllBeds,
-        bedsInWard
+        bedsInWard,
+        PharmacistId,
+        setPharmacistID,
+        PharmacyAdmin,
+        setPharmacyAdmin,
       }}
     >
-
       {props.children}
     </HmsContext.Provider>
   );
