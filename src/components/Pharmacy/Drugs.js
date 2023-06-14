@@ -1,6 +1,8 @@
 import React from "react";
 import gavologo from "../../img/gavologo.png";
 import { useState, useEffect } from "react";
+import { HmsContext } from "../../context/HmsContext";
+import { useContext } from "react";
 import axios from "axios";
 const Drugs = ({ setShowCreateDrug }) => {
   const baseUrl = "https://gavohms.onrender.com";
@@ -8,42 +10,69 @@ const Drugs = ({ setShowCreateDrug }) => {
 
   const [update, setUpdate] = useState(false);
   const [drugFrom, setDrugFrom] = useState(true);
-  const [disable, setDisable] = useState("enableDrug")
+  const [disable, setDisable] = useState("enableDrug");
   const [drug, setDrug] = useState({
     name: "",
-    category:"",
-    status:"",
-    brand:"",
-    strength:"",
-    quantity:"",
-    expire_date:"",
-    batch_no:"",
-    item_code:"",
-    price:"",
-    pharmacy_id:"",
-    branch_id:"",
+    category: "",
+    status: "",
+    brand: "",
+    strength: "",
+    quantity: "",
+    expire_date: "",
+    batch_no: "",
+    item_code: "",
+    price: "",
+    pharmacy_id: "",
+    branch_id: "",
   });
-
-  const createDrug = async ()=>{
-    try{
-      let response = await axios.post(`${testUrl}/drugs`, drug).then((resp)=>{
-        console.log(resp)
-        alert("Drug created successfully")
-        setShowCreateDrug(false);
-      }).catch((err)=> console.log(err))
-    }catch(err){
+  const { PharmacyAdmin } = useContext(HmsContext);
+  const [Pharmacy, setPharmacy] = useState()
+  console.log(Pharmacy)
+  const getPharmacy = async () => {
+    if (PharmacyAdmin.id) {
+      let response =( await axios.get(
+        `${testUrl}/pharmacy?emp_id=${PharmacyAdmin.id}`
+      )).data;
+      setPharmacy(response?.data)
+    }
+  };
+  const createDrug = async () => {
+    try {
+      let response = await axios
+        .post(`${testUrl}/drugs`, drug)
+        .then((resp) => {
+          console.log(resp);
+          alert("Drug created successfully");
+          setShowCreateDrug(false);
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
       console.log(err.message);
     }
-  }
+  };
+
+  useEffect(() => {
+    if (
+      !drug.category ||
+      !drug.name ||
+      !drug.status ||
+      !drug.brand ||
+      !drug.strength ||
+      !drug.quantity ||
+      !drug.expire_date ||
+      !drug.batch_no ||
+      !drug.item_code ||
+      !drug.price
+    ) {
+      setDisable("disableDrug");
+    } else {
+      setDisable("enableDrug");
+    }
+  }, [drug]);
 
   useEffect(()=>{
-    if(!drug.category || !drug.name || !drug.status || !drug.brand || !drug.strength || !drug.quantity || !drug.expire_date || !drug.batch_no || !drug.item_code || !drug.price){
-      setDisable("disableDrug")
-    }else{
-      setDisable("enableDrug")
-    }
-  },[drug])
-
+    getPharmacy()
+  },[])
   return (
     <div>
       {drugFrom && (
@@ -66,14 +95,18 @@ const Drugs = ({ setShowCreateDrug }) => {
                       name="name"
                       value={drug.name}
                       placeholder="name"
-                      onChange={(e)=> setDrug({...drug, name: e.target.value})}
+                      onChange={(e) =>
+                        setDrug({ ...drug, name: e.target.value })
+                      }
                     />
                     <input
                       type="text"
                       name="category"
                       value={drug.category}
                       placeholder="category"
-                      onChange={(e)=> setDrug({...drug, category: e.target.value})}
+                      onChange={(e) =>
+                        setDrug({ ...drug, category: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -85,14 +118,18 @@ const Drugs = ({ setShowCreateDrug }) => {
                       name="status"
                       value={drug.status}
                       placeholder="status"
-                      onChange={(e)=> setDrug({...drug, status: e.target.value})}
+                      onChange={(e) =>
+                        setDrug({ ...drug, status: e.target.value })
+                      }
                     />
                     <input
                       type="text"
                       name="brand"
                       value={drug.brand}
                       placeholder="brand"
-                      onChange={(e)=> setDrug({...drug, brand: e.target.value})}
+                      onChange={(e) =>
+                        setDrug({ ...drug, brand: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -104,14 +141,18 @@ const Drugs = ({ setShowCreateDrug }) => {
                       name="strength"
                       value={drug.strength}
                       placeholder="strength"
-                      onChange={(e)=> setDrug({...drug, strength: e.target.value})}
+                      onChange={(e) =>
+                        setDrug({ ...drug, strength: e.target.value })
+                      }
                     />
                     <input
                       type="text"
                       name="qunatity"
                       value={drug.quantity}
                       placeholder="quantity"
-                      onChange={(e)=> setDrug({...drug, quantity: e.target.value})}
+                      onChange={(e) =>
+                        setDrug({ ...drug, quantity: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -123,14 +164,18 @@ const Drugs = ({ setShowCreateDrug }) => {
                       name="expirydate"
                       value={drug.expire_date}
                       placeholder="expiry date"
-                      onChange={(e)=> setDrug({...drug, expire_date: e.target.value})}
+                      onChange={(e) =>
+                        setDrug({ ...drug, expire_date: e.target.value })
+                      }
                     />
                     <input
                       type="text"
                       name="batch_no"
                       value={drug.batch_no}
                       placeholder="batch no"
-                      onChange={(e)=> setDrug({...drug, batch_no: e.target.value})}
+                      onChange={(e) =>
+                        setDrug({ ...drug, batch_no: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -142,14 +187,18 @@ const Drugs = ({ setShowCreateDrug }) => {
                       name="itemcode"
                       value={drug.item_code}
                       placeholder="item code"
-                      onChange={(e)=> setDrug({...drug, item_code:e.target.value})}
+                      onChange={(e) =>
+                        setDrug({ ...drug, item_code: e.target.value })
+                      }
                     />
                     <input
                       type="text"
                       name="price"
                       value={drug.price}
                       placeholder="price"
-                      onChange={(e)=> setDrug({...drug, price: e.target.value})}
+                      onChange={(e) =>
+                        setDrug({ ...drug, price: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -164,9 +213,13 @@ const Drugs = ({ setShowCreateDrug }) => {
               >
                 Discard
               </button>
-              <button type="btn" className={disable} onClick={()=>{
-                createDrug()
-              }}>
+              <button
+                type="btn"
+                className={disable}
+                onClick={() => {
+                  createDrug();
+                }}
+              >
                 Create Drug
               </button>
             </div>

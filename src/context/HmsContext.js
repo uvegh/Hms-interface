@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 export const HmsContext = createContext();
 
@@ -11,7 +11,7 @@ function HmsProvider(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPatientId, setCurrentPatientId] = useState({});
   const [appointments, setAppointments] = useState([]);
-  const [appt, setAppt] = useState()
+  const [appt, setAppt] = useState();
   // console.log(currentPatientId + "this is from the context api")
   const [patientGoogleObj, setPatientGoogleObj] = useState({});
   // console.log(patientGoogleObj);
@@ -38,35 +38,39 @@ function HmsProvider(props) {
   const [userNotifications, setUserNotifications] = useState()
   const [viewNotification, setViewNotification] = useState(false)
   const [notificationIsOpen, setNotificationIsOpen] = useState(false);
+
+
+  const [PharmacistId, setPharmacistID] = useState();
+  const [PharmacyAdmin, setPharmacyAdmin] = useState();
   const showLoggedInNotification = () => {
-    toast('Logged in!', {
+    toast("Logged in!", {
       position: toast.POSITION.TOP_RIGHT,
       className: "loggedIn-notification",
       theme: "colored",
       autoClose: 2000,
-      hideProgressBar: true
-
-
-    })
-  }
+      hideProgressBar: true,
+    });
+  };
 
   const customAlertNotify = (info) => {
-    toast.success(info), {
+    toast.success(info),
+    {
       position: toast.POSITION.TOP_RIGHT,
       theme: "colored",
       autoClose: 2000,
-      hideProgressBar: true
-    }
-  }
+      hideProgressBar: true,
+    };
+  };
 
   const customAlertWarning = (info) => {
-    toast.warn(info), {
+    toast.warn(info),
+    {
       position: toast.POSITION.TOP_RIGHT,
       theme: "colored",
       autoClose: 2000,
-      hideProgressBar: true
-    }
-  }
+      hideProgressBar: true,
+    };
+  };
 
   const handleGetDiagnosis = async () => {
     let response = (await axios.get(`${baseUrl}/record`)).data;
@@ -82,7 +86,7 @@ function HmsProvider(props) {
 
   const handleGetAppointment = async () => {
     let response = (await axios.get(`${baseUrl}/appointment`)).data;
-    setAppt(response?.appointment)
+    setAppt(response?.appointment);
     //console.log("appointment", response?.appointment);
 
     let filterAppointment = response?.appointment.filter((doctor) => {
@@ -108,15 +112,13 @@ function HmsProvider(props) {
   };
 
   const handleGetNurseDetail = async () => {
-    let response = (await axios.get(`${baseUrl}/nurse/${currentEmpId?.id}`))
+    let response = await axios.get(`${baseUrl}/nurse/${currentEmpId?.id}`);
     //console.log(currentEmpId?.id);
-    setPatientsInChargeOf(response?.data?.data?.patients_incharge_of)
-    setWardsInChargeOf(response?.data?.data?.ward_no)
+    setPatientsInChargeOf(response?.data?.data?.patients_incharge_of);
+    setWardsInChargeOf(response?.data?.data?.ward_no);
     // console.log(response?.data?.data?.patients_incharge_of);
     setNurseObj(response);
   };
-
-
 
   const handleGetConsultation = async () => {
     let response = (await axios.get(`${baseUrl}/consultation`)).data;
@@ -124,7 +126,10 @@ function HmsProvider(props) {
     setConsultation(response?.data);
 
     let nurse_consult = response?.data?.filter((consultation) => {
-      return consultation?.nurse_seen == false && consultation?.payment_status == "paid";
+      return (
+        consultation?.nurse_seen == false &&
+        consultation?.payment_status == "paid"
+      );
     });
 
     setConsultationNurse(nurse_consult);
@@ -148,71 +153,67 @@ function HmsProvider(props) {
   const handleGetDepartments = async () => {
     let response = (await axios.get(`${baseUrl}/department`)).data;
     //console.log(response?.department);
-    setDepartments(response?.department)
-
-  }
+    setDepartments(response?.department);
+  };
 
   const getAvaialbelConsultantByDepartment = async (deptId) => {
-    let response = (await axios.get(`${baseUrl}/employee?role=doctor&department=${deptId}&status=available`)).data;
+    let response = (
+      await axios.get(
+        `${baseUrl}/employee?role=doctor&department=${deptId}&status=available`
+      )
+    ).data;
     //console.log(response.employees?.data);
-    setAvaialableConsultants(response?.employees?.data)
-
-
-  }
+    setAvaialableConsultants(response?.employees?.data);
+  };
 
   const getAvaialabeGeneralDoctors = async (deptId) => {
-    let response = (await axios.get(`${baseUrl}/employee?role=doctor&department=647213929f4ee94640c242a7&status=available`)).data;
+    let response = (
+      await axios.get(
+        `${baseUrl}/employee?role=doctor&department=647213929f4ee94640c242a7&status=available`
+      )
+    ).data;
     //console.log(response.employees?.data);
-    setAvaialabeGeneralDoctors(response?.employees?.data)
-
-
-  }
+    setAvaialabeGeneralDoctors(response?.employees?.data);
+  };
   const handleGetAllNurses = async () => {
     let response = (await axios.get(`${baseUrl}/employee?role=nurse`)).data;
     // console.log(response?.employees?.data);
-    setNurses(response?.employees?.data)
-  }
+    setNurses(response?.employees?.data);
+  };
 
   const handlegetNurseAddInfo = async (id) => {
-    let response = (await axios.get(`${baseUrl}/nurse/${id}`))
-      .data;
+    let response = (await axios.get(`${baseUrl}/nurse/${id}`)).data;
     //console.log(response?.data);
     setAdditionalNurseDetail(response?.data);
-  }
+  };
 
   const handleGetAllWards = async () => {
-    let response = (await axios.get(`${baseUrl}/ward`))
-      .data;
+    let response = (await axios.get(`${baseUrl}/ward`)).data;
     // console.log(response?.data);
     setWards(response?.data);
-
-  }
+  };
 
   const reload = async () => {
     if (!currentEmpId?.id) {
       //navigate("/staflogin")
-      return
+      return;
     }
     let response = await axios
       .get(`${baseUrl}/employee/${currentEmpId?.id}`)
 
       .catch((err) => {
-
         //console.log(err);
         // alert("failed to reload");
-
       });
 
     // console.log(response);
     if (response?.status == "200") {
-
-
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
       //console.log(response?.data?.data)
       setProfileObj(response?.data?.data);
-      return
+      return;
     }
-  }
+  };
   const removePfp = async () => {
     let response = await (axios.put(`${baseUrl}/employee/${currentEmpId?.id}`, {
       avatar: "https://res.cloudinary.com/df9o0bto4/image/upload/v1686672390/userAvatars/1686672389691.png"
@@ -224,15 +225,15 @@ function HmsProvider(props) {
       reload()
       return
     }
-    customAlertWarning("failed to remove profile")
-  }
+    customAlertWarning("failed to remove profile");
+  };
   const HandleGetAllBeds = async (wardId) => {
-    let response = (await axios.get(`${baseUrl}/bed`)).data
+    let response = (await axios.get(`${baseUrl}/bed`)).data;
     //console.log(response?.data);
 
     let filterByWard = response?.data?.filter((bed) => {
-      return bed?.ward_id?._id == wardId
-    })
+      return bed?.ward_id?._id == wardId;
+    });
     // console.log(filterByWard);
     setBedsInWard(filterByWard)
   }
@@ -344,10 +345,13 @@ function HmsProvider(props) {
         setViewNotification,
         removeNotification,
         notificationIsOpen,
-        setNotificationIsOpen
+        setNotificationIsOpen,
+        PharmacistId,
+        setPharmacistID,
+        PharmacyAdmin,
+        setPharmacyAdmin,
       }}
     >
-
       {props.children}
     </HmsContext.Provider>
   );
