@@ -63,30 +63,44 @@ function ProfileNurse() {
     const [updateAvatarFile, setUpdateAvatarFile] = useState({
         avatar: ""
     })
-    const formData = new FormData()
+
 
     //handle file change on update avatar
 
-    const handleImgChange = (e) => {
-        console.log("yooo its working")
-        const fileObj = e.target.files[0]
-        console.log(fileObj)
-        if (!fileObj) {
-            console.log(fileObj)
-            return
-        }
-        console.log(fileObj);
-        setUpdateAvatarFile(fileObj)
-        console.log(updateAvatarFile)
-        handleUpdateAvatarFile()
-    }
+    // const handleImgChange = (e) => {
+    //     console.log("yooo its working")
+    //     const fileObj = e.target.files[0]
+    //     console.log(fileObj)
+    //     // setUpdateAvatarFile({ ...updateAvatarFile, avatar:})
+    //     if (!fileObj) {
+    //         console.log(fileObj)
+    //         return
+    //     }
+    //     console.log(fileObj);
+
+    //     console.log(updateAvatarFile)
+    //     handleUpdateAvatarFile()
+    // }
 
     //update avatar through file
     const handleUpdateAvatarFile = async () => {
-        formData.append("avatar", updateAvatarFile)
+        if (updateAvatarFile.avatar == "") {
+            console.log(updateAvatarFile.avatar)
+            return
+        }
+        const formData = new FormData()
+        formData.append("avatar", updateAvatarFile.avatar)
+        console.log(updateAvatarFile.avatar)
         console.log(formData)
-        let response = await (axios.put(`${baseUrl}/employee/pfp/${currentEmpId?.id}`, formData)).data
-        console.log(response)
+        console.log(currentEmpId?.id)
+        let response = await (axios.put(`${baseUrl}/employee/pfp/${currentEmpId?.id}`, formData,
+
+        )).catch((err) => {
+            console.log(err);
+            customAlertWarning("Failed to update profile")
+        })
+        if (response?.data?.code == "200") return customAlertNotify("Profile updated")
+        customAlertWarning("Failed to update profile")
     }
 
 
@@ -352,10 +366,10 @@ function ProfileNurse() {
                             </li>
 
                             {
-    currentEmpId?.role=="nurseAdmin"?(  <li className="sidebar_btn">
-                                <Link to="/nurse/management"> Management </Link>
-                            </li>):null
-}
+                                currentEmpId?.role == "nurseAdmin" ? (<li className="sidebar_btn">
+                                    <Link to="/nurse/management"> Management </Link>
+                                </li>) : null
+                            }
                             <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
@@ -405,9 +419,14 @@ function ProfileNurse() {
                                                     handleAddPfp()
                                                 }}
                                             >
-                                                <input type="file" hidden
+                                                <input type="file" name='avatar' hidden
                                                     ref={inputRef}
-                                                    onChange={handleImgChange}
+                                                    onChange={(e) => {
+
+                                                        setUpdateAvatarFile({ ...updateAvatarFile, avatar: e.target.files[0] })
+                                                        console.log(updateAvatarFile)
+                                                        handleUpdateAvatarFile()
+                                                    }}
                                                 />
                                                 <Link className="dropdown-item" >
                                                     <img className='me-2' src={photoIcon} alt="" />

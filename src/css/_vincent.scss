@@ -598,6 +598,11 @@ select {
 }
 
 .notifications-bar {
+  .time {
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 0.8em;
+  }
+
   list-style: none;
   color: $loginBlue;
   top: 13%;
@@ -623,7 +628,12 @@ select {
   }
 
   .notification-body {
-    overflow-y: scroll;
+
+
+    .notification-text {
+      min-width: 10rem;
+      text-align: end;
+    }
 
     ::-webkit-scrollbar {
       display: none;
@@ -631,6 +641,11 @@ select {
 
     ul {
       list-style: none;
+      overflow-y: scroll;
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
     }
 
 
@@ -639,15 +654,19 @@ select {
 
     section {
       p {
-        text-justify: newspaper;
+       
       }
 
-      min-height: 7em;
+      min-height: 5em;
 
 
       .closeBtn {
         width: 0.7em;
         height: 0.7em;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 
@@ -660,6 +679,16 @@ select {
 
 
 
+  }
+
+}
+
+.closeBtn-header {
+  width: 0.7em;
+  height: 0.7em;
+
+  &:hover {
+    cursor: pointer;
   }
 }
 

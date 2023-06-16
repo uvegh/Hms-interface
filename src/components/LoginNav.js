@@ -6,6 +6,8 @@ import notificationBar from "../img/notificationBar.png";
 import profile from "../img/pexels-photo-6.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { HmsContext } from "../context/HmsContext";
+import { format, parseISO } from "date-fns";
+import TimeAgo from "../TimeAgo";
 function LoginNav(props) {
   const {
     isLoggedIn,
@@ -23,6 +25,7 @@ function LoginNav(props) {
 
   const baseUrl = "https://gavohms.onrender.com";
   const navigate = useNavigate();
+
 
 
 
@@ -47,6 +50,9 @@ function LoginNav(props) {
     overflow: 'hidden'
   };
 
+
+
+
   useEffect(() => {
     reload();
     handleGetNotifications();
@@ -56,13 +62,13 @@ function LoginNav(props) {
 
 
 
-      <div className="notifications-bar col-lg-3" style={divStyle}>
+      {isLoggedIn == true ? (<div className="notifications-bar col-lg-3 col-md-4 col-sm-11" style={divStyle}>
         <ul className="notification-body container-fluid ">
           <li>
             <header className="notifications-header d-flex justify-content-between">
               <img src={notificationBar} alt="bar" />
               <h5>Notifications</h5>
-              <img
+              <img className="closeBtn-header"
                 onClick={() => {
 
                   setViewNotification(false)
@@ -80,9 +86,9 @@ function LoginNav(props) {
           ) : (
             userNotifications?.map((notification, i) => (
               <li className="border-bottom bg-white" key={i}>
-                <section className=" d-flex justify-content-between  align-content-center pt-4 flex-wrap container   ">
+                <section className=" d-flex justify-content-between   pt-4 flex-wrap container   ">
                   <img className="user-icon" src={profile} alt="bar" />
-                  <p>{notification?.info}</p>
+                  <p className="notification-text">{notification?.info}</p>
 
                   <img
                     onClick={() => {
@@ -93,11 +99,19 @@ function LoginNav(props) {
                     alt="close"
                   />
                 </section>
+                <div className="col-8 ms-auto d-flex justify-content-between time">
+                  <span className="fst-italic fw-lighter ">
+                    <TimeAgo timestamp={notification?.createdAt} />
+                  </span>
+                  <span className=" fw-lighter ">
+                    {notification?.createdAt.substring(11, 16)}
+                  </span>
+                </div>
               </li>
             ))
           )}
         </ul>
-      </div>
+      </div>) : null}
 
 
       <nav className="fixed-top container-fluid ">
@@ -145,7 +159,7 @@ function LoginNav(props) {
             ) : (
               <>
                 <button
-                  className="btn btn-home btn-primary btn-lg border-0 "
+                  className="btn btn-home btn-primary btn-lg border-0 me-3 "
                   onClick={() => {
                     navigate("/stafflogin");
                   }}

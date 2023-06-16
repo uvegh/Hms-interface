@@ -123,7 +123,7 @@ function StaffLogin() {
       } else if (loginObj?.role == "receptionist") {
         navigate("/receptionist/dashboard");
       } else if (loginObj?.role == "nurse") {
-        navigate("/nurse/dashboard");
+        navigate("/nurse/dashboard", { replace: true });
       } else if (loginObj?.role == "nurseAdmin") {
         navigate("/nurse/dashboard");
       } else if (loginObj?.role == "pharmacist") {
@@ -153,10 +153,7 @@ function StaffLogin() {
   }, []);
 
 
-  google.accounts.id.renderButton(document.getElementById("signInGoogle"), {
-    size: "large",
-    theme: "outline",
-  });
+
 
   return (
     <>

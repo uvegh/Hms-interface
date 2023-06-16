@@ -42,8 +42,10 @@ function HmsProvider(props) {
 
   const [PharmacistId, setPharmacistID] = useState();
   const [PharmacyAdmin, setPharmacyAdmin] = useState();
+
+  const [allUserNotifications, setAllUserNotifications] = useState()
   const showLoggedInNotification = () => {
-    toast("Logged in!", {
+    toast.info("Logged in!", {
       position: toast.POSITION.TOP_RIGHT,
       className: "loggedIn-notification",
       theme: "colored",
@@ -208,7 +210,7 @@ function HmsProvider(props) {
 
     // console.log(response);
     if (response?.status == "200") {
-      setIsLoggedIn(true);
+      //setIsLoggedIn(true);
       //console.log(response?.data?.data)
       setProfileObj(response?.data?.data);
       return;
@@ -240,11 +242,17 @@ function HmsProvider(props) {
 
   const handleGetNotifications = async () => {
     //get logged in users notification
-    let response = await (await (axios.get(`${baseUrl}/notification?reciever=${currentEmpId?.id}`))).data
+    let response = await (await (axios.get(`${baseUrl}/notification?reciever=${currentEmpId?.id}&seen=false`))).data
     //console.log(response)
     if (response?.code == "200") {
       setUserNotifications(response?.data)
     }
+
+    response = await (await (axios.get(`${baseUrl}/notification?reciever=${currentEmpId?.id}`))).data
+    if (response?.code == "200") {
+      setAllUserNotifications(response?.data)
+    }
+    //console.log(response)
 
 
   }
@@ -350,6 +358,7 @@ function HmsProvider(props) {
         setPharmacistID,
         PharmacyAdmin,
         setPharmacyAdmin,
+        allUserNotifications
       }}
     >
       {props.children}

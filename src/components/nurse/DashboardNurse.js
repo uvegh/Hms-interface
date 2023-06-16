@@ -33,8 +33,8 @@ function DashboardNurse() {
         isLoggedIn,
         profileObj,
         setIsLoggedIn,
-        reload
-        //showLoggedInNotification
+        reload,
+        showLoggedInNotification
 
     } = useContext(HmsContext);
     const { notifications, clear, markAllAsRead, markAsRead } = useNotificationCenter()
@@ -111,20 +111,7 @@ function DashboardNurse() {
         alert("something went wrong")
         setIsloading(false);
     }
-    const showLoggedInNotification = () => {
-        toast.info(`Welcome ${currentEmpId?.first_name}
-         you have ${!patientsInChargeOf?.length ? ("0") : patientsInChargeOf?.length}  new patients and
-         ${wardsInChargeOf?.length ? ("0") : wardsInChargeOf?.length} new ward under your care
-         
-         assigned under your care.
-        
-        ` , {
-            position: toast.POSITION.TOP_RIGHT,
-            draggable: true,
 
-            className: 'loggedin-notification'
-        })
-    }
 
 
 
@@ -144,18 +131,19 @@ function DashboardNurse() {
 
     useEffect(() => {
         if (isLoggedIn == true) {
+            reload()
             showLoggedInNotification()
         }
-        reload()
 
 
-        // handleGetNotifications(loadNotifi)
+
+
     }, [])
 
 
     return (
         <>
-
+            <ToastContainer />
             {isLoading && (
                 <SpinnerLoader />
             )}
@@ -540,13 +528,6 @@ function DashboardNurse() {
                 </div>
             )}
 
-            {/* <ToastContainer
-                className="loggedin-notification"
-
-                autoClose={false}
-                theme="colored"
-                hideProgressBar={true}
-            /> */}
             <section className="doctor__dashboard">
                 <div className="doctor_sidebar">
                     <div className="links_display_box">

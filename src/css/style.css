@@ -2824,6 +2824,10 @@ select {
   right: 0;
   z-index: 1000;
 }
+.notifications-bar .time {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 0.8em;
+}
 .notifications-bar .notifications-header {
   padding: 0.5em;
   background-color: #E1DCDC;
@@ -2837,29 +2841,44 @@ select {
   height: 0.8em;
 }
 .notifications-bar .notification-body {
-  overflow-y: scroll;
   color: #2B415C;
+}
+.notifications-bar .notification-body .notification-text {
+  min-width: 10rem;
+  text-align: end;
 }
 .notifications-bar .notification-body ::-webkit-scrollbar {
   display: none;
 }
 .notifications-bar .notification-body ul {
   list-style: none;
+  overflow-y: scroll;
+}
+.notifications-bar .notification-body ul ::-webkit-scrollbar {
+  display: none;
 }
 .notifications-bar .notification-body section {
-  min-height: 7em;
-}
-.notifications-bar .notification-body section p {
-  text-justify: newspaper;
+  min-height: 5em;
 }
 .notifications-bar .notification-body section .closeBtn {
   width: 0.7em;
   height: 0.7em;
 }
+.notifications-bar .notification-body section .closeBtn:hover {
+  cursor: pointer;
+}
 .notifications-bar .notification-body .user-icon {
   width: 4em;
   height: 3.6em;
   border-radius: 50%;
+}
+
+.closeBtn-header {
+  width: 0.7em;
+  height: 0.7em;
+}
+.closeBtn-header:hover {
+  cursor: pointer;
 }
 
 .notFound-container {

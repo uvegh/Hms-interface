@@ -25,7 +25,7 @@ function BedAllotment() {
 
     } = useContext(HmsContext);
 
-    console.log(wards)
+    // console.log(wards)
     useEffect(() => {
         reload()
     })
