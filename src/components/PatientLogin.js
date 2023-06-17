@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import logo from '../img/ORBIS.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import bgImg1 from '../img/Rectangle 5.png'
 import appleLogo from '../img/apple-logo 1.png'
 import googleIcon from '../img/google-icon-logo-png-transparent 1.png'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 import { HmsContext } from '../context/HmsContext'
-function PatientLogin () {
+function PatientLogin() {
   const baseUrl = 'https://gavohms.onrender.com'
   const [isLoading, setIsloading] = useState(false)
   const [validate, setValidate] = useState(false)
@@ -17,8 +17,8 @@ function PatientLogin () {
     password: ''
   })
 
-  const { patientGoogleObj, setPatientGoogleObj } = useContext(HmsContext)
-
+  const { patientGoogleObj, setPatientGoogleObj, setCurrentEmpId } = useContext(HmsContext)
+  const navigate = useNavigate()
   const handleLogin = async () => {
     setIsloading(true)
     if (!loginData.emailOrPhone || !loginData.password) {
@@ -40,6 +40,9 @@ function PatientLogin () {
     if (response?.status == '200') {
       setIsloading(false)
       setValidate(false)
+      setCurrentEmpId(response?.data?.data)
+      navigate("/patient/dashboard", { replace: true })
+      //console.log(response?.data?.data)
       alert('logged in')
       setLoginData({
         emailOrPhone: '',
@@ -54,7 +57,7 @@ function PatientLogin () {
   }
 
   let userDets = {}
-  async function handleCallbackResponse (response) {
+  async function handleCallbackResponse(response) {
     setIsloading(true)
     console.log('encoded response', response.credential)
     userDets = jwt_decode(response.credential)

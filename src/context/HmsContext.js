@@ -236,7 +236,7 @@ function HmsProvider(props) {
     let filterByWard = response?.data?.filter((bed) => {
       return bed?.ward_id?._id == wardId;
     });
-    // console.log(filterByWard);
+    console.log(filterByWard);
     setBedsInWard(filterByWard)
   }
 
@@ -358,7 +358,8 @@ function HmsProvider(props) {
         setPharmacistID,
         PharmacyAdmin,
         setPharmacyAdmin,
-        allUserNotifications
+        allUserNotifications,
+        setBedsInWard
       }}
     >
       {props.children}

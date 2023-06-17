@@ -653,9 +653,7 @@ select {
     color: $loginBlue;
 
     section {
-      p {
-       
-      }
+
 
       min-height: 5em;
 
@@ -692,11 +690,45 @@ select {
   }
 }
 
-// .patient-history-overlay {
+.search_box_patient {
+  left: 44%
+}
 
-// }
+.patient_daily_info {
+  color: $loginBlue;
+
+  .patient_header {
+    .present_section {
+      .row {
+        display: grid;
+        gap: 1em;
+        grid-template-columns: auto auto auto;
 
 
-// .nurse_search_box {
-//   height: 2.5em !important;
-// }
+        div[class*="col"] {
+          min-height: 8rem;
+          border-radius: 0.3 em;
+
+          .task {
+            margin-top: 1.5em;
+            line-height: 1.3em;
+          }
+
+          img {
+            width: 3rem;
+            height: 3rem;
+            margin-right: 1em;
+          }
+
+          background: #ADD8DC;
+          line-height: 3em;
+          font-size: small;
+        }
+      }
+
+      span {
+        color: rgba(175, 177, 184, 1)
+      }
+    }
+  }
+}

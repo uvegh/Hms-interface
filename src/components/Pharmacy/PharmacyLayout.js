@@ -1,9 +1,13 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import LoginNav from "../LoginNav"
 const PharmacyLayout = () => {
   return (
     <>
-    <Outlet/>
+      <>
+        <LoginNav />
+        <Outlet />
+      </>
     </>
   )
 }

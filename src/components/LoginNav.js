@@ -30,16 +30,6 @@ function LoginNav(props) {
 
 
 
-
-
-  useEffect(() => {
-    if (notificationIsOpen) {
-      setTimeout(() => {
-        setNotificationIsOpen(true);
-      }, 1000);
-    }
-  }, [notificationIsOpen]);
-
   const handleClick = () => {
     setNotificationIsOpen(current => !current);
   };
@@ -49,6 +39,16 @@ function LoginNav(props) {
     transform: notificationIsOpen ? 'translateX(0)' : 'translateX(100%)',
     overflow: 'hidden'
   };
+
+  useEffect(() => {
+    if (notificationIsOpen) {
+      setTimeout(() => {
+        setNotificationIsOpen(true);
+      }, 1000);
+    }
+  }, [notificationIsOpen]);
+
+
 
 
 

@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useContext, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { HmsContext } from '../context/HmsContext'
+import LoginNav from './LoginNav'
 
 function ResetPassword() {
   const baseUrl = "https://gavohms.onrender.com"
@@ -84,6 +85,7 @@ function ResetPassword() {
 
   return (
     <>
+      <LoginNav />
       {
         isLoading && (
           <div className="container-fluid overlay">

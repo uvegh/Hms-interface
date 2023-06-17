@@ -17,6 +17,23 @@ html {
   left: 45%;
 }
 
+.loader-wards {
+  top: 30%;
+  position: absolute;
+  left: 55%;
+}
+.loader-wards .lds-spinner div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 37px;
+  width: 6px;
+  height: 18px;
+  border-radius: 20%;
+  background: #312f2f;
+}
+
 .histLoader {
   top: 35%;
   position: absolute;
@@ -2879,6 +2896,38 @@ select {
 }
 .closeBtn-header:hover {
   cursor: pointer;
+}
+
+.search_box_patient {
+  left: 44%;
+}
+
+.patient_daily_info {
+  color: #2B415C;
+}
+.patient_daily_info .patient_header .present_section .row {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: auto auto auto;
+}
+.patient_daily_info .patient_header .present_section .row div[class*=col] {
+  min-height: 8rem;
+  border-radius: 0.3 em;
+  background: #ADD8DC;
+  line-height: 3em;
+  font-size: small;
+}
+.patient_daily_info .patient_header .present_section .row div[class*=col] .task {
+  margin-top: 1.5em;
+  line-height: 1.3em;
+}
+.patient_daily_info .patient_header .present_section .row div[class*=col] img {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1em;
+}
+.patient_daily_info .patient_header .present_section span {
+  color: rgb(175, 177, 184);
 }
 
 .notFound-container {

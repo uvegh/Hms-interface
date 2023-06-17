@@ -12,6 +12,7 @@ import { FiSmartphone } from "react-icons/fi";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { CiMail } from "react-icons/ci";
 import SpinnerLoader from "./SpinnerLoader";
+import LoginNav from "./LoginNav";
 function StaffLogin() {
   const baseUrl = "https://gavohms.onrender.com";
   const [isLoading, setIsloading] = useState(false);
@@ -157,6 +158,7 @@ function StaffLogin() {
 
   return (
     <>
+      <LoginNav />
       {isLoading && <SpinnerLoader />}
       <div className="containerbg  container-fluid">
         <main className="login-banner m-auto    ">
