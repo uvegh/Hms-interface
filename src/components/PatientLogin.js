@@ -17,7 +17,9 @@ function PatientLogin() {
     password: ''
   })
 
-  const { patientGoogleObj, setPatientGoogleObj, setCurrentEmpId } = useContext(HmsContext)
+  const { patientGoogleObj, setPatientGoogleObj,
+    setCurrentEmpId,
+    setIsLoggedIn } = useContext(HmsContext)
   const navigate = useNavigate()
   const handleLogin = async () => {
     setIsloading(true)
@@ -41,6 +43,7 @@ function PatientLogin() {
       setIsloading(false)
       setValidate(false)
       setCurrentEmpId(response?.data?.data)
+      setIsLoggedIn(true)
       navigate("/patient/dashboard", { replace: true })
       //console.log(response?.data?.data)
       alert('logged in')
@@ -82,8 +85,11 @@ function PatientLogin() {
         alert('failed to login ')
         return
       }
+
       alert('login successful')
+      setIsLoggedIn(true)
       setIsloading(false)
+      setCurrentEmpId(findUser?.data?.patients?.data)
     } else {
       setIsloading(false)
       setErrorMessage('invalid email')
