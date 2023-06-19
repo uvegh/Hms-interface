@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import Drugs from "./Drugs";
 import { HmsContext } from "../../context/HmsContext";
 import { useContext } from "react";
+
 const PharmacyAdmin = () => {
   const baseUrl = "https://gavohms.onrender.com";
   const testUrl = "http://localhost:3001";
@@ -21,11 +22,20 @@ const PharmacyAdmin = () => {
   const [showCreateDrug, setShowCreateDrug] = useState(false);
   const { PharmacyAdmin } = useContext(HmsContext);
   const [Pharmacy, setPharmacy] = useState();
+  const [drugTrue, setDrugTrue] = useState(false);
+  const [showView, setShowView] = useState(false);
+  const [drugID, setDrugID] = useState();
+  const [singleDrug, setSingleDrug] = useState();
+  const [deleted, setDeleted] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [prescribID, setPrescribID] = useState();
+  const [singlePres, setSinglePress] = useState();
+  console.log(singlePres);
 
   const getDrugs = async () => {
     let inInstock = [];
     let outStock = [];
-    let response = (await axios.get(`${baseUrl}/drugs`)).data;
+    let response = (await axios.get(`${testUrl}/drugs`)).data;
     setDrugs(response?.data);
     {
       response?.data
@@ -49,20 +59,39 @@ const PharmacyAdmin = () => {
     setPrescriptions(response?.data);
   };
 
-  const getPharmacy = async () => {
-    if (PharmacyAdmin.id) {
-      let response =( await axios.get(
-        `${testUrl}/pharmacy?emp_id=${PharmacyAdmin.id}`
-      )).data;
-      console.log(response);
+  const getSinglePrescription = async () => {
+    if (prescribID) {
+      let response = (await axios.get(`${baseUrl}/prescription/${prescribID}`))
+        .data;
+      setSinglePress(response?.data);
     }
   };
 
+  const getPharmacy = async () => {
+    if (PharmacyAdmin.id) {
+      let response = (
+        await axios.get(`${testUrl}/pharmacy?emp_id=${PharmacyAdmin.id}`)
+      ).data;
+      setPharmacy(response?.data);
+    }
+  };
+
+  const getSingleDrug = async () => {
+    if (drugID) {
+      let response = (await axios.get(`${testUrl}/drugs/${drugID}`)).data;
+      setSingleDrug(response?.data);
+    }
+  };
   useEffect(() => {
+    if (drugTrue === true) {
+      getDrugs();
+    }
     getDrugs();
     getPrescriptions();
     getPharmacy();
-  }, []);
+    getSingleDrug();
+    getSinglePrescription();
+  }, [drugTrue, drugID, singleDrug, prescribID]);
 
   return (
     <div>
@@ -153,7 +182,6 @@ const PharmacyAdmin = () => {
               type="btn"
               onClick={() => {
                 setShowCreateDrug(true);
-                console.log("create");
               }}
             >
               Create Drug
@@ -174,7 +202,7 @@ const PharmacyAdmin = () => {
                 <tbody>
                   {drugs ? (
                     drugs.map((drug, i) => (
-                      <tr>
+                      <tr key={drug._id}>
                         <td>{i + 1}</td>
                         <td>{drug.name} </td>
                         <td>134677</td>
@@ -185,7 +213,9 @@ const PharmacyAdmin = () => {
                           <button
                             type="btn"
                             onClick={() => {
-                              alert("view this item");
+                              console.log(drug._id);
+                              setDrugID(drug._id);
+                              setShowView(true);
                             }}
                           >
                             View Item
@@ -214,7 +244,7 @@ const PharmacyAdmin = () => {
                 <tbody>
                   {prescriptions ? (
                     prescriptions.map((prescription, i) => (
-                      <tr>
+                      <tr key={prescription._id}>
                         <td>{i + 1}</td>
                         <td>{prescription.patient_id.first_name}</td>
                         <td>Dr {prescription.doctor_id.first_name}</td>
@@ -232,7 +262,8 @@ const PharmacyAdmin = () => {
                           <button
                             type="btn"
                             onClick={() => {
-                              alert("view this item");
+                              setPrescribID(prescription._id);
+                              setModal(true);
                             }}
                           >
                             View Prescription
@@ -249,7 +280,164 @@ const PharmacyAdmin = () => {
           )}
         </div>
       </div>
-      {showCreateDrug && <Drugs setShowCreateDrug={setShowCreateDrug} />}
+      {showCreateDrug && (
+        <Drugs
+          setShowCreateDrug={setShowCreateDrug}
+          setDrugTrue={setDrugTrue}
+        />
+      )}
+      {showView && (
+        <div className="viewDrugs">
+          {singleDrug ? (
+            <div className="innerDrug" key={singleDrug._id}>
+              <h1>Item Details</h1>
+              <div className="firstDetails">
+                <div>
+                  <span>Name</span>
+                  <p>{singleDrug.name}</p>
+                </div>
+                <div>
+                  <span>Brand</span>
+                  <p>{singleDrug.brand}</p>
+                </div>
+                <div>
+                  <span>Category</span>
+                  <p>{singleDrug.category}</p>
+                </div>
+              </div>
+              <div className="secondDetails">
+                <div>
+                  <span>Price</span>
+                  <p>{singleDrug.price}</p>
+                </div>
+                <div>
+                  <span>Quantity</span>
+                  <p>{singleDrug.quantity}</p>
+                </div>
+                <div>
+                  <span>Strength</span>
+                  <p>{singleDrug.strength}</p>
+                </div>
+                <div>
+                  <span>Status</span>
+                  <p>{singleDrug.status}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  console.log(singleDrug._id);
+                  try {
+                    if (singleDrug._id) {
+                      axios
+                        .delete(`${baseUrl}/drugs/${singleDrug._id}`)
+                        .then((res) => {
+                          console.log(res);
+                          alert("Drug Deleted Successfully");
+                          setShowView(false);
+                          setDrugTrue(true);
+                        })
+                        .catch((err) => console.log(err));
+                    }
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
+              >
+                Delete
+              </button>
+              <button
+                type="btn"
+                onClick={() => {
+                  setShowView(false);
+                }}
+              >
+                Edit
+              </button>
+            </div>
+          ) : (
+            <p className="loaders load">Loading</p>
+          )}
+        </div>
+      )}
+
+      {modal && (
+        <div className="viewDrugs">
+          {singlePres ? (
+            <div className="innerDrug">
+              <h1>Patient Details</h1>
+              <div className="firstDetails">
+                <div>
+                  <span>Patient Name</span>
+                  <p>
+                    {singlePres?.patient_id?.first_name} <i>{singlePres?.patient_id?.last_name}</i>
+                  </p>
+                </div>
+                <div>
+                  <span>Card No</span>
+                  <p>{singlePres.card_no}</p>
+                </div>
+                <div>
+                  <span>Date of Diagnosis</span>
+                  <p>
+                    {" "}
+                    {format(
+                      new Date(singlePres.date_of_diagnosis),
+                      "MM/dd/yyyy"
+                    )}
+                  </p>
+                </div>
+                <div>
+                  <span>Vitals</span>
+                  <p>{singlePres?.patient_id?.vitals?.blood_pressure}</p>
+                </div>
+                <div>
+                  <span>Doctor</span>
+
+                  <p>
+                    <i>Dr</i> {singlePres?.doctor_id?.first_name}{" "}
+                    <i>{singlePres?.doctor_id?.last_name}</i>
+                  </p>
+                </div>
+              </div>
+              <div className="secondDetails">
+               {singlePres?.prescription ? (
+                 <table>
+                 <thead>
+                   <th>Frequency</th>
+                   <th>Name</th>
+                   <th>Strength</th>
+                   <th>Duration</th>
+                   <th>Price</th>
+                 </thead>
+                {singlePres?.prescription.map((preps)=> (
+                   <tbody>
+                   <tr>
+                     <td>{preps.frequency}</td>
+                     <td>{preps.name}</td>
+                     <td>{preps.strength}</td>
+                     <td>{preps.duration}</td>
+                     <td>{preps.price}</td>
+                   </tr>
+                 </tbody>
+                ))}
+               </table>
+               ):(<p>No Prescription Found</p>)}
+              </div>
+              <button>Delete</button>
+              <button
+                type="btn"
+                onClick={() => {
+                  setModal(false);
+                }}
+              >
+                Edit
+              </button>
+            </div>
+          ) : (
+            <h1 className="Loadam">Loading Please Wait...</h1>
+          )}
+        </div>
+      )}
     </div>
   );
 };

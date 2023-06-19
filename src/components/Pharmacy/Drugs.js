@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { HmsContext } from "../../context/HmsContext";
 import { useContext } from "react";
 import axios from "axios";
-const Drugs = ({ setShowCreateDrug }) => {
+const Drugs = ({ setShowCreateDrug,setDrugTrue}) => {
   const baseUrl = "https://gavohms.onrender.com";
   const testUrl = "http://localhost:3001";
 
@@ -26,26 +26,36 @@ const Drugs = ({ setShowCreateDrug }) => {
     branch_id: "",
   });
   const { PharmacyAdmin } = useContext(HmsContext);
-  const [Pharmacy, setPharmacy] = useState()
-  console.log(Pharmacy)
+  const [Pharmacy, setPharmacy] = useState();
+  console.log(Pharmacy);
   const getPharmacy = async () => {
     if (PharmacyAdmin.id) {
-      let response =( await axios.get(
-        `${testUrl}/pharmacy?emp_id=${PharmacyAdmin.id}`
-      )).data;
-      setPharmacy(response?.data)
+      let response = (
+        await axios.get(`${testUrl}/pharmacy?emp_id=${PharmacyAdmin.id}`)
+      ).data;
+      setPharmacy(response?.data);
     }
   };
-  const createDrug = async () => {
+  const createDrug = async() => {
     try {
+      if (Pharmacy) {
+        Pharmacy.map(
+          (pharmacy) => (
+            (drug.pharmacy_id = pharmacy._id),
+            (drug.branch_id = pharmacy?.branch_id?._id)
+          )
+        );
+      }
       let response = await axios
-        .post(`${testUrl}/drugs`, drug)
-        .then((resp) => {
-          console.log(resp);
-          alert("Drug created successfully");
-          setShowCreateDrug(false);
-        })
-        .catch((err) => console.log(err));
+      .post(`${testUrl}/drugs`, drug)
+      .then((resp) => {
+        console.log(resp);
+        alert("Drug created successfully");
+        setShowCreateDrug(false);
+        setDrugTrue(true)
+      })
+      .catch((err) => console.log(err));
+      console.log(drug)
     } catch (err) {
       console.log(err.message);
     }
@@ -70,9 +80,9 @@ const Drugs = ({ setShowCreateDrug }) => {
     }
   }, [drug]);
 
-  useEffect(()=>{
-    getPharmacy()
-  },[])
+  useEffect(() => {
+    getPharmacy();
+  }, []);
   return (
     <div>
       {drugFrom && (
@@ -218,6 +228,7 @@ const Drugs = ({ setShowCreateDrug }) => {
                 className={disable}
                 onClick={() => {
                   createDrug();
+                  console.log("created")
                 }}
               >
                 Create Drug
