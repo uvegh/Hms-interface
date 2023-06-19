@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import LoginNav from './LoginNav'
 
 export default function NotFound() {
 
 	return (
 		<>
+			<LoginNav />
 			<div className='container-fluid notFound-container' >
 				<div className="notfound">
 					<div className="notfound-404"></div>

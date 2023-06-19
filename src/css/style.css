@@ -17,6 +17,29 @@ html {
   left: 45%;
 }
 
+.loader-wards {
+  top: 30%;
+  position: absolute;
+  left: 55%;
+}
+.loader-wards .lds-spinner div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 37px;
+  width: 6px;
+  height: 18px;
+  border-radius: 20%;
+  background: #312f2f;
+}
+
+.histLoader {
+  top: 35%;
+  position: absolute;
+  left: 50%;
+}
+
 .lds-spinner {
   transform: translateX(-50%) translateY(50%);
   color: official;
@@ -2943,6 +2966,103 @@ select {
 .logged-in-profile .logged-in-profile-details span {
   font-style: italic;
   font-weight: 400;
+}
+
+.notifications-bar {
+  list-style: none;
+  color: #2B415C;
+  top: 13%;
+  position: fixed;
+  right: 0;
+  z-index: 1000;
+}
+.notifications-bar .time {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 0.8em;
+}
+.notifications-bar .notifications-header {
+  padding: 0.5em;
+  background-color: #E1DCDC;
+}
+.notifications-bar .notifications-header p,
+.notifications-bar .notifications-header img {
+  margin: auto;
+}
+.notifications-bar .notifications-header img {
+  width: 0.8em;
+  height: 0.8em;
+}
+.notifications-bar .notification-body {
+  color: #2B415C;
+}
+.notifications-bar .notification-body .notification-text {
+  min-width: 10rem;
+  text-align: end;
+}
+.notifications-bar .notification-body ::-webkit-scrollbar {
+  display: none;
+}
+.notifications-bar .notification-body ul {
+  list-style: none;
+  overflow-y: scroll;
+}
+.notifications-bar .notification-body ul ::-webkit-scrollbar {
+  display: none;
+}
+.notifications-bar .notification-body section {
+  min-height: 5em;
+}
+.notifications-bar .notification-body section .closeBtn {
+  width: 0.7em;
+  height: 0.7em;
+}
+.notifications-bar .notification-body section .closeBtn:hover {
+  cursor: pointer;
+}
+.notifications-bar .notification-body .user-icon {
+  width: 4em;
+  height: 3.6em;
+  border-radius: 50%;
+}
+
+.closeBtn-header {
+  width: 0.7em;
+  height: 0.7em;
+}
+.closeBtn-header:hover {
+  cursor: pointer;
+}
+
+.search_box_patient {
+  left: 44%;
+}
+
+.patient_daily_info {
+  color: #2B415C;
+}
+.patient_daily_info .patient_header .present_section .row {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: auto auto auto;
+}
+.patient_daily_info .patient_header .present_section .row div[class*=col] {
+  min-height: 8rem;
+  border-radius: 0.3 em;
+  background: #ADD8DC;
+  line-height: 3em;
+  font-size: small;
+}
+.patient_daily_info .patient_header .present_section .row div[class*=col] .task {
+  margin-top: 1.5em;
+  line-height: 1.3em;
+}
+.patient_daily_info .patient_header .present_section .row div[class*=col] img {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1em;
+}
+.patient_daily_info .patient_header .present_section span {
+  color: rgb(175, 177, 184);
 }
 
 .notFound-container {

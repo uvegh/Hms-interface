@@ -12,6 +12,7 @@ import { FiSmartphone } from "react-icons/fi";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { CiMail } from "react-icons/ci";
 import SpinnerLoader from "./SpinnerLoader";
+import LoginNav from "./LoginNav";
 function StaffLogin() {
   const baseUrl = "https://gavohms.onrender.com";
   const [isLoading, setIsloading] = useState(false);
@@ -22,17 +23,14 @@ function StaffLogin() {
     emailOrPhone: "",
     password: "",
   });
+
   const navigate = useNavigate();
-  const {
-    staffGoogleObj,
-    setStaffGoogleObj,
-    setIsLoggedIn,
-    setCurrentEmpId,
-    currentEmpId,
-    showLoggedInNotification,
-    setPharmacistID,
-    setPharmacyAdmin,
-  } = useContext(HmsContext);
+  const { staffGoogleObj, setStaffGoogleObj, setIsLoggedIn, setCurrentEmpId, handleGetNotifications,
+    currentEmpId, showLoggedInNotification, setViewNotification, setPharmacistID,
+    setPharmacyAdmin } =
+    useContext(HmsContext);
+
+
   const handleLogin = async () => {
     setIsloading(true);
     if (!loginData.emailOrPhone || !loginData.password) {
@@ -65,8 +63,8 @@ function StaffLogin() {
       //   emailOrPhone: '',
       //   password: ''
       // })
-      showLoggedInNotification();
-
+      showLoggedInNotification()
+      handleGetNotifications()
       setErrorMessage("");
       setCurrentEmpId(response?.data?.data);
 
@@ -126,7 +124,7 @@ function StaffLogin() {
       } else if (loginObj?.role == "receptionist") {
         navigate("/receptionist/dashboard");
       } else if (loginObj?.role == "nurse") {
-        navigate("/nurse/dashboard");
+        navigate("/nurse/dashboard", { replace: true });
       } else if (loginObj?.role == "nurseAdmin") {
         navigate("/nurse/dashboard");
       } else if (loginObj?.role == "pharmacist") {
@@ -138,6 +136,14 @@ function StaffLogin() {
     }
   };
 
+  google.accounts.id.renderButton(document.getElementById("signInGoogle"), {
+    size: "large",
+    theme: "outline"
+  });
+
+
+  const clientID = "357757074966 - ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com"
+
   //global google
   useEffect(() => {
     google.accounts.id.initialize({
@@ -146,14 +152,13 @@ function StaffLogin() {
       callback: handleCallbackResponse,
     });
   }, []);
-  google.accounts.id.renderButton(document.getElementById("signInGoogle"), {
-    size: "large",
-    theme: "outline",
-  });
-  const clientID =
-    "357757074966 - ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com";
+
+
+
+
   return (
     <>
+      <LoginNav />
       {isLoading && <SpinnerLoader />}
       <div className="containerbg  container-fluid">
         <main className="login-banner m-auto    ">

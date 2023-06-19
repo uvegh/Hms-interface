@@ -60,13 +60,47 @@ function ProfileNurse() {
         setImageSrc(imageSrc);
         console.log(imageSrc);
     };
+    const [updateAvatarFile, setUpdateAvatarFile] = useState({
+        avatar: ""
+    })
 
-    const handleImgChange = (e) => {
-        const fileObj = e.target.files && e.target.files[0]
-        if (!fileObj) {
+
+    //handle file change on update avatar
+
+    // const handleImgChange = (e) => {
+    //     console.log("yooo its working")
+    //     const fileObj = e.target.files[0]
+    //     console.log(fileObj)
+    //     // setUpdateAvatarFile({ ...updateAvatarFile, avatar:})
+    //     if (!fileObj) {
+    //         console.log(fileObj)
+    //         return
+    //     }
+    //     console.log(fileObj);
+
+    //     console.log(updateAvatarFile)
+    //     handleUpdateAvatarFile()
+    // }
+
+    //update avatar through file
+    const handleUpdateAvatarFile = async () => {
+        if (updateAvatarFile.avatar == "") {
+            console.log(updateAvatarFile.avatar)
             return
         }
-        console.log(fileObj);
+        const formData = new FormData()
+        formData.append("avatar", updateAvatarFile.avatar)
+        console.log(updateAvatarFile.avatar)
+        console.log(formData)
+        console.log(currentEmpId?.id)
+        let response = await (axios.put(`${baseUrl}/employee/pfp/${currentEmpId?.id}`, formData,
+
+        )).catch((err) => {
+            console.log(err);
+            customAlertWarning("Failed to update profile")
+        })
+        if (response?.data?.code == "200") return customAlertNotify("Profile updated")
+        customAlertWarning("Failed to update profile")
     }
 
 
@@ -297,7 +331,7 @@ function ProfileNurse() {
                             }}> <TiTimes /> </span>
                         </div>
                         <div className="text-center">
-                            <img className='img-fluid' src={`${baseUrl}/${currentEmpId?.avatar}`} alt="" />
+                            <img className='img-fluid' src={profileObj?.avatar} alt="" />
                         </div>
 
                     </div>
@@ -331,9 +365,11 @@ function ProfileNurse() {
                                 <Link to="/nurse/bedAllotment"> Wards </Link>
                             </li>
 
-                            <li className="sidebar_btn">
-                                <Link to="/nurse/management"> Management </Link>
-                            </li>
+                            {
+                                currentEmpId?.role == "nurseAdmin" ? (<li className="sidebar_btn">
+                                    <Link to="/nurse/management"> Management </Link>
+                                </li>) : null
+                            }
                             <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
@@ -353,7 +389,7 @@ function ProfileNurse() {
                         <div className='present_section'>
                             <h2>Profile</h2>
                         </div>
-                        
+
                     </div>
 
 
@@ -370,7 +406,7 @@ function ProfileNurse() {
                                             setViewFullPfp(true)
                                         }}
 
-                                        className='user_view_icon border-1' src={`${baseUrl}/${profileObj?.avatar}`} alt="avatar" />
+                                        className='user_view_icon border-1' src={profileObj?.avatar} alt="avatar" />
 
                                     <div className="dropdown align-bottom pt-5">
                                         <Link className="btn bg-white border-0   fs-4 text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -383,9 +419,14 @@ function ProfileNurse() {
                                                     handleAddPfp()
                                                 }}
                                             >
-                                                <input type="file" hidden
+                                                <input type="file" name='avatar' hidden
                                                     ref={inputRef}
-                                                    onChange={handleImgChange}
+                                                    onChange={(e) => {
+
+                                                        setUpdateAvatarFile({ ...updateAvatarFile, avatar: e.target.files[0] })
+                                                        console.log(updateAvatarFile)
+                                                        handleUpdateAvatarFile()
+                                                    }}
                                                 />
                                                 <Link className="dropdown-item" >
                                                     <img className='me-2' src={photoIcon} alt="" />

@@ -67,7 +67,7 @@ function Management() {
             return
         }
         let response = (await (axios.put(`${baseUrl}/patient/${id}`, patientVitals))).data
-        console.log(response);
+        //console.log(response);
 
     }
     const handleVitalsChange = (e) => {
@@ -91,7 +91,7 @@ function Management() {
 
     const handleAssignNursePatient = async (nurseId, patientId) => {
         setIsloadingForm(true)
-        console.log(nurseId, patientId);
+        //console.log(nurseId, patientId);
         if (!nurseId || !patientId || patientCardNo == "") {
             alert("patient can't be empty")
             setIsloadingForm(false)
@@ -101,7 +101,7 @@ function Management() {
             "patients_incharge_of": patientId
 
         }))).data
-        console.log(response);
+        //console.log(response);
 
         if (response?.msg == "Patient Assiged") {
             alert(response?.msg)
@@ -125,7 +125,7 @@ function Management() {
 
     const handleAssignNurseWard = async (nurseId) => {
         setIsloadingForm(true)
-        console.log(nurseId, wardNo);
+        //console.log(nurseId, wardNo);
         if (!nurseId || wardNo == "") {
             alert("ward can't be empty")
             setIsloadingForm(false)
@@ -135,7 +135,7 @@ function Management() {
             "ward_no": wardNo
 
         }))).data
-        console.log(response);
+        //console.log(response);
 
         if (response?.msg == "Ward Assiged") {
             alert(response?.msg)
@@ -156,7 +156,7 @@ function Management() {
     }
 
     const removeAssignedPatient = async (nurseId, patientId) => {
-        console.log(nurseId, patientId)
+        // console.log(nurseId, patientId)
         if (!nurseId || patientId == "") {
             alert("patient can't be empty")
             setIsloadingForm(false)
@@ -178,7 +178,7 @@ function Management() {
     }
 
     const removeAssignedWard = async (nurseId, wardId) => {
-        console.log(nurseId, wardId)
+        //console.log(nurseId, wardId)
         if (!nurseId || wardId == "") {
             alert("ward can't be empty")
             setIsloadingForm(false)
@@ -205,7 +205,7 @@ function Management() {
         let response = (await (axios.get(`${baseUrl}/employee?role=nurse&last_name=${searchNurseData.first_name}`))).data
         if (response?.employees?.data?.length > 0) {
             setFoundNurse(response?.employees?.data)
-            console.log(response?.employees?.data);
+            // console.log(response?.employees?.data);
             setIsTableLoading(false)
         }
         else {
@@ -214,7 +214,7 @@ function Management() {
 
             if (response?.employees?.data?.length > 0) {
                 setFoundNurse(response?.employees?.data)
-                console.log(response?.employees?.data)
+                //console.log(response?.employees?.data)
                 setIsTableLoading(false)
             }
             else {
@@ -234,7 +234,7 @@ function Management() {
 
     const handleGetPatient = async () => {
         setIsloadingForm(true)
-        console.log(patientCardNo);
+        //console.log(patientCardNo);
 
         if (!patientCardNo) {
             // alert("search box can not be empty")
@@ -242,12 +242,12 @@ function Management() {
             return
         }
         let response = (await (axios.get(`${baseUrl}/patient?card_no=${patientCardNo}`))).data
-        console.log(response?.data)
+        //console.log(response?.data)
         if (response) {
             setIsloadingForm(false)
             setFoundPatient(response?.data[0])
 
-            console.log(foundPatient)
+            //console.log(foundPatient)
             return
         }
 
@@ -888,9 +888,11 @@ function Management() {
                                 <Link to="/nurse/bedAllotment"> Wards </Link>
                             </li>
 
-                            <li className="sidebar_btn">
-                                <Link to="/nurse/management"> Management </Link>
-                            </li>
+                            {
+                                currentEmpId?.role == "nurseAdmin" ? (<li className="sidebar_btn">
+                                    <Link to="/nurse/management"> Management </Link>
+                                </li>) : null
+                            }
                             <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
@@ -910,7 +912,7 @@ function Management() {
                         <div className='present_section'>
                             <h2>Management</h2>
                         </div>
-                       
+
                     </div>
                     <div className='doctors_container_content'>
                         <div className='patient_search_box nurse_search_box'>
@@ -1004,7 +1006,7 @@ function Management() {
                                                                                 setViewNurse(true)
                                                                                 handlegetNurseAddInfo(nurses?._id)
                                                                                 setViewNurseIndex(i)
-                                                                                console.log(additionalNurseDetail)
+                                                                                //console.log(additionalNurseDetail)
 
 
                                                                             }}
@@ -1014,7 +1016,7 @@ function Management() {
                                                                                 setShowEdit(true)
                                                                                 handlegetNurseAddInfo(nurses?._id)
                                                                                 setViewNurseIndex(i)
-                                                                                console.log(additionalNurseDetail)
+                                                                                //console.log(additionalNurseDetail)
                                                                             }}
 
                                                                         ><Link className="dropdown-item" >Edit </Link></li>

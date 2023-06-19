@@ -23,6 +23,7 @@ function SingleWard() {
     const [editMode, setEditMode] = useState(false)
     const [patientCardNo, setPatientCardNo] = useState()
     const [isLoading, setIsloading] = useState(false);
+    const [isLoadingSpinner, setIsLoadingSpinner] = useState(false);
     const [foundPatient, setFoundPatient] = useState({})
     const [editIndex, setEditIndex] = useState()
     const {
@@ -35,7 +36,8 @@ function SingleWard() {
         setIsLoggedIn,
         HandleGetAllBeds,
         customAlertNotify,
-        customAlertWarning
+        customAlertWarning,
+        setBedsInWard
         //showLoggedInNotification
 
     } = useContext(HmsContext);
@@ -44,27 +46,32 @@ function SingleWard() {
     const date = new Date()
     let assignedDate = (`${format(date, 'dd/MM/yyyy')}`)
     let assignedTime = (`${format(date, 'HH:mm')}`)
-    console.log(assignedDate, assignedTime)
+    // console.log(assignedDate, assignedTime)
+
     const handleGetSingleWard = async () => {
+        setIsLoadingSpinner(true)
         let response = (await (axios.get(`${baseUrl}/ward/${id}`))).data
-        //console.log(response?.data)
+
         if (response?.code == 200) {
+            console.log(response?.code)
+            setIsLoadingSpinner(false)
             setWard(response?.data)
             //console.log(ward)
             return
         }
+        setIsLoadingSpinner(false)
 
     }
-    //console.log(ward)
+
 
     const handleSetAsVacant = async (bedId) => {
-        console.log(bedId)
+        // console.log(bedId)
         let response = (await (axios.put(`${baseUrl}/bed/${bedId}`, {
             patient: null, status: "Free"
         })))
 
 
-        console.log(response);
+        // console.log(response);
         if (response?.data?.code == "200") {
             customAlertNotify("Bed updated")
             return
@@ -77,7 +84,7 @@ function SingleWard() {
 
     const handleGetPatient = async () => {
         setIsloading(true)
-        console.log(patientCardNo);
+        // console.log(patientCardNo);
 
         if (!patientCardNo) {
             // alert("search box can not be empty")
@@ -85,12 +92,12 @@ function SingleWard() {
             return
         }
         let response = (await (axios.get(`${baseUrl}/patient?card_no=${patientCardNo}`))).data
-        console.log(response?.data)
+        //console.log(response?.data)
         if (response) {
             setIsloading(false)
             setFoundPatient(response?.data[0])
 
-            console.log(foundPatient)
+            //.log(foundPatient)
             return
         }
 
@@ -100,14 +107,14 @@ function SingleWard() {
 
 
     const handleBedAssignment = async (bedId) => {
-        console.log(bedId)
-        console.log(foundPatient?._id);
+        // console.log(bedId)
+        //console.log(foundPatient?._id);
         if (!foundPatient?._id) {
             alert(" Patient is needed")
             return
         }
 
-        console.log(response)
+
 
         let responseAllotment = (await (axios.post(`${baseUrl}/bedAllotment`, {
             patient_id: foundPatient?._id,
@@ -129,19 +136,26 @@ function SingleWard() {
             }
 
         }
-        console.log(responseAllotment);
+        // console.log(responseAllotment);
 
     }
 
-
+    console.log(bedsInWard)
 
     useEffect(() => {
         handleGetSingleWard()
-        HandleGetAllBeds(id)
+
         reload()
-    }, [ward, bedsInWard])
+    }, [])
+
+    useEffect(() => {
+        HandleGetAllBeds(id)
+    }, [])
+
     return (
         <>
+
+
 
             <ToastContainer
                 className="loggedin-notification"
@@ -168,7 +182,7 @@ function SingleWard() {
                             <div className=" ward pt-4">
                                 <section className="text-center">
                                     {
-                                        bedsInWard[editIndex]?.status == "OCCUPIED" ? (
+                                        bedsInWard[editIndex]?.status == "Occupied" ? (
                                             <img className="single-bed-icon" src={
                                                 bedOccupied} alt="" />
                                         ) : (
@@ -258,6 +272,7 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                 </div>
             )
             }
+
             <section className="doctor__dashboard">
                 <div className="doctor_sidebar">
                     <div className="links_display_box">
@@ -279,9 +294,11 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                                 <Link to="/nurse/patient"> Patients </Link>
                             </li>
 
-                            <li className="sidebar_btn">
-                                <Link to="/nurse/management"> Management </Link>
-                            </li>
+                            {
+                                currentEmpId?.role == "nurseAdmin" ? (<li className="sidebar_btn">
+                                    <Link to="/nurse/management"> Management </Link>
+                                </li>) : null
+                            }
 
 
                             <li className="sidebar_btn">
@@ -306,7 +323,11 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                     <div className="doctors_header">
 
                         <div className="present_section current-tab">
-                            <h3> <Link to="/nurse/bedAllotment" className="text-decoration-none">
+                            <h3> <Link
+                                onClick={() => {
+                                    setBedsInWard("")
+                                }}
+                                to="/nurse/bedAllotment" className="text-decoration-none">
 
                                 Bed Allotment
                             </Link>  <span> <MdArrowForwardIos /> </span> <span>{ward?.name}</span></h3>
@@ -318,14 +339,31 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                     <div className=" bed-allotment">
                         <div className="container px-4 ">
 
-                            <div className="row g-5">
+                            <div className="row g-5 ms-5">
+
+                                {isLoadingSpinner && (
+                                    <div className="loader-wards m-auto">
+                                        <div className="lds-spinner text-center m-auto">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+
+                                )}
 
                                 {
                                     bedsInWard?.length == 0 ? (<>
-                                        <SpinnerLoader />
-                                        {/* <div className="vh-100">
-                                            <h3 className="m-auto text-center"> No Beds </h3>
-                                        </div> */}
+                                        <h5>No bed</h5>
 
                                     </>) :
                                         bedsInWard?.map((bed, i) => (
@@ -335,7 +373,7 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
                                                 <div className=" ward pt-4">
 
                                                     {
-                                                        bed?.status == "OCCUPIED" ? (
+                                                        bed?.status == "occupied" ? (
                                                             <img className="bed-icon" src={
                                                                 bedOccupied} alt="" />
                                                         ) : (
@@ -371,7 +409,7 @@ N/A` : (`${foundPatient?.first_name} ${foundPatient?.last_name}`)
 
                                                     </section>
                                                     <div className="text-center bed-btns pb-5 col-10  ">
-                                                        <button className="me-1  border-light col-lg-6"
+                                                        <button className="me-1  border-light col-lg-4"
                                                             onClick={() => {
                                                                 setEditMode(true)
 

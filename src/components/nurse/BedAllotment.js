@@ -25,7 +25,7 @@ function BedAllotment() {
 
     } = useContext(HmsContext);
 
-    console.log(wards)
+    // console.log(wards)
     useEffect(() => {
         reload()
     })
@@ -60,10 +60,12 @@ function BedAllotment() {
                             <li className="sidebar_btn">
                                 <Link to="/nurse/patient"> Patients </Link>
                             </li>
+                            {
+                                currentEmpId?.role == "nurseAdmin" ? (<li className="sidebar_btn">
+                                    <Link to="/nurse/management"> Management </Link>
+                                </li>) : null
+                            }
 
-                            <li className="sidebar_btn">
-                                <Link to="/nurse/management"> Management </Link>
-                            </li>
 
 
                             <li className="sidebar_btn">

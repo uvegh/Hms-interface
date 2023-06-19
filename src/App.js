@@ -43,6 +43,8 @@ import PharmacyLayout from "./components/Pharmacy/PharmacyLayout";
 import Drugs from "./components/Pharmacy/Drugs";
 import BedAllotment from "./components/nurse/BedAllotment";
 import SingleWard from "./components/nurse/SingleWard";
+import PatientLayout from "./components/patient/PatientLayout";
+import DashboardPatient from "./components/patient/DashboardPatient";
 
 export default function App() {
   return (
@@ -50,7 +52,7 @@ export default function App() {
       <HmsProvider>
         <GoogleOAuthProvider clientId="357757074966-ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com">
           <BrowserRouter>
-            <LoginNav />
+
 
             <Routes>
               <Route path="*" element={<NotFound />} />
@@ -87,11 +89,12 @@ export default function App() {
                 <Route path="diagnosis" element={<DoctorDiagnosis />} />
                 <Route path="prescription" element={<DoctorPrescription />} />
               </Route>
+
               <Route path="/pharmacy" element={<PharmacyLayout />}>
                 <Route path="dashboard" element={<Pharmacy />} />
                 <Route path="admin" element={<PharmacyAdmin />} />
                 <Route path="dispense" element={<Dispense />} />
-                <Route path="drugs" element={<Drugs/>}/>
+                <Route path="drugs" element={<Drugs />} />
               </Route>
               <Route path="/viewPatient" element={<ViewPatients />} />
               <Route path="/dispense" element={<Dispense />} />
@@ -112,6 +115,9 @@ export default function App() {
                 <Route path="bedAllotment/:id" element={<SingleWard />} />
               </Route>
 
+              <Route path="/patient" element={<PatientLayout />}>
+                <Route path="dashboard" element=<DashboardPatient /> />
+              </Route>
               <Route path="/admin" element={<AdminLayout />}></Route>
               <Route path="/super" element={<SuperAdminLayout />}></Route>
 

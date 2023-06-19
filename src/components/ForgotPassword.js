@@ -3,6 +3,7 @@ import React, { useContext, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { HmsContext } from '../context/HmsContext'
 import PinInput from 'react-pin-input'
+import LoginNav from './LoginNav'
 
 
 function ForgotPassword() {
@@ -12,14 +13,14 @@ function ForgotPassword() {
     const [validate, setValidate] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false)
     const [showPsswdVerification, setshowPsswdVerification] = useState(false)
-    const {  setCurrentEmpId,currentEmpId} = useContext(HmsContext)
+    const { setCurrentEmpId, currentEmpId } = useContext(HmsContext)
     const [loginData, setLoginData] = useState({
         email: ""
 
     })
     const [email, setEmail] = useState("")
     const [codeData, setCodeData] = useState({
-        code:""
+        code: ""
     })
 
     const navigate = useNavigate()
@@ -36,17 +37,17 @@ function ForgotPassword() {
         }
         console.log(loginData);
 
-   
+
         let response = (await axios.post(`${baseUrl}/forgotPassword`, loginData)).data
 
-         console.log(response)
+        console.log(response)
 
         if (response?.code === 200) {
             console.log(response)
             setIsloading(false)
             setValidate(false)
             console.log(response?.data._id);
-     
+
             handleEmailHider()
 
             setshowPsswdVerification(true)
@@ -55,8 +56,8 @@ function ForgotPassword() {
 
             // })
             setErrorMessage("")
-             setCurrentEmpId(response)
-            
+            setCurrentEmpId(response)
+
         }
         else {
             setErrorMessage("This email has no account ")
@@ -83,22 +84,22 @@ function ForgotPassword() {
     const handleCodeVerification = async () => {
 
         setIsloading(true)
-        if (!codeData||!codeData.length==6) {
+        if (!codeData || !codeData.length == 6) {
             console.log(codeData);
             setIsloading(false)
             setValidate(true)
             return
         }
-       
-        
-console.log(codeData,"codedata");
-           let response = (await (axios.post(`${baseUrl}/forgotPassword/compare`, codeData))).data
-    
-     
+
+
+        console.log(codeData, "codedata");
+        let response = (await (axios.post(`${baseUrl}/forgotPassword/compare`, codeData))).data
+
+
         console.log(response);
         if (response?.code == "200") {
             setIsloading(false)
-        
+
             console.log(response);
             alert("verification complete")
             navigate("/resetpassword")
@@ -110,11 +111,11 @@ console.log(codeData,"codedata");
         }
     }
 
-    const handleResendCode=async()=>{
-  setIsloading(true)
-         let response = (await axios.post(`${baseUrl}/forgotPassword`, {email:currentEmpId?.data?.email})).data
+    const handleResendCode = async () => {
+        setIsloading(true)
+        let response = (await axios.post(`${baseUrl}/forgotPassword`, { email: currentEmpId?.data?.email })).data
 
-         console.log(response)
+        console.log(response)
 
         if (response?.code === 200) {
             setIsloading(false)
@@ -122,7 +123,7 @@ console.log(codeData,"codedata");
             setIsloading(false)
             setValidate(false)
             console.log(response);
-     alert("codeSent")
+            alert("codeSent")
             handleEmailHider()
 
             setshowPsswdVerification(true)
@@ -131,9 +132,9 @@ console.log(codeData,"codedata");
 
             // })
             setErrorMessage("")
-             setCurrentEmpId(response)
-            
-            
+            setCurrentEmpId(response)
+
+
         }
         else {
             setIsloading(false)
@@ -143,12 +144,13 @@ console.log(codeData,"codedata");
             setErrorMessage("Invalid email")
             setshowPsswdVerification(false)
         }
-}
+    }
 
 
 
     return (
         <>
+            <LoginNav />
 
             {
                 isLoading && (
@@ -165,11 +167,11 @@ console.log(codeData,"codedata");
 
             <div className="container-fluid position-relative vh-100  forgotPsswd-container " style={{ minHeight: "100%" }}>
 
-     
+
                 {showPsswdVerification == true ? (
 
                     <form className=' rounded-5 forgotPsswd-form border border-1  col-lg-4 col-md-11 col-sm-12  m-auto mt-5' >
-                       
+
                         <div className='col-lg-10 col-md-10 col-sm-12 m-auto mt-5'>
                             <label htmlFor="exampleFormControlInput1" className="form-label fw-bolder fs-2 " style={{
                                 color: "#2B415C"
@@ -178,16 +180,16 @@ console.log(codeData,"codedata");
                                 color: "#2B415C",
                                 fontSize: "0.9rem"
                             }}>Enter the 6-digit verification code sent to  {email}</p>
-<div className="text-center ">
-<PinInput length={6} type='numeric' autoSelect={true} 
-                      onComplete={(code,index)=>{
-setCodeData({
-    code:code
-})
-                      }}
-                   
-                      />
-</div>
+                            <div className="text-center ">
+                                <PinInput length={6} type='numeric' autoSelect={true}
+                                    onComplete={(code, index) => {
+                                        setCodeData({
+                                            code: code
+                                        })
+                                    }}
+
+                                />
+                            </div>
 
                             <div className='text-center mt-2 container-fluid'>
                                 <p className='text-danger ms-auto'>{errorMessage}</p>
@@ -229,7 +231,7 @@ setCodeData({
 
                     </form>) :
                     (<form className='container-fluid rounded-5  forgotPsswd-form border border-1  col-lg-4 col-md-11 col-sm-12   m-auto mt-5' >
-                
+
                         <div className='col-10 m-auto mt-5'>
                             <label htmlFor="exampleFormControlInput1" className="form-label fw-bolder fs-2 " style={{
                                 color: "#2B415C"

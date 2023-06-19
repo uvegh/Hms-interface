@@ -597,12 +597,138 @@ select {
   }
 }
 
+.notifications-bar {
+  .time {
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 0.8em;
+  }
 
-// .patient-history-overlay {
+  list-style: none;
+  color: $loginBlue;
+  top: 13%;
+  position: fixed;
+  right: 0;
+  z-index: 1000;
+  // min-width: 50%;
 
-// }
+  .notifications-header {
+    padding: 0.5em;
+
+    p,
+    img {
+      margin: auto;
+    }
+
+    img {
+      width: 0.8em;
+      height: 0.8em;
+    }
+
+    background-color: $gavoNav;
+  }
+
+  .notification-body {
 
 
-// .nurse_search_box {
-//   height: 2.5em !important;
-// }
+    .notification-text {
+      min-width: 10rem;
+      text-align: end;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    ul {
+      list-style: none;
+      overflow-y: scroll;
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+
+
+    color: $loginBlue;
+
+    section {
+
+
+      min-height: 5em;
+
+
+      .closeBtn {
+        width: 0.7em;
+        height: 0.7em;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .user-icon {
+      width: 4em;
+      height: 3.6em;
+
+      border-radius: 50%;
+    }
+
+
+
+  }
+
+}
+
+.closeBtn-header {
+  width: 0.7em;
+  height: 0.7em;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.search_box_patient {
+  left: 44%
+}
+
+.patient_daily_info {
+  color: $loginBlue;
+
+  .patient_header {
+    .present_section {
+      .row {
+        display: grid;
+        gap: 1em;
+        grid-template-columns: auto auto auto;
+
+
+        div[class*="col"] {
+          min-height: 8rem;
+          border-radius: 0.3 em;
+
+          .task {
+            margin-top: 1.5em;
+            line-height: 1.3em;
+          }
+
+          img {
+            width: 3rem;
+            height: 3rem;
+            margin-right: 1em;
+          }
+
+          background: #ADD8DC;
+          line-height: 3em;
+          font-size: small;
+        }
+      }
+
+      span {
+        color: rgba(175, 177, 184, 1)
+      }
+    }
+  }
+}
