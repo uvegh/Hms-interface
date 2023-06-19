@@ -16,8 +16,33 @@ const Pharmacy = () => {
   const [patientPres, setPatientPres] = useState();
   const [dispenser, setDispenser] = useState(false);
   const [patientID, setPatientID] = useState();
-  const {PharmacistId} = useContext(HmsContext);
-  console.log(PharmacistId)
+  const { PharmacistId } = useContext(HmsContext);
+  const [drugs, setDrugs] = useState();
+  const [showDrug, setShowDrugs] = useState(false)
+  const [showPatient, setShowPatient]=useState(true)
+  console.log(PharmacistId);
+
+  const getDrugs = async () => {
+    let inInstock = [];
+    let outStock = [];
+    let response = (await axios.get(`${testUrl}/drugs`)).data;
+    setDrugs(response?.data);
+    {
+      response?.data
+        ? response?.data.map((drug) => {
+            if (drug.status === "available") {
+              inInstock.push(drug);
+              setInStock(inInstock);
+            } else if (drug.status === "not-available") {
+              outStock.push(drug);
+              setOutOffStock(outStock);
+            } else {
+              console.log("no drug found");
+            }
+          })
+        : console.log("no drugs found");
+    }
+  };
 
   const getPrescription = async () => {
     if (!Prescription) return alert("Enter Patients Card Number");
@@ -27,12 +52,13 @@ const Pharmacy = () => {
     setPatientPres(response.data);
   };
 
-  
   const handlePrescription = () => {
     console.log("handled");
   };
 
-  
+  useEffect(() => {
+    getDrugs();
+  }, []);
   return (
     <div>
       <div className="pharmacy">
@@ -50,13 +76,20 @@ const Pharmacy = () => {
             </div>
             <div className="loggedIn">
               <div></div>
-             {PharmacistId ? (
-               <p>{PharmacistId.first_name} {PharmacistId.last_name}</p>
-             ):( <p>Phamacist name</p>)}
+              {PharmacistId ? (
+                <p>
+                  {PharmacistId.first_name} {PharmacistId.last_name}
+                </p>
+              ) : (
+                <p>Phamacist name</p>
+              )}
             </div>
             <ul className="sidebar_link_btns">
               <li className="sidebar_btn active">
-                <Link to="/doctor/dashboard"> Prescription </Link>
+                <div onClick={()=>{
+                  setShowDrugs(false)
+                  setShowPatient(true)
+                }}> Prescription </div>
               </li>
               <li className="sidebar_btn">
                 <Link to="/doctor/patient"> Patients </Link>
@@ -65,7 +98,10 @@ const Pharmacy = () => {
                 <div> Order </div>
               </li>
               <li className="sidebar_btn">
-                <div> Drugs </div>
+                <div onClick={()=>{
+                  setShowPatient(false)
+                  setShowDrugs(true)
+                }}> Drugs </div>
               </li>
               <li className="sidebar_btn">
                 <div> Support </div>
@@ -97,7 +133,7 @@ const Pharmacy = () => {
               <p>Now</p>
             </div>
           </div>
-          <div className="pharmMiddle">
+         { showPatient && <div className="pharmMiddle">
             <button type="btn" onClick={getPrescription}>
               Filter
             </button>
@@ -108,8 +144,8 @@ const Pharmacy = () => {
               placeholder="search here"
               onChange={(e) => setPrescription(e.target.value)}
             />
-          </div>
-          <div className="pharmBottom">
+          </div>}
+         { showPatient && <div className="pharmBottom">
             {patientPres ? (
               patientPres.map((Prescription) => (
                 <div
@@ -153,13 +189,53 @@ const Pharmacy = () => {
                 </div>
               ))
             ) : !Prescription ? (
-              <p class="loaders">Loading</p>
+              <span class="loader">Loading</span>
             ) : (
               <p>no prescription found</p>
             )}
-          </div>
+          </div>}
+         {showDrug && <div className="admin-drug">
+            <table>
+              <thead>
+                <th>S/N</th>
+                <th>Item Name</th>
+                <th>Item Code</th>
+                <th>Batch No</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </thead>
+              <tbody>
+                {drugs ? (
+                  drugs.map((drug, i) => (
+                    <tr key={drug._id}>
+                      <td>{i + 1}</td>
+                      <td>{drug.name} </td>
+                      <td>134677</td>
+                      <td>#2942</td>
+                      <td>{drug.category}</td>
+                      <td>{drug.status}</td>
+                      <td>
+                        <button
+                          type="btn"
+                          onClick={() => {
+                            console.log(drug._id);
+                          }}
+                        >
+                          View Item
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <p>no drugs found</p>
+                )}
+              </tbody>
+            </table>
+          </div>}
         </div>
       </div>
+
       {dispenser && (
         <Dispense setDispenser={setDispenser} patientID={patientID} />
       )}
