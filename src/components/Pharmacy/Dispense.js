@@ -131,7 +131,7 @@ const Dispense = ({ setDispenser, patientID }) => {
        </div> */}
         </div>
       ) : (
-        <span class="loaderDispense">Loading</span>
+        <span class="loader loadDispense">Loading</span>
       )}
     </div>
   );
