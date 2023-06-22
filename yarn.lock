@@ -1121,6 +1121,20 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
+"@cloudinary/transformation-builder-sdk@^1.2.7":
+  "integrity" "sha512-qbLAfKhX4hy5tFPv4erpxdBT9x0GZgzDuMeDBIygqutNJTeB7lNuEZedf8X++0ZinkDccrJwXzDJty60MEfyHw=="
+  "resolved" "https://registry.npmjs.org/@cloudinary/transformation-builder-sdk/-/transformation-builder-sdk-1.2.9.tgz"
+  "version" "1.2.9"
+  dependencies:
+    "@cloudinary/url-gen" "^1.7.0"
+
+"@cloudinary/url-gen@^1.10.1", "@cloudinary/url-gen@^1.7.0":
+  "integrity" "sha512-6pBmapnL7G231NbNWhKbi+08HcpNASci7M3OmZWaUCQWUfdmo3au27HT3Zqg9NMsisfyer3t7o0RXzPQ4XlmMg=="
+  "resolved" "https://registry.npmjs.org/@cloudinary/url-gen/-/url-gen-1.10.1.tgz"
+  "version" "1.10.1"
+  dependencies:
+    "@cloudinary/transformation-builder-sdk" "^1.2.7"
+
 "@csstools/normalize.css@*":
   "integrity" "sha512-M0qqxAcwCsIVfpFQSlGN5XjXWu8l5JDZN+fPt1LeW5SZexQTgnaEvgXAY+CeygRw0EeppWHi12JxESWiWrB0Sg=="
   "resolved" "https://registry.npmjs.org/@csstools/normalize.css/-/normalize.css-12.0.0.tgz"
@@ -7636,10 +7650,10 @@
   dependencies:
     "clsx" "^1.1.1"
 
-"react-webcam@^7.1.0":
-  "integrity" "sha512-QzqXbTVoAuVA8BgTQWQmm6pnKgpQPNyQ3MtjjgT6cUgaqNE9ih6oDDaHRXyzZmJYJObEIvnKHSX3dQuhiZIm6A=="
-  "resolved" "https://registry.npmjs.org/react-webcam/-/react-webcam-7.1.0.tgz"
-  "version" "7.1.0"
+"react-webcam@^7.1.1":
+  "integrity" "sha512-2W5WN8wmEv8ZlxvyAlOxVuw6new8Bi7+KSPqoq5oa7z1KSKZ72ucaKqCFRtHSuFjZ5sh5ioS9lp4BGwnaZ6lDg=="
+  "resolved" "https://registry.npmjs.org/react-webcam/-/react-webcam-7.1.1.tgz"
+  "version" "7.1.1"
 
 "react@*", "react@^0.14.0 || ^15.4.2 || ^16.2.0 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18.2.0", "react@>= 16", "react@>=0.14.0", "react@>=16", "react@>=16.2.0", "react@>=16.8", "react@>=16.8.0", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="

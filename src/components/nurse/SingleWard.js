@@ -10,7 +10,7 @@ import axios from "axios";
 
 import { HmsContext } from "../../context/HmsContext";
 import { TiTimes } from "react-icons/ti";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
 import SpinnerLoader from "../SpinnerLoader";
 
@@ -26,6 +26,8 @@ function SingleWard() {
     const [isLoadingSpinner, setIsLoadingSpinner] = useState(false);
     const [foundPatient, setFoundPatient] = useState({})
     const [editIndex, setEditIndex] = useState()
+
+    const navigate = useNavigate()
     const {
         currentEmpId,
         handleGetNurseDetail,

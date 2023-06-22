@@ -6,7 +6,7 @@ import { TbPrescription, TbCalendarEvent } from 'react-icons/tb'
 import Calender from 'react-calendar'
 import Stethoscope from '../../img/stethoscope.svg'
 import profile from '../../img/pexels-photo-6.jpg'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 import { TiTimes } from 'react-icons/ti'
@@ -51,6 +51,8 @@ function Management() {
     const [validate, setValidate] = useState(false)
     const [addPatient, setAddPatient] = useState(false)
     const [addWard, setAddWard] = useState(false)
+
+    const navigate = useNavigate()
     const [searchNurseData, setSearchNurseData] = useState({
         first_name: ""
 

@@ -44,6 +44,9 @@ function HmsProvider(props) {
   const [PharmacyAdmin, setPharmacyAdmin] = useState();
 
   const [allUserNotifications, setAllUserNotifications] = useState()
+  const [pendingApptPayment, setPendingApptPayment] = useState()
+  const [pendingConsultationPayment, setPendingConsultationPayment] = useState()
+
   const showLoggedInNotification = () => {
     toast.info("Logged in!", {
       position: toast.POSITION.TOP_RIGHT,
@@ -266,6 +269,27 @@ function HmsProvider(props) {
     }
   }
 
+  const getPendingApptPayment = async () => {
+    if (currentEmpId?.id) {
+
+      let response = (await (axios.get(`${baseUrl}/appointment?payment_status=false&card_no=${currentEmpId?.id}`))).data
+      console.log(response)
+      setPendingApptPayment(response?.appointment)
+    }
+  }
+
+  const getPendingConsultationPayment = async () => {
+    if (currentEmpId?.id) {
+
+      let response = await (axios.get(`${baseUrl}/consultation?payment_status=notpaid&patient_id=${currentEmpId?.id}`))
+      console.log(response?.data?.data)
+      if (response?.data?.code == "200") {
+        setPendingConsultationPayment(response?.data?.data)
+      }
+
+    }
+  }
+
 
 
   useEffect(() => {
@@ -274,6 +298,7 @@ function HmsProvider(props) {
     handleGetAllNurses()
     handleGetNurseDetail()
     handleGetAllWards()
+
     reload()
 
   }, [])
@@ -359,7 +384,11 @@ function HmsProvider(props) {
         PharmacyAdmin,
         setPharmacyAdmin,
         allUserNotifications,
-        setBedsInWard
+        setBedsInWard,
+        getPendingApptPayment,
+        getPendingConsultationPayment,
+        pendingApptPayment,
+        pendingConsultationPayment
       }}
     >
       {props.children}

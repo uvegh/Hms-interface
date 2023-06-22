@@ -5,7 +5,7 @@ import { TbPrescription, TbCalendarEvent } from 'react-icons/tb'
 import Calender from 'react-calendar'
 import Stethoscope from '../../img/stethoscope.svg'
 import profile from '../../img/pexels-photo-6.jpg'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import { HmsContext } from '../../context/HmsContext'
 import { TiTimes } from 'react-icons/ti'
@@ -22,7 +22,7 @@ function Patient() {
 
         customAlertNotify,
         reload } = useContext(HmsContext)
-    console.log(patientsInChargeOf);
+    // console.log(patientsInChargeOf);
     const [patientDetails, setPatientDetails] = useState()
 
     const [showEdit, setShowEdit] = useState(false)
@@ -53,22 +53,24 @@ function Patient() {
     const [weight, setWeight] = useState("")
     const [appointmentHistory, setAppointmentHistory] = useState()
     const [consultationHistory, setConsultationHistory] = useState()
+
+    const navigate = useNavigate()
     const handleEditPatientVitals = async (id) => {
-        console.log(patientVitals);
+        //console.log(patientVitals);
         if (!patientVitals.vitals.blood_pressure || !patientVitals.vitals.weight) {
             setValidate(true)
             console.log(patientVitals);
             return
         }
         let response = (await (axios.put(`${baseUrl}/patient/${id}`, patientVitals))).data
-        console.log(response);
+        // console.log(response);
 
     }
 
 
     const handleGetPatient = async () => {
         setIsloading(true)
-        console.log(patientCardNo);
+        //console.log(patientCardNo);
 
         if (!patientCardNo) {
             // alert("search box can not be empty")
@@ -76,12 +78,12 @@ function Patient() {
             return
         }
         let response = (await (axios.get(`${baseUrl}/patient?card_no=${patientCardNo}`))).data
-        console.log(response?.data)
+        // console.log(response?.data)
         if (response) {
             setIsloading(false)
             setFoundPatient(response?.data[0])
 
-            console.log(foundPatient)
+            //console.log(foundPatient)
             return
         }
 
@@ -96,11 +98,11 @@ function Patient() {
         if (!patientVitals.blood_pressure || !patientVitals.weight) {
             setValidate(true);
             //console.log(patientVitals);
-            console.log(patientVitals);
+            //console.log(patientVitals);
             setVitalsUpdateIsLoading(false)
             return;
         }
-        console.log(patientVitals);
+        //console.log(patientVitals);
         let response = (await axios.put(`${baseUrl}/patient/${id}`, {
             vitals: {
 
@@ -115,7 +117,7 @@ function Patient() {
 
         }))
             .data;
-        console.log(response);
+        // console.log(response);
 
         if (response) {
             setEditMode(false);
@@ -131,8 +133,8 @@ function Patient() {
         setIsloading(true)
         let response = (await (axios.get(`${baseUrl}/consultation?patient_id=${patientId}&nurse_seen=true`))).data
         let response2 = (await (axios.get(`${baseUrl}/appointment?card_no=${patientId}&nurse_seen=true`))).data
-        console.log(response);
-        console.log(response2);
+        // console.log(response);
+        //console.log(response2);
         if (response?.code == "200") {
             setConsultationHistory(response?.data)
 
@@ -147,8 +149,8 @@ function Patient() {
 
         setIsloading(false)
 
-        console.log(appointmentHistory)
-        console.log(consultationHistory)
+        //console.log(appointmentHistory)
+        //.log(consultationHistory)
 
     }
 

@@ -16,6 +16,8 @@ function Appointment() {
         setIsLoggedIn,
         departments,
         getAvaialbelConsultantByDepartment,
+        customAlertNotify,
+        customAlertWarning,
         avaialableConsultants,
         avaialabeGeneralDoctors,
         getAvaialabeGeneralDoctors,
@@ -32,6 +34,8 @@ function Appointment() {
     const [showDoctors, setShowDoctors] = useState(false);
     const [foundAppt, setFoundAppt] = useState()
     const [foundIndex, setFoundIndex] = useState()
+    const [viewAppt, setViewAppt] = useState(false)
+    const [viewIndex, setViewIndex] = useState(null)
     const navigate = useNavigate()
     const [newAppointmentData, setNewAppointmentData] = useState({
         card_no: foundPatient?._id,
@@ -80,6 +84,7 @@ function Appointment() {
             }
         )).catch(err => {
             console.log(err);
+            customAlertWarning("Failed to add appointment,try again later")
             setIsloadingForm(false);
         })
 
@@ -95,7 +100,11 @@ function Appointment() {
 
         if (response?.data?.code == "200") {
             setIsloadingForm(false);
-            alert("new appointment created");
+            setTimeout(() => {
+                customAlertNotify("new appointment created")
+            }, 2000);
+
+
             setValidate(false);
             setAddAppointment(false);
             let getDetails = (await (axios.get(`${baseUrl}/appointment/${response?.data?.new_appointment?._id}`))).data
@@ -103,11 +112,12 @@ function Appointment() {
             console.log(getDetails?.appointment);
             setAddedAppointment(getDetails?.appointment);
             // setPhone([""]);
-        } else {
-            // alert("failed to add new patient");
-
-            setIsloadingForm(false);
+            return
         }
+        // alert("failed to add new patient");
+        customAlertWarning("Failed to add appointment")
+        setIsloadingForm(false);
+
     };
 
     const toggleaddAppointment = () => {
@@ -256,7 +266,7 @@ function Appointment() {
                                         type="number"
                                         onChange={(e) => {
                                             setPatientCardNo(e.target.value);
-                                            // setNewAppointmentData({ ...addAppointment, card_no: e.target.value })
+
                                         }}
                                         onKeyUpCapture={() => {
                                             handleGetPatient();
@@ -276,7 +286,7 @@ function Appointment() {
                                         First Name{" "}
                                     </label>
                                     <p className="bg-white ">
-                                        {" "}
+
                                         {foundPatient?.first_name
                                             ? foundPatient?.first_name
                                             : "N/A"}
@@ -288,7 +298,7 @@ function Appointment() {
                                         Last Name{" "}
                                     </label>
                                     <p className="bg-white ">
-                                        {" "}
+
                                         {foundPatient?.last_name ? foundPatient?.last_name : "N/A"}
                                     </p>
                                 </div>
@@ -348,60 +358,7 @@ function Appointment() {
                                         </select>
 
                                     </section>
-                                    {/* {showDoctors && (
-                                        <section
-                                            className=" ms-2 bg-white avail-doctors rounded-2 "
-                                            style={{ zIndex: "10" }}
-                                        >
-                                            <ul className="list-group">
-                                                {!avaialableConsultants ? (
-                                                    <li className="list-group-item">
-                                                        {" "}
-                                                        <div className="text-center">
-                                                            <div className="spinner-border" role="status">
-                                                                <span className="visually-hidden">
-                                                                    Loading...
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                ) : avaialableConsultants?.length == 0 ? (
-                                                    <li
-                                                        className="list-group-item"
-                                                        onMouseLeave={() => {
-                                                            setShowDoctors(false);
-                                                        }}
-                                                    >
-                                                        Not available
-                                                    </li>
-                                                ) : (
-                                                    avaialableConsultants.map((consultant) => (
-                                                        <li
-                                                            className="border-bottom list-group-item "
-                                                            onClick={() => {
-                                                                setNewAppointmentData({
-                                                                    ...newAppointmentData,
-                                                                    physician: consultant?._id,
-                                                                });
 
-                                                                setDoctorDetails({
-                                                                    ...doctorDetails,
-                                                                    first_name: consultant?.first_name,
-                                                                    last_name: consultant?.last_name,
-                                                                    id: consultant?._id,
-                                                                });
-                                                                setShowDoctors(false);
-                                                            }}
-                                                        >
-
-                                                            Dr {consultant?.first_name}{" "}
-                                                            {consultant?.last_name}
-                                                        </li>
-                                                    ))
-                                                )}
-                                            </ul>
-                                        </section>
-                                    )} */}
                                 </div>
 
                                 <div className="col-md-4 ">
@@ -413,9 +370,9 @@ function Appointment() {
 
                                 <div className="col-md-4 ">
                                     <label htmlFor="validationDefault02" className="form-label">
-                                        ID{" "}
+                                        ID
                                     </label>
-                                    <p className="bg-white "> {doctorDetails?.id}</p>
+                                    <p className="bg-white "> {doctorDetails?.id?.substring(16, 24)}/DR</p>
                                 </div>
 
                                 <div className="col-12 text-center">
@@ -445,6 +402,132 @@ function Appointment() {
                     </div>
                 </div>
             )}
+            {viewAppt && (
+                <div className="overlay">
+                    <div className="container  add-patient-form">
+                        <form className=" container  col-lg-10 col-md-10 m-auto mt-5 rounded p-5 new-appointment">
+                            <div className="d-flex fs-3 col-12 justify-content-end">
+                                <span
+                                    onClick={() => {
+                                        setViewAppt(false);
+                                    }}
+                                >
+
+                                    <TiTimes />
+                                </span>
+                            </div>
+                            <h3> Appointment</h3>
+                            <div className="row g-3 ">
+                                <div className="col-md-4">
+                                    <label htmlFor="validationDefault01" className="form-label">
+                                        Appt Date
+                                    </label>
+                                    <p>{appt[viewIndex]?.date}</p>
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="validationDefault02" className="form-label">
+                                        Appt Time
+                                    </label>
+                                    <p>{appt[viewIndex]?.time}</p>
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="validationDefault02" className="form-label">
+                                        Card no
+                                    </label>
+                                    <p>{appt[viewIndex]?.card_no?.card_no}</p>
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="validationDefault02" className="form-label">
+                                        First Name{" "}
+                                    </label>
+                                    <p className=" ">
+
+                                        {appt[viewIndex]?.card_no?.first_name
+                                            ? appt[viewIndex]?.card_no?.first_name
+                                            : "N/A"}
+                                    </p>
+                                </div>
+
+                                <div className="col-md-4 ">
+                                    <label htmlFor="validationDefault02" className="form-label">
+                                        Last Name{" "}
+                                    </label>
+                                    <p className=" ">
+
+                                        {appt[viewIndex]?.card_no?.last_name
+                                            ? appt[viewIndex]?.card_no?.last_name
+                                            : "N/A"}
+                                    </p>
+                                </div>
+
+                                <div className="col-md-4 ">
+                                    <label htmlFor="validationDefault02" className="form-label">
+                                        Gender{" "}
+                                    </label>
+                                    <p className=" ">
+
+                                        {appt[viewIndex]?.card_no?.gender
+                                            ? appt[viewIndex]?.card_no?.gender
+                                            : "N/A"}
+                                    </p>
+                                </div>
+
+                                <div className="col-md-4 ">
+                                    <section>
+                                        <label htmlFor="validationDefault02" className="form-label">
+                                            Consultant
+                                        </label>
+
+
+                                        <p className="text-capitalize "> <img className="rounded-circle fs-6" src={appt[viewIndex]?.physician?.first_name} alt="" />
+                                            Dr {appt[viewIndex]?.physician?.first_name
+                                                ? appt[viewIndex]?.physician?.first_name
+                                                : "N/A"} {appt[viewIndex]?.physician?.last_name ? appt[viewIndex]?.physician?.last_name : "N/A"}
+                                        </p>
+
+
+                                    </section>
+
+                                </div>
+
+                                <div className="col-md-4 ">
+                                    <label htmlFor="validationDefault02" className="form-label">
+                                        Department
+                                    </label>
+                                    <p className="bg-white ">  {appt[viewIndex]?.physician?.department?.name}</p>
+                                </div>
+
+                                <div className="col-md-4 ">
+                                    <label htmlFor="validationDefault02" className="form-label">
+                                        ID
+                                    </label>
+                                    <p className="bg-white "> {appt[viewIndex]?.physician?._id?.substring(18, 24)}/DR</p>
+                                </div>
+
+                                <div className="col-12 text-center">
+
+                                    <>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary border-0 col-4 mt-3 fs-5"
+                                            onClick={() => {
+                                                setViewAppt(false)
+                                            }}
+                                        >
+                                            Close
+                                        </button>
+                                    </>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
 
             {foundPatientIsShown && (
                 <div className="overlay">
@@ -486,7 +569,7 @@ function Appointment() {
                                         <label htmlFor="validationDefault01" className="form-label">
                                             Consultant
                                         </label>
-                                        <p> Dr {foundAppt[foundIndex]?.physician?.first_name} </p>
+                                        <p className="text-capitalize"> Dr {foundAppt[foundIndex]?.physician?.first_name} </p>
                                     </div>
                                     <div className="col-md-4">
                                         <label htmlFor="validationDefault01" className="form-label">
@@ -539,11 +622,11 @@ function Appointment() {
 
 
 
-                            <li className='sidebar_btn'>
-                                <Link to='/receptionist/profile'> Profile </Link>
-                            </li>
                             <li className="sidebar_btn">
                                 <Link to="/receptionist/appointment"> Appointment </Link>
+                            </li>
+                            <li className='sidebar_btn'>
+                                <Link to='/receptionist/profile'> Profile </Link>
                             </li>
                             <li className='sidebar_btn'
                                 onClick={() => {
@@ -648,7 +731,7 @@ function Appointment() {
                                                     {patient?.date}
 
                                                 </td>
-                                                <td className="text-decoration-underline" onClick={() => {
+                                                <td className="text-decoration-underline close-btn" onClick={() => {
                                                     setFoundPatientIsShown(true)
                                                     setFoundIndex(i)
                                                 }}>
@@ -683,7 +766,7 @@ function Appointment() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {appt?.length == 0 ? ("loading...") : appt?.splice(0, 3)?.map((appt, i) => (
+                                        {appt?.length == 0 ? ("loading...") : appt?.slice(0, 3)?.map((appt, i) => (
                                             <tr key={i}>
                                                 <td>
                                                     {appt?.card_no?.first_name} {appt?.card_no?.last_name}
@@ -699,7 +782,7 @@ function Appointment() {
 
                                                 </td>
 
-                                                <td>
+                                                <td className="text-capitalize">
                                                     Dr {appt?.physician?.first_name} {appt?.physician?.last_name}
 
                                                 </td>
@@ -708,9 +791,10 @@ function Appointment() {
                                                     {appt?.date}
 
                                                 </td>
-                                                <td className="text-decoration-underline"
+                                                <td className="text-decoration-underline close-btn"
                                                     onClick={() => {
-
+                                                        setViewIndex(i)
+                                                        setViewAppt(true)
                                                     }}>
                                                     view
 
@@ -719,26 +803,7 @@ function Appointment() {
                                             </tr>
                                         ))}
 
-                                        {/* <tr>
-                                            <td>
-                                                {addedAppointment?.card_no?.first_name}
-                                                {addedAppointment?.card_no?.last_name}
-                                            </td>
-                                            <td>
-                                                <span>#</span>
-                                                {addedAppointment?.card_no}
-                                            </td>
-                                            <td>{addedAppointment?.d_o_b} </td>
-                                            <td>{addedAppointment?.card_no?.last_name} </td>
-                                            <td>
-                                                {!addedAppointment?.status ? (
-                                                    "outpatient"
-                                                ) : (
-                                                    <p> {!addedAppointment?.status}</p>
-                                                )}{" "}
-                                            </td>
-                                            <td>{addedAppointment?.gender} </td>
-                                        </tr> */}
+
                                     </tbody>
                                 </table>
                             </div>

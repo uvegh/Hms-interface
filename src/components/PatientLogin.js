@@ -7,6 +7,7 @@ import googleIcon from '../img/google-icon-logo-png-transparent 1.png'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 import { HmsContext } from '../context/HmsContext'
+import SpinnerLoader from './SpinnerLoader'
 function PatientLogin() {
   const baseUrl = 'https://gavohms.onrender.com'
   const [isLoading, setIsloading] = useState(false)
@@ -110,24 +111,7 @@ function PatientLogin() {
   return (
     <>
       {isLoading && (
-        <div className='container-fluid overlay'>
-          <div className='loader m-auto'>
-            <div className='lds-spinner text-center m-auto'>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        </div>
+        <SpinnerLoader />
       )}
 
       <div className='containerbg pb-5 container-fluid'>

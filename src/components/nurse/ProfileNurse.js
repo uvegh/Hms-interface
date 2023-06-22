@@ -22,6 +22,7 @@ function ProfileNurse() {
         customAlertNotify,
         customAlertWarning,
         setCurrentEmpId,
+
         reload,
         profileObj,
         removePfp } = useContext(HmsContext)
@@ -34,7 +35,7 @@ function ProfileNurse() {
     const [viewFullPfp, setViewFullPfp] = useState(false)
     const [liveSelfie, setLiveSelfie] = useState(false)
     const [viewphoto, setViewPhoto] = useState(false)
-
+    const [viewCapturedImg, setViewCapturedImg] = useState()
     const navigate = useNavigate()
     const [loginData, setLoginData] = useState({
         emailOrPhone: currentEmpId?.email,
@@ -54,53 +55,99 @@ function ProfileNurse() {
         inputRef.current.click()
     }
     const [imageSrc, setImageSrc] = useState(null);
+    const [imgUpdateLoading, setImgUpdateLoading] = useState(false)
+    const [updateAvatarFile, setUpdateAvatarFile] = useState(null)
     const fileReader = new FileReader()
+    const date = new Date()
     const capture = () => {
         const imageSrc = webcamRef.current.getScreenshot();
-        setImageSrc(imageSrc);
-        console.log(imageSrc);
+        const file = dataURLtoFile(imageSrc, "image" + date.getTime() + ".jpg")
+        setViewCapturedImg(URL.createObjectURL(file))//convert file to url to display taken photot
+        setImageSrc(file);
+        console.log(file);
     };
-    const [updateAvatarFile, setUpdateAvatarFile] = useState({
-        avatar: ""
-    })
 
+    const imageData = new FormData()
+    const imgFileData = new FormData()
 
-    //handle file change on update avatar
+    //  function to convert data URL to a file
+    const dataURLtoFile = (dataUrl, filename) => {
+        const arr = dataUrl.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, { type: mime });
+    };
+    //update avatar through camera
 
-    // const handleImgChange = (e) => {
-    //     console.log("yooo its working")
-    //     const fileObj = e.target.files[0]
-    //     console.log(fileObj)
-    //     // setUpdateAvatarFile({ ...updateAvatarFile, avatar:})
-    //     if (!fileObj) {
-    //         console.log(fileObj)
-    //         return
-    //     }
-    //     console.log(fileObj);
-
-    //     console.log(updateAvatarFile)
-    //     handleUpdateAvatarFile()
-    // }
-
-    //update avatar through file
-    const handleUpdateAvatarFile = async () => {
-        if (updateAvatarFile.avatar == "") {
-            console.log(updateAvatarFile.avatar)
+    const handleUpdateAvatarcamera = async () => {
+        setImgUpdateLoading(true)
+        imageData.append("avatar", imageSrc)
+        console.log(imageSrc)
+        if (imageSrc == "") {
+            setImgUpdateLoading(false)
             return
         }
-        const formData = new FormData()
-        formData.append("avatar", updateAvatarFile.avatar)
-        console.log(updateAvatarFile.avatar)
-        console.log(formData)
-        console.log(currentEmpId?.id)
-        let response = await (axios.put(`${baseUrl}/employee/pfp/${currentEmpId?.id}`, formData,
+        try {
+            let response = await (await (axios.put(`${baseUrl}/employee/pfp/${currentEmpId?.id}`, imageData))).data
+            console.log(response)
+            if (response?.code == "200") {
+                setImgUpdateLoading(false)
+                setImageSrc(null)
+                customAlertNotify("Profile updated")
+                setTimeout(() => {
+                    setLiveSelfie(false)
+                }, 2000);
+                return
+            }
+            setTimeout(() => {
+                setLiveSelfie(false)
+            }, 2000);
 
-        )).catch((err) => {
-            console.log(err);
+            setImgUpdateLoading(false)
             customAlertWarning("Failed to update profile")
-        })
-        if (response?.data?.code == "200") return customAlertNotify("Profile updated")
-        customAlertWarning("Failed to update profile")
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    //update avatar through file
+    const handleUpdateAvatarFile = async (event) => {
+        // if (!updateAvatarFile) {
+        //     console.log(updateAvatarFile)
+        //     return
+        // }
+        const file = event.target.files[0]
+        console.log(file)
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        console.log(formData)
+
+        try {
+            let response = await axios.put(`${baseUrl}/employee/pfp/${currentEmpId?.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            console.log(response)
+            if (response?.data?.code == "200") {
+                customAlertNotify("Profile updated")
+
+                return
+            }
+
+            customAlertWarning("Failed to update profile")
+        }
+        catch (err) {
+            console.log(err)
+        }
+
     }
 
 
@@ -175,40 +222,10 @@ function ProfileNurse() {
     }
 
 
-    const getLiveVideo = () => {
-        //get access to camera of any user
-        navigator.mediaDevices.getUserMedia({
-            video: true
-        }).then((stream) => {
-            //attach stream to video ref and tag
-            let video = vidRef.current
-            video.srcObject = stream
-            video.play()//make video play
-        }).catch((err) => console.log(err))
-    }
 
-    const takePicture = () => {
-        let width = 100
-        let height = 50
 
-        let photo = photoRef.current
-        let video = vidRef.current
 
-        photo.width = width
-        photo.height = height
 
-        //get contex of image
-        let ctx = photo.getContext('2d')
-        //draw image
-        ctx.drawImage(video, 0, 0, photo.width, photo.height)//pass  video tag through ref and x,y height and width coordinates
-
-    }
-
-    const cancelImg = () => {
-        let photo = photoRef.current
-        let ctx = photo.getContext('2d')
-        ctx.clearRect(0, 0, photo.width, photo.height)//clear current photo
-    }
 
 
 
@@ -224,59 +241,27 @@ function ProfileNurse() {
     const webcamStyle = {
         width: '100%',
         maxWidth: '500px',
-        borderRadius: '46%',
+        borderRadius: '5%',
         height: '100%',
 
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-        marginLeft: '35%',
+        marginLeft: '32%',
         textAlign: 'center'
     };
 
     return (
         <>
             {liveSelfie && (
-                <div className="overlay">
+                <div className="overlay bg-white">
                     <div className="live-video">
 
-                        <div className="d-flex fs-3 text-white col-12 justify-content-end">
+                        <div className="d-flex fs-3 text-dark col-12 justify-content-end">
                             <span onClick={() => {
                                 setLiveSelfie(false)
+                                setImageSrc(null)
                             }}> <TiTimes /> </span>
                         </div>
-                        {/* <div className="text-center d-block">
 
-                            {
-                                viewphoto == false ? (
-                                    <>
-                                        <video className='container' ref={vidRef}></video> <br />
-                                        <button className='btn btn-primary fs-2  rounded-circle border-0 ' onClick={
-                                            () => {
-                                                setViewPhoto(true)
-                                                takePicture()
-
-                                            }
-
-                                        }>
-                                            <FiCamera />
-
-                                        </button>
-                                    </>
-
-                                ) : (
-                                    <>
-                                        <canvas ref={photoRef}>
-
-                                        </canvas>
-                                        <button className='btn btn-danger'
-                                            onClick={cancelImg}
-                                        > cancel</button>
-                                    </>
-
-                                )
-                            }
-
-
-                        </div> */}
                         <div>
                             {
                                 imageSrc == null ? (
@@ -286,10 +271,10 @@ function ProfileNurse() {
                                                 audio={false}
                                                 ref={webcamRef}
                                                 style={webcamStyle}
-
+                                                screenshotFormat='image/jpeg'
                                             /> <br />
                                             <div className='text-center'>
-                                                <button className='rounded btn btn-primary border-0 p-3' onClick={capture}><FiCamera /></button>
+                                                <button className='col-lg-2 col-md-4 col-sm-7 btn btn-primary border-0  fs-1' onClick={capture}><FiCamera /></button>
                                             </div>
                                         </section>
                                     </>
@@ -298,16 +283,38 @@ function ProfileNurse() {
 
 
                             {imageSrc && (<>
-                                <div className="m-auto text-center mt-2">
-                                    <img src={imageSrc} alt="Captured" /> <br />
-                                    <div className="m-auto text-center mt-2">
-                                        <button className='col-1 btn btn-primary bg-white border-2 text-dark '
+                                <div className="m-auto text-center mt-2 rounded">
+                                    <img className="rounded" src={viewCapturedImg} alt="Captured" /> <br />
+                                    <div className=' row m-auto col-lg-8'>
+
+
+
+                                        <button type="button" className="btn btn-primary m-auto border-0 col-lg-2 mt-3 fs-5"
                                             onClick={() => {
                                                 setImageSrc(null)
                                             }}
-                                        >Retake </button>
-                                        <button className='btn btn-primary border-0 col-1'>Use </button>
+                                        >Retake
+                                        </button>
+
+                                        {imgUpdateLoading == false ? (<button type="button" className="btn btn-primary border-0  m-auto col-lg-2 mt-3 fs-5"
+                                            onClick={handleUpdateAvatarcamera}
+
+                                        >Use Photo
+                                        </button>) : (
+
+                                            <button type="button" className="btn btn-primary border-0  m-auto col-lg-2 mt-3 fs-5">
+                                                <div className="text-center">
+                                                    <div className="spinner-border" role="status">
+                                                        <span className="visually-hidden">Loading...</span>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        )}
                                     </div>
+
+
+
+
                                 </div>
                             </>
 
@@ -421,12 +428,7 @@ function ProfileNurse() {
                                             >
                                                 <input type="file" name='avatar' hidden
                                                     ref={inputRef}
-                                                    onChange={(e) => {
-
-                                                        setUpdateAvatarFile({ ...updateAvatarFile, avatar: e.target.files[0] })
-                                                        console.log(updateAvatarFile)
-                                                        handleUpdateAvatarFile()
-                                                    }}
+                                                    onChange={handleUpdateAvatarFile}
                                                 />
                                                 <Link className="dropdown-item" >
                                                     <img className='me-2' src={photoIcon} alt="" />
@@ -435,7 +437,7 @@ function ProfileNurse() {
                                             <li
                                                 onClick={() => {
                                                     setLiveSelfie(true)
-                                                    getLiveVideo()
+                                                    // getLiveVideo()
                                                 }}
                                             ><Link className="dropdown-item new-photo " >
                                                     <img className='me-2' src={camera} alt="" />
