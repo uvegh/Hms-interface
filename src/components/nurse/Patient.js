@@ -11,6 +11,7 @@ import { HmsContext } from '../../context/HmsContext'
 import { TiTimes } from 'react-icons/ti'
 import SpinnerLoader from '../SpinnerLoader'
 import { AiOutlineEllipsis } from 'react-icons/ai'
+import { ToastContainer } from 'react-toastify'
 function Patient() {
     const baseUrl = "https://gavohms.onrender.com"
     const { currentEmpId,
@@ -18,7 +19,8 @@ function Patient() {
         handleGetNurseDetail,
         handleGetConsultation,
         patientsInChargeOf,
-        profileObj,
+
+        customAlertNotify,
         reload } = useContext(HmsContext)
     console.log(patientsInChargeOf);
     const [patientDetails, setPatientDetails] = useState()
@@ -45,6 +47,7 @@ function Patient() {
     const [patientCardNo, setPatientCardNo] = useState()
     const [foundPatientIsShown, setFoundPatientIsShown] = useState(false)
     const [isLoading, setIsloading] = useState(false);
+    const [vitalsUpdateIsLoading, setVitalsUpdateIsLoading] = useState(false)
     const [viewPatientHistory, setViewPatientHistory] = useState(false)
 
     const [weight, setWeight] = useState("")
@@ -89,10 +92,12 @@ function Patient() {
 
 
     const handleUpdatePatientvitals = async (id) => {
+        setVitalsUpdateIsLoading(true)
         if (!patientVitals.blood_pressure || !patientVitals.weight) {
             setValidate(true);
             //console.log(patientVitals);
             console.log(patientVitals);
+            setVitalsUpdateIsLoading(false)
             return;
         }
         console.log(patientVitals);
@@ -114,7 +119,12 @@ function Patient() {
 
         if (response) {
             setEditMode(false);
+            customAlertNotify("vitals updated")
+            setVitalsUpdateIsLoading(false)
+            setFoundPatientIsShown(false)
+
         }
+        setVitalsUpdateIsLoading(false)
     }
 
     const handlGetPatientsHistory = async (patientId) => {
@@ -154,6 +164,7 @@ function Patient() {
             {/* {isLoading && (
                 <SpinnerLoader />
             )} */}
+            <ToastContainer />
             {foundPatientIsShown && (<div className="overlay">
                 <div className="container  add-patient-form">
                     {
@@ -459,13 +470,25 @@ function Patient() {
                                                 >Cancel
                                                 </button>
 
-                                                <button type="button" className="btn btn-primary border-0  m-auto col-4 mt-3 fs-5"
+                                                {vitalsUpdateIsLoading == false ? (<button type="button" className="btn btn-primary border-0  m-auto col-4 mt-3 fs-5"
                                                     onClick={() => [
                                                         handleUpdatePatientvitals(foundPatient?._id)
                                                     ]}
 
                                                 >Update
-                                                </button>
+                                                </button>) : (
+
+                                                    <button type="button" className="btn btn-primary border-0  m-auto col-4 mt-3 fs-5"
+
+
+                                                    >
+                                                        <div className="text-center">
+                                                            <div className="spinner-border" role="status">
+                                                                <span className="visually-hidden">Loading...</span>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                )}
                                             </div>
 
                                         )
@@ -504,183 +527,186 @@ function Patient() {
             </div>)
 
             }
-            {showEdit && (
+            {
+                showEdit && (
 
-                <div className="overlay">
-                    <div className="container  add-patient-form ">
+                    <div className="overlay">
+                        <div className="container  add-patient-form ">
 
-                        <form className=" container  col-lg-6 col-md-10 m-auto  rounded " style={{
-                            position: "absolute", left: "25%", top: "30%"
-                        }}>
-                            <div className="d-flex fs-3 col-12 justify-content-end">
-                                <span onClick={() => {
-                                    setShowEdit(false)
-                                }}> <TiTimes /> </span>
-                            </div>
-                            <section className="row">
-
-
-                                <div className="col-md-5 m-auto mb-3">
-                                    <label htmlFor="">Card no</label>
-                                    <p className='bg-white p-2'>#{patientDetails?.card_no}</p>
+                            <form className=" container  col-lg-6 col-md-10 m-auto  rounded " style={{
+                                position: "absolute", left: "25%", top: "30%"
+                            }}>
+                                <div className="d-flex fs-3 col-12 justify-content-end">
+                                    <span onClick={() => {
+                                        setShowEdit(false)
+                                    }}> <TiTimes /> </span>
                                 </div>
-                                <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Name</label>
-                                    <p className='bg-white p-2'> {!patientDetails?.first_name && !patientDetails?.last_name ? ("N/A") : `${patientDetails?.first_name} ${patientDetails?.last_name}`} </p>
-                                </div>
-
-                                <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Weight(kg)</label>
-                                    <input
-                                        name='vitals.weight'
-                                        value={patientVitals.vitals.weight}
-                                        onChange={handleVitalsChange}
-                                        type="number" className='form-control' />
-                                </div>
-                                <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3 ">
-                                    <label htmlFor="">Blood Pressure</label>
-                                    <input type="number"
-                                        onChange={handleVitalsChange}
-                                        name='vitals.blood_pressure'
-                                        value={patientVitals.vitals.blood_pressure}
-                                        className='form-control' />
-                                </div>
-
-                                <div className='text-center mb-3'>
-                                    <button type='button' className='btn btn-secondary '
-                                        onClick={() => {
-                                            handleEditPatientVitals(patientDetails?._id)
-                                        }}
-                                    >
-                                        Update
-                                    </button>
-                                </div>
-                            </section>
+                                <section className="row">
 
 
-                        </form>
+                                    <div className="col-md-5 m-auto mb-3">
+                                        <label htmlFor="">Card no</label>
+                                        <p className='bg-white p-2'>#{patientDetails?.card_no}</p>
+                                    </div>
+                                    <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3">
+                                        <label htmlFor="">Name</label>
+                                        <p className='bg-white p-2'> {!patientDetails?.first_name && !patientDetails?.last_name ? ("N/A") : `${patientDetails?.first_name} ${patientDetails?.last_name}`} </p>
+                                    </div>
+
+                                    <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3">
+                                        <label htmlFor="">Weight(kg)</label>
+                                        <input
+                                            name='vitals.weight'
+                                            value={patientVitals.vitals.weight}
+                                            onChange={handleVitalsChange}
+                                            type="number" className='form-control' />
+                                    </div>
+                                    <div className="col-md-5 col-lg-5 col-sm-11 m-auto mb-3 ">
+                                        <label htmlFor="">Blood Pressure</label>
+                                        <input type="number"
+                                            onChange={handleVitalsChange}
+                                            name='vitals.blood_pressure'
+                                            value={patientVitals.vitals.blood_pressure}
+                                            className='form-control' />
+                                    </div>
+
+                                    <div className='text-center mb-3'>
+                                        <button type='button' className='btn btn-secondary '
+                                            onClick={() => {
+                                                handleEditPatientVitals(patientDetails?._id)
+                                            }}
+                                        >
+                                            Update
+                                        </button>
+                                    </div>
+                                </section>
+
+
+                            </form>
+                        </div>
                     </div>
-                </div>
-            )
+                )
             }
 
 
-            {viewPatient && (
+            {
+                viewPatient && (
 
-                <div className="overlay">
-                    <div className="container  add-patient-form">
+                    <div className="overlay">
+                        <div className="container  add-patient-form">
 
-                        <form className=" container  col-lg-11 col-md-10 m-auto mt-5 rounded  nurse-view ">
-                            <div className="d-flex fs-3 col-12 justify-content-end">
-                                <span onClick={() => {
-                                    setViewPatient(false)
-                                }}> <TiTimes /> </span>
-                            </div>
-
-                            <div className=" text-center mb-3">
-                                <img className='user_view_icon' src={` ${baseUrl}/${assignedPatient[viewPatientIndex]?.avatar}`} alt="" />
-                                <h6> {assignedPatient[viewPatientIndex]?.first_name} {assignedPatient[viewPatientIndex]?.last_name}  </h6>
-                                <p>#{assignedPatient[viewPatientIndex]?._id} </p>
-                            </div>
-
-                            <section className="row nurse_view_details m-auto col-lg-10 col-sm-12 col-md-10">
-
-
-                                <div className="col-md-4 m-auto mb-3">
-                                    <label htmlFor="" >Gender</label>
-                                    <p className=''>{assignedPatient[viewPatientIndex]?.gender}</p>
-
-                                </div>
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Department</label>
-                                    <p className=''>{assignedPatient[viewPatientIndex]?.department?.name} </p>
-                                </div>
-
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Phone</label>
-                                    <p className=''>{assignedPatient[viewPatientIndex]?.phone} </p>
-                                </div>
-
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Status</label>
-                                    <p className=''>{assignedPatient[viewPatientIndex]?.status} </p>
-                                </div>
-                                <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                    <label htmlFor="">Patients Assigned</label>
-                                    <ul className='list-group'>
-                                        {
-                                            additionalNurseDetail?.patients_incharge_of?.length == 0 || !additionalNurseDetail?.patients_incharge_of ? (<ul>
-                                                <li className='list-group-item'>N/A</li>
-                                            </ul>) :
-                                                additionalNurseDetail?.patients_incharge_of.map((patient) => (
-                                                    <li className='list-group-item'>#{patient?.card_no} {patient?.first_name} {patient?.last_name}</li>
-
-                                                ))
-                                        }
-
-
-
-                                    </ul>
-                                </div>
-                                <div className="col-md-5 col-lg-4 col-sm-11 m-auto mb-3 ">
-                                    <label htmlFor="">Ward Assigned</label>
-                                    <ul className='list-group'>
-                                        {
-                                            additionalNurseDetail?.data?.ward_no?.length == 0 || !additionalNurseDetail?.data?.ward_no ? (<ul>
-                                                <li className='list-group-item'>N/A</li>
-                                            </ul>) :
-                                                additionalNurseDetail?.data?.ward_no?.map((ward) => (
-                                                    <li className='list-group-item'>{ward?.name} {ward?.type} </li>
-
-                                                ))
-                                        }
-
-
-
-                                    </ul>
-                                </div>
-
-                                <div className='text-center mb-5 mt-3'>
-                                    <button type='button' className='btn btn-primary col-lg-4 col-md-4 col-sm-10' onClick={() => {
+                            <form className=" container  col-lg-11 col-md-10 m-auto mt-5 rounded  nurse-view ">
+                                <div className="d-flex fs-3 col-12 justify-content-end">
+                                    <span onClick={() => {
                                         setViewPatient(false)
-
-                                    }
-
-
-                                    }>
-                                        Close
-                                    </button>
+                                    }}> <TiTimes /> </span>
                                 </div>
-                            </section>
+
+                                <div className=" text-center mb-3">
+                                    <img className='user_view_icon' src={` ${baseUrl}/${assignedPatient[viewPatientIndex]?.avatar}`} alt="" />
+                                    <h6> {assignedPatient[viewPatientIndex]?.first_name} {assignedPatient[viewPatientIndex]?.last_name}  </h6>
+                                    <p>#{assignedPatient[viewPatientIndex]?._id} </p>
+                                </div>
+
+                                <section className="row nurse_view_details m-auto col-lg-10 col-sm-12 col-md-10">
 
 
-                        </form>
+                                    <div className="col-md-4 m-auto mb-3">
+                                        <label htmlFor="" >Gender</label>
+                                        <p className=''>{assignedPatient[viewPatientIndex]?.gender}</p>
+
+                                    </div>
+                                    <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                        <label htmlFor="">Department</label>
+                                        <p className=''>{assignedPatient[viewPatientIndex]?.department?.name} </p>
+                                    </div>
+
+                                    <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                        <label htmlFor="">Phone</label>
+                                        <p className=''>{assignedPatient[viewPatientIndex]?.phone} </p>
+                                    </div>
+
+                                    <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                        <label htmlFor="">Status</label>
+                                        <p className=''>{assignedPatient[viewPatientIndex]?.status} </p>
+                                    </div>
+                                    <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                        <label htmlFor="">Patients Assigned</label>
+                                        <ul className='list-group'>
+                                            {
+                                                additionalNurseDetail?.patients_incharge_of?.length == 0 || !additionalNurseDetail?.patients_incharge_of ? (<ul>
+                                                    <li className='list-group-item'>N/A</li>
+                                                </ul>) :
+                                                    additionalNurseDetail?.patients_incharge_of.map((patient) => (
+                                                        <li className='list-group-item'>#{patient?.card_no} {patient?.first_name} {patient?.last_name}</li>
+
+                                                    ))
+                                            }
+
+
+
+                                        </ul>
+                                    </div>
+                                    <div className="col-md-5 col-lg-4 col-sm-11 m-auto mb-3 ">
+                                        <label htmlFor="">Ward Assigned</label>
+                                        <ul className='list-group'>
+                                            {
+                                                additionalNurseDetail?.data?.ward_no?.length == 0 || !additionalNurseDetail?.data?.ward_no ? (<ul>
+                                                    <li className='list-group-item'>N/A</li>
+                                                </ul>) :
+                                                    additionalNurseDetail?.data?.ward_no?.map((ward) => (
+                                                        <li className='list-group-item'>{ward?.name} {ward?.type} </li>
+
+                                                    ))
+                                            }
+
+
+
+                                        </ul>
+                                    </div>
+
+                                    <div className='text-center mb-5 mt-3'>
+                                        <button type='button' className='btn btn-primary col-lg-4 col-md-4 col-sm-10' onClick={() => {
+                                            setViewPatient(false)
+
+                                        }
+
+
+                                        }>
+                                            Close
+                                        </button>
+                                    </div>
+                                </section>
+
+
+                            </form>
+                        </div>
                     </div>
-                </div>
-            )
+                )
             }
 
 
 
-            {viewPatientHistory && (
+            {
+                viewPatientHistory && (
 
-                <div className="overlay patient-history-overlay container-fluid">
-                    <div className="  view-patient-history">
+                    <div className="overlay patient-history-overlay container-fluid">
+                        <div className="  view-patient-history">
 
-                        <section className="  bg-light col-lg-9 col-md-10 m-auto scrollhist rounded mt-5 ">
-                            <div className="d-flex fs-3 col-12 justify-content-end">
-                                <span onClick={() => {
-                                    setViewPatientHistory(false)
-                                }}> <TiTimes /> </span>
-                            </div>
-                            <h3 className='text-center'> </h3>
+                            <section className="  bg-light col-lg-9 col-md-10 m-auto scrollhist rounded mt-5 ">
+                                <div className="d-flex fs-3 col-12 justify-content-end">
+                                    <span onClick={() => {
+                                        setViewPatientHistory(false)
+                                    }}> <TiTimes /> </span>
+                                </div>
+                                <h3 className='text-center'> </h3>
 
-                            <div className=" text-center mb-3 sticky-pfp">
-                                <img className='user_view_icon' src={`${baseUrl}/${foundPatient?.avatar}`} alt="" />
-                                <h5> {foundPatient?.first_name} {foundPatient?.last_name}  </h5>
-                                <p>#{foundPatient?.card_no} </p>
-                            </div>
-                            {/* {isLoading && (
+                                <div className=" text-center mb-3 sticky-pfp">
+                                    <img className='user_view_icon' src={`${baseUrl}/${foundPatient?.avatar}`} alt="" />
+                                    <h5> {foundPatient?.first_name} {foundPatient?.last_name}  </h5>
+                                    <p>#{foundPatient?.card_no} </p>
+                                </div>
+                                {/* {isLoading && (
                                 <div className="histLoader">
                                     <div className="lds-spinner fs-6 text-center m-auto bg-dark">
                                         <div></div>
@@ -701,44 +727,93 @@ function Patient() {
 
                             } */}
 
-                            {
-                                consultationHistory?.length == 0 && appointmentHistory?.length == 0 ? (
-                                    <p className='text-center'> No History</p>
-                                ) :
-                                    consultationHistory?.length == 0 ? ("") :
-                                        consultationHistory?.map((patient) => (
+                                {
+                                    consultationHistory?.length == 0 && appointmentHistory?.length == 0 ? (
+                                        <p className='text-center'> No History</p>
+                                    ) :
+                                        consultationHistory?.length == 0 ? ("") :
+                                            consultationHistory?.map((patient) => (
+                                                <section className="row  m-auto bg-white mb-3  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
+
+                                                    <h5 className='text-start mt-2 mb-2'>Monday 5th June, 2023</h5>
+                                                    <div className="col-md-4  m-auto mb-3">
+                                                        <label htmlFor="" > weight(kg)</label>
+                                                        <p className=''> {!patient?.patient_id?.vitals?.weight ? ("N/A") : patient?.patient_id?.vitals?.weight}</p>
+
+                                                    </div>
+                                                    <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                        <label htmlFor="">Temperature</label>
+                                                        <p className=''> {!patient?.patient_id?.vitals?.temperature ? ("N/A") : patient?.patient_id?.vitals?.temperature}</p>
+                                                    </div>
+
+                                                    <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                        <label htmlFor="">Blood Pressure </label>
+                                                        <p className=''>{!patient?.patient_id?.vitals?.blood_pressure ? ("N/A") : patient?.patient_id?.vitals?.blood_pressure} </p>
+                                                    </div>
+
+                                                    <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                        <label htmlFor="">Heart Rate (bpm)</label>
+                                                        <p className='border-bottom-0'>{!patient?.patient_id?.vitals?.heart_rate ? ("N/A") : patient?.patient_id?.vitals?.heart_rate} </p>
+                                                    </div>
+
+
+                                                    <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                        <label htmlFor="">     Respiratory Rate (bpm)</label>
+                                                        <p className='border-bottom-0'> {!patient?.patient_id?.vitals?.respiratory_rate ? ("N/A") : patient?.patient_id?.vitals?.respiratory_rate}</p>
+                                                    </div>
+
+                                                    <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
+                                                        <label htmlFor="">  Pulse (bpm)</label>
+                                                        <p className='border-bottom-0'>{!patient?.patient_id?.vitals?.pulse ? ("N/A") : patient?.patient_id?.vitals?.pulse} </p>
+                                                    </div>
+
+
+
+
+                                                </section>
+                                            )
+
+                                            )
+
+                                }
+
+
+
+                                {
+                                    appointmentHistory?.length == 0 ? ("") :
+                                        appointmentHistory?.map((patient) => (
                                             <section className="row  m-auto bg-white mb-3  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
 
-                                                <h5 className='text-start mt-2 mb-2'>Monday 5th June, 2023</h5>
+                                                <h5 className='text-start mt-2 mb-2'>{patient?.createdAt}Monday 5th June, 2023</h5>
                                                 <div className="col-md-4  m-auto mb-3">
                                                     <label htmlFor="" > weight(kg)</label>
-                                                    <p className=''> {!patient?.patient_id?.vitals?.weight ? ("N/A") : patient?.patient_id?.vitals?.weight}</p>
+                                                    <p className=''> {!patient?.card_no?.vitals?.weight ? ("N/A") : patient?.card_no?.vitals?.weight}</p>
 
                                                 </div>
                                                 <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
                                                     <label htmlFor="">Temperature</label>
-                                                    <p className=''> {!patient?.patient_id?.vitals?.temperature ? ("N/A") : patient?.patient_id?.vitals?.temperature}</p>
+                                                    <p className=''> {!patient?.card_no?.vitals?.temperature ? ("N/A") : patient?.card_no?.vitals?.temperature}</p>
                                                 </div>
 
                                                 <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
                                                     <label htmlFor="">Blood Pressure </label>
-                                                    <p className=''>{!patient?.patient_id?.vitals?.blood_pressure ? ("N/A") : patient?.patient_id?.vitals?.blood_pressure} </p>
+                                                    <p className=''>{!patient?.card_no?.vitals?.blood_pressure ? ("N/A") : patient?.card_no?.vitals?.blood_pressure} </p>
                                                 </div>
 
                                                 <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
                                                     <label htmlFor="">Heart Rate (bpm)</label>
-                                                    <p className='border-bottom-0'>{!patient?.patient_id?.vitals?.heart_rate ? ("N/A") : patient?.patient_id?.vitals?.heart_rate} </p>
+                                                    <p className='border-bottom-0'>{!patient?.card_no?.vitals?.heart_rate ? ("N/A") : patient?.card_no?.vitals?.heart_rate} </p>
                                                 </div>
 
 
                                                 <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
                                                     <label htmlFor="">     Respiratory Rate (bpm)</label>
-                                                    <p className='border-bottom-0'> {!patient?.patient_id?.vitals?.respiratory_rate ? ("N/A") : patient?.patient_id?.vitals?.respiratory_rate}</p>
+                                                    <p className='border-bottom-0'> {!patient?.card_no?.vitals?.respiratory_rate ? ("N/A") : patient?.card_no?.vitals?.respiratory_rate}</p>
                                                 </div>
 
                                                 <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
                                                     <label htmlFor="">  Pulse (bpm)</label>
-                                                    <p className='border-bottom-0'>{!patient?.patient_id?.vitals?.pulse ? ("N/A") : patient?.patient_id?.vitals?.pulse} </p>
+                                                    <p className='border-bottom-0'>{!patient?.card_no?.vitals?.pulse ? ("N/A") : patient?.card_no?.vitals?.pulse} </p>
                                                 </div>
 
 
@@ -748,72 +823,23 @@ function Patient() {
                                         )
 
                                         )
-
-                            }
-
-
-
-                            {
-                                appointmentHistory?.length == 0 ? ("") :
-                                    appointmentHistory?.map((patient) => (
-                                        <section className="row  m-auto bg-white mb-3  patient-history col-lg-9 p-2 col-sm-12 col-md-10">
-
-                                            <h5 className='text-start mt-2 mb-2'>{patient?.createdAt}Monday 5th June, 2023</h5>
-                                            <div className="col-md-4  m-auto mb-3">
-                                                <label htmlFor="" > weight(kg)</label>
-                                                <p className=''> {!patient?.card_no?.vitals?.weight ? ("N/A") : patient?.card_no?.vitals?.weight}</p>
-
-                                            </div>
-                                            <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                                <label htmlFor="">Temperature</label>
-                                                <p className=''> {!patient?.card_no?.vitals?.temperature ? ("N/A") : patient?.card_no?.vitals?.temperature}</p>
-                                            </div>
-
-                                            <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                                <label htmlFor="">Blood Pressure </label>
-                                                <p className=''>{!patient?.card_no?.vitals?.blood_pressure ? ("N/A") : patient?.card_no?.vitals?.blood_pressure} </p>
-                                            </div>
-
-                                            <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                                <label htmlFor="">Heart Rate (bpm)</label>
-                                                <p className='border-bottom-0'>{!patient?.card_no?.vitals?.heart_rate ? ("N/A") : patient?.card_no?.vitals?.heart_rate} </p>
-                                            </div>
-
-
-                                            <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                                <label htmlFor="">     Respiratory Rate (bpm)</label>
-                                                <p className='border-bottom-0'> {!patient?.card_no?.vitals?.respiratory_rate ? ("N/A") : patient?.card_no?.vitals?.respiratory_rate}</p>
-                                            </div>
-
-                                            <div className="col-md-4 col-lg-4 col-sm-11 m-auto mb-3">
-                                                <label htmlFor="">  Pulse (bpm)</label>
-                                                <p className='border-bottom-0'>{!patient?.card_no?.vitals?.pulse ? ("N/A") : patient?.card_no?.vitals?.pulse} </p>
-                                            </div>
-
-
-
-
-                                        </section>
-                                    )
-
-                                    )
-                            }
-
-                            <div className='text-center  mt-3 pb-3'>
-                                <button type='button' className='btn btn-primary col-lg-4 col-md-4 col-sm-10' onClick={() => {
-
-                                    setViewPatientHistory(false)
                                 }
 
+                                <div className='text-center  mt-3 pb-3'>
+                                    <button type='button' className='btn btn-primary col-lg-4 col-md-4 col-sm-10' onClick={() => {
 
-                                }>
-                                    Close
-                                </button>
-                            </div>
-                        </section>
+                                        setViewPatientHistory(false)
+                                    }
+
+
+                                    }>
+                                        Close
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
                     </div>
-                </div>
-            )
+                )
             }
 
 
@@ -846,10 +872,10 @@ function Patient() {
                             </li>
 
                             {
-    currentEmpId?.role=="nurseAdmin"?(  <li className="sidebar_btn">
-                                <Link to="/nurse/management"> Management </Link>
-                            </li>):null
-}
+                                currentEmpId?.role == "nurseAdmin" ? (<li className="sidebar_btn">
+                                    <Link to="/nurse/management"> Management </Link>
+                                </li>) : null
+                            }
                             <li className="sidebar_btn">
                                 <Link to="/nurse/profile"> Profile </Link>
                             </li>
@@ -877,9 +903,9 @@ function Patient() {
                         <div className='patient_search_box nurse_search_box'>
                             <div className='search_box  m-auto '  >
 
-                                <form action=''>
+                                <form >
                                     <input
-                                        className="col-md-5 p-3"
+                                        className="col-md-5 p-3" name='card_no'
                                         type='text' onSubmit={handleGetPatient}
                                         onChange={(e) => {
                                             setPatientCardNo(e.target.value
