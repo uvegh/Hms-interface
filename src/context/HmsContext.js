@@ -232,6 +232,7 @@ function HmsProvider(props) {
     }
     customAlertWarning("failed to remove profile");
   };
+
   const HandleGetAllBeds = async (wardId) => {
     let response = (await axios.get(`${baseUrl}/bed`)).data;
     //console.log(response?.data);
@@ -291,6 +292,42 @@ function HmsProvider(props) {
   }
 
 
+  //patient contexet
+
+  const reloadPatient = async () => {
+    if (!currentEmpId?.id) {
+      //navigate("/staflogin")
+      return;
+    }
+    let response = await axios
+      .get(`${baseUrl}/patient/${currentEmpId?.id}`)
+
+      .catch((err) => {
+        //console.log(err);
+        // alert("failed to reload");
+      });
+
+    // console.log(response);
+    if (response?.status == "200") {
+      //setIsLoggedIn(true);
+      //console.log(response?.data?.data)
+      setProfileObj(response?.data?.data);
+      return;
+    }
+  };
+  const removePfpPatient = async () => {
+    let response = await (axios.put(`${baseUrl}/patient/${currentEmpId?.id}`, {
+      avatar: "https://res.cloudinary.com/df9o0bto4/image/upload/v1686672390/userAvatars/1686672389691.png"
+    }))
+    //console.log(response);
+    if (response?.status == "200") {
+      //console.log(response)
+      customAlertNotify("profile deleted")
+      reloadPatient()
+      return
+    }
+    customAlertWarning("failed to remove profile");
+  };
 
   useEffect(() => {
     handleGetNotifications()
@@ -298,8 +335,12 @@ function HmsProvider(props) {
     handleGetAllNurses()
     handleGetNurseDetail()
     handleGetAllWards()
-
-    reload()
+    if (currentEmpId?.role) {
+      reload()
+    }
+    else {
+      reloadPatient
+    }
 
   }, [])
 
@@ -388,7 +429,9 @@ function HmsProvider(props) {
         getPendingApptPayment,
         getPendingConsultationPayment,
         pendingApptPayment,
-        pendingConsultationPayment
+        pendingConsultationPayment,
+        reloadPatient,
+        removePfpPatient
       }}
     >
       {props.children}

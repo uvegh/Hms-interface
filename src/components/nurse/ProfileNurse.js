@@ -68,7 +68,7 @@ function ProfileNurse() {
     };
 
     const imageData = new FormData()
-    const imgFileData = new FormData()
+
 
     //  function to convert data URL to a file
     const dataURLtoFile = (dataUrl, filename) => {

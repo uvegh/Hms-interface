@@ -67,7 +67,7 @@ function Profile() {
     };
 
     const imageData = new FormData()
-    const imgFileData = new FormData()
+
 
     //  function to convert data URL to a file
     const dataURLtoFile = (dataUrl, filename) => {
@@ -447,7 +447,7 @@ function Profile() {
                                 </section>
 
 
-                                <p className='text-uppercase'>#{currentEmpId?.id?.substring(18, 24)}/Nr </p>
+                                <p className='text-uppercase'>#{currentEmpId?.id?.substring(18, 24)}/REC </p>
                             </div>
 
 

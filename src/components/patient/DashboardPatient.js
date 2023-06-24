@@ -26,6 +26,7 @@ function DashboardPatient() {
         pendingConsultationPayment,
         getPendingApptPayment,
         getPendingConsultationPayment,
+        setCurrentEmpId
     } = useContext(HmsContext);
     const navigate = useNavigate();
     const [pendingAppts, setPendingAppts] = useState();
@@ -337,7 +338,7 @@ function DashboardPatient() {
                                 <Link to="/patient/dashboard"> Finance </Link>
                             </li>
                             <li className="sidebar_btn">
-                                <Link to="/patient/dashboard"> Profile </Link>
+                                <Link to="/patient/profile"> Profile </Link>
                             </li>
 
                             <li
@@ -345,6 +346,7 @@ function DashboardPatient() {
                                 onClick={() => {
                                     navigate("/login");
                                     setIsLoggedIn(false);
+                                    setCurrentEmpId("")
                                 }}
                             >
                                 <div> Logout </div>
