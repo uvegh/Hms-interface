@@ -97,16 +97,22 @@ function PatientLogin() {
     }
   }
 
+  google.accounts.id.renderButton(document.getElementById("signInGoogle"), {
+    size: "large",
+    theme: "outline"
+  });
+
+
+
+  //global google
   useEffect(() => {
     google.accounts.id.initialize({
       client_id:
-        '357757074966-ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com',
-      callback: handleCallbackResponse
-    })
-  }, [])
-  google.accounts.id.renderButton(document.getElementById('signInGoogle'), {
-    size: 'large'
-  })
+        "357757074966-ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+  }, []);
+
 
   return (
     <>

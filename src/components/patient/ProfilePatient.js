@@ -25,7 +25,7 @@ function ProfilePatient() {
 
 
         profileObj,
-        removePfp,
+        removePfpPatient,
         reloadPatient } = useContext(HmsContext)
     const baseUrl = "https://gavohms.onrender.com"
 
@@ -97,6 +97,7 @@ function ProfilePatient() {
             let response = await (await (axios.put(`${baseUrl}/patient/pfp/${currentEmpId?.id}`, imageData))).data
             console.log(response)
             if (response?.code == "200") {
+                reloadPatient()
                 setImgUpdateLoading(false)
                 setImageSrc(null)
                 customAlertNotify("Profile updated")
@@ -453,7 +454,7 @@ function ProfilePatient() {
                                             <li
                                                 onClick={() => { }}
                                             ><Link className="dropdown-item"
-                                                onClick={removePfp}
+                                                onClick={removePfpPatient}
                                             >
                                                     <img className='me-2' src={removePhoto} alt="" />
                                                     Remove picture</Link></li>
@@ -463,7 +464,7 @@ function ProfilePatient() {
                                 </section>
 
 
-                                <p className='text-uppercase'>#{currentEmpId?.card_no} </p>
+                                <p className='text-uppercase'>{currentEmpId?.card_no} </p>
                             </div>
 
 

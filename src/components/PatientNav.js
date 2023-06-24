@@ -11,9 +11,9 @@ import TimeAgo from "../TimeAgo";
 function PatientNav(props) {
     const {
         isLoggedIn,
-        setIsLoggedIn,
+
         profileObj,
-        reload,
+        reloadPatient,
         currentEmpId,
         userNotifications,
         setViewNotification,
@@ -54,7 +54,7 @@ function PatientNav(props) {
 
 
     useEffect(() => {
-        reload();
+        reloadPatient();
         handleGetNotifications();
     }, [userNotifications]);
     return (
