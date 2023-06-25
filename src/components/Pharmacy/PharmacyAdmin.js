@@ -80,7 +80,7 @@ const PharmacyAdmin = () => {
   const getPharmacy = async () => {
     if (PharmacyAdmin.id) {
       let response = (
-        await axios.get(`${testUrl}/pharmacy?emp_id=${PharmacyAdmin.id}`)
+        await axios.get(`${baseUrl}/pharmacy?emp_id=${PharmacyAdmin.id}`)
       ).data;
       setPharmacy(response?.data);
     }
