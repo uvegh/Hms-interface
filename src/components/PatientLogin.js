@@ -8,6 +8,9 @@ import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 import { HmsContext } from '../context/HmsContext'
 import SpinnerLoader from './SpinnerLoader'
+import PatientNav from "./PatientNav";
+import { BsFillTelephoneFill } from 'react-icons/bs'
+import { CiMail } from 'react-icons/ci'
 function PatientLogin() {
   const baseUrl = 'https://gavohms.onrender.com'
   const [isLoading, setIsloading] = useState(false)
@@ -17,7 +20,7 @@ function PatientLogin() {
     emailOrPhone: '',
     password: ''
   })
-
+  const [loginWithPhone, setLoginWithPhone] = useState(false);
   const { patientGoogleObj, setPatientGoogleObj,
     setCurrentEmpId,
     setIsLoggedIn } = useContext(HmsContext)
@@ -119,10 +122,11 @@ function PatientLogin() {
       {isLoading && (
         <SpinnerLoader />
       )}
+      <PatientNav />
 
       <div className='containerbg pb-5 container-fluid'>
         <main className='login-banner m-auto    '>
-          <div className='row' style={{ height: '100%' }}>
+          <div className='row' >
             <section
               className='col-lg-6 col-md-6 col-sm-12 join-us-banner'
               style={{
@@ -134,11 +138,11 @@ function PatientLogin() {
                   className='fw-bolder mt-5 pt-5 ps-5'
                   style={{ color: '#E9E9E9', fontSize: '5rem' }}
                 >
-                  join us
+                  Join us
                 </p>
 
                 <p
-                  className='ps-5'
+                  className='ps-5 fs-4'
                   style={{ color: '#FFFFFF', fontWeight: '600' }}
                 >
                   Let Orbis help streamline your hospital operations <br /> with
@@ -162,7 +166,7 @@ function PatientLogin() {
                       color: '#000000'
                     }}
                   >
-                    Email
+                    {loginWithPhone == true ? 'Phone' : 'Email'}
                   </label>
                   <div className='form-floating mb-3'>
                     <input
@@ -172,7 +176,7 @@ function PatientLogin() {
                           emailOrPhone: e.target.value
                         })
                       }}
-                      type='email'
+                      type={loginWithPhone == true ? 'tel' : 'email'}
                       value={loginData.emailOrPhone}
                       className={
                         validate == true && !loginData.emailOrPhone
@@ -182,7 +186,7 @@ function PatientLogin() {
                       id='floatingInput'
                       placeholder='name@example.com'
                     />
-                    <label htmlFor='floatingInput'>Email address</label>
+                    <label htmlFor='floatingInput'> {loginWithPhone == true ? 'Phone' : 'Email address'}</label>
                   </div>
                   {/* {validate == true && !loginData.email ? (<p className='text-danger'>*empty</p>) : (null)} */}
                 </div>
@@ -257,11 +261,34 @@ function PatientLogin() {
                 </div>
                 <br />
 
-                <div className='mt-3 mb-5'>
-                  <button className='rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center'>
-                    <img src={appleLogo} className='img-fluid' /> Login with
-                    Apple
-                  </button>
+                <div className="mt-3 mb-5">
+                  {loginWithPhone == true ? (
+                    <button
+                      onClick={() => {
+                        setLoginWithPhone(false);
+                        setLoginData({
+                          emailOrPhone: "",
+                          password: ""
+                        })
+                      }}
+                      className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center"
+                    >
+                      <CiMail /> Login with Mail
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setLoginWithPhone(true);
+                        setLoginData({
+                          emailOrPhone: "",
+                          password: ""
+                        })
+                      }}
+                      className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center"
+                    >
+                      <BsFillTelephoneFill /> Login with Phone
+                    </button>
+                  )}
                 </div>
               </div>
             </section>

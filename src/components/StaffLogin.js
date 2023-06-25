@@ -170,14 +170,14 @@ function StaffLogin() {
             >
               <section className="">
                 <p
-                  className="fw-bolder mt-5 pt-5 ps-5"
+                  className="fw-bolder mt-5 pt-5 ps-5 "
                   style={{ color: "#E9E9E9", fontSize: "5rem" }}
                 >
-                  join us
+                  Join us
                 </p>
 
                 <p
-                  className="ps-5"
+                  className="ps-5 fs-4"
                   style={{ color: "#FFFFFF", fontWeight: "600" }}
                 >
                   Let Orbis help streamline your hospital operations <br /> with
@@ -339,15 +339,23 @@ function StaffLogin() {
                     <button
                       onClick={() => {
                         setLoginWithPhone(false);
+                        setLoginData({
+                          emailOrPhone: "",
+                          password: ""
+                        })
                       }}
                       className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center"
                     >
-                      <CiMail /> Login with mail
+                      <CiMail /> Login with Mail
                     </button>
                   ) : (
                     <button
                       onClick={() => {
-                        setLoginWithPhone(true);
+                        setLoginWithPhone(false);
+                        setLoginData({
+                          emailOrPhone: "",
+                          password: ""
+                        })
                       }}
                       className="rounded-3 google-signIn p-2 btn-primary  col-12 text-decoration-none text-center"
                     >

@@ -1,18 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.d6214546.css",
-    "main.js": "/static/js/main.33bfc029.js",
+    "main.css": "/static/css/main.6fae6579.css",
+    "main.js": "/static/js/main.566e1c78.js",
+    "static/media/drug1.jpeg": "/static/media/drug1.a205a037e625c2c9aa75.jpeg",
     "static/media/loginBg.png": "/static/media/loginBg.1e3184b582232fcda17a.png",
     "static/media/pexels-photo-6.jpg": "/static/media/pexels-photo-6.3f0fe944a8a3a80f55cb.jpg",
     "static/media/Rectangle 5.png": "/static/media/Rectangle 5.9f223a4a5548f3c6e0d5.png",
     "static/media/stethoscope.svg": "/static/media/stethoscope.dfedccbedc531053ef03096be73a6f19.svg",
+    "static/media/consultation.svg": "/static/media/consultation.f483e88e606f0d628349cf8a225c43db.svg",
+    "static/media/emergency.svg": "/static/media/emergency.ba3a2d0213f6bba657112d58ded93dca.svg",
     "index.html": "/index.html",
+    "static/media/chart.svg": "/static/media/chart.f0b4d54fd462983c32a15c72ba79bfb5.svg",
     "static/media/greater-than.svg": "/static/media/greater-than.331569cf3e7fd28f01748a786a5bceed.svg",
-    "main.d6214546.css.map": "/static/css/main.d6214546.css.map",
-    "main.33bfc029.js.map": "/static/js/main.33bfc029.js.map"
+    "main.6fae6579.css.map": "/static/css/main.6fae6579.css.map",
+    "main.566e1c78.js.map": "/static/js/main.566e1c78.js.map"
   },
   "entrypoints": [
-    "static/css/main.d6214546.css",
-    "static/js/main.33bfc029.js"
+    "static/css/main.6fae6579.css",
+    "static/js/main.566e1c78.js"
   ]
 }
