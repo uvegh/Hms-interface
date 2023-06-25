@@ -25,7 +25,7 @@ const Drugs = ({ setShowCreateDrug,setDrugTrue}) => {
     pharmacy_id: "",
     branch_id: "",
   });
-  const { PharmacyAdmin } = useContext(HmsContext);
+  const { PharmacyAdmin, customAlertNotify } = useContext(HmsContext);
   const [Pharmacy, setPharmacy] = useState();
   console.log(Pharmacy);
   const getPharmacy = async () => {
@@ -50,7 +50,8 @@ const Drugs = ({ setShowCreateDrug,setDrugTrue}) => {
       .post(`${testUrl}/drugs`, drug)
       .then((resp) => {
         console.log(resp);
-        alert("Drug created successfully");
+        customAlertNotify("Created !")
+        // alert("Drug created successfully");
         setShowCreateDrug(false);
         setDrugTrue(true)
       })
@@ -228,7 +229,6 @@ const Drugs = ({ setShowCreateDrug,setDrugTrue}) => {
                 className={disable}
                 onClick={() => {
                   createDrug();
-                  console.log("created")
                 }}
               >
                 Create Drug

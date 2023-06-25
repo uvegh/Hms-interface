@@ -20,7 +20,7 @@ const Pharmacy = () => {
   const [drugs, setDrugs] = useState();
   const [showDrug, setShowDrugs] = useState(false)
   const [showPatient, setShowPatient]=useState(true)
-  console.log(PharmacistId);
+  // console.log(PharmacistId);
 
   const getDrugs = async () => {
     let inInstock = [];

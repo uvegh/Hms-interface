@@ -9,43 +9,43 @@ export const HmsContext = createContext();
 function HmsProvider(props) {
   const [currentEmpId, setCurrentEmpId] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [checkLogedIn, setCheckLoggedIn] = useState(false);
   const [currentPatientId, setCurrentPatientId] = useState({});
   const [appointments, setAppointments] = useState([]);
   const [appt, setAppt] = useState();
   // //console.log(currentPatientId + "this is from the context api")
-  const [patientGoogleObj, setPatientGoogleObj] = useState({});
-  // //console.log(patientGoogleObj);
-  const [staffGoogleObj, setStaffGoogleObj] = useState({})
-  const [prescriptionsDeployed, setPrescriptionsDeployed] = useState([])
-  const [diagnosis, setDiagnosis] = useState([])
-  const [nurseObj, setNurseObj] = useState({})
-  const [consultation, setConsultation] = useState([])
-  const [doctors, setDoctors] = useState()
-  const [consultationNurse, setConsultationNurse] = useState()
-  const [consultationDoctor, setConsultationDoctor] = useState()
-  const baseUrl = 'https://gavohms.onrender.com'
-  const [departments, setDepartments] = useState()
-  const [patientID, setPatientID] = useState({})
-  const [avaialableConsultants, setAvaialableConsultants] = useState()
-  const [avaialabeGeneralDoctors, setAvaialabeGeneralDoctors] = useState()
-  const [nurses, setNurses] = useState()
-  const [additionalNurseDetail, setAdditionalNurseDetail] = useState()
-  const [patientsInChargeOf, setPatientsInChargeOf] = useState()
-  const [wardsInChargeOf, setWardsInChargeOf] = useState()
-  const [wards, setWards] = useState()
-  const [profileObj, setProfileObj] = useState()
-  const [bedsInWard, setBedsInWard] = useState()
-  const [userNotifications, setUserNotifications] = useState()
-  const [viewNotification, setViewNotification] = useState(false)
+  const [patientGoogleObj, setPatientGoogleObj] = useState({})
+  // console.log(patientGoogleObj);
+  const [staffGoogleObj, setStaffGoogleObj] = useState({});
+  const [prescriptionsDeployed, setPrescriptionsDeployed] = useState([]);
+  const [diagnosis, setDiagnosis] = useState([]);
+  const [nurseObj, setNurseObj] = useState({});
+  const [consultation, setConsultation] = useState([]);
+  const [doctors, setDoctors] = useState();
+  const [consultationNurse, setConsultationNurse] = useState();
+  const [consultationDoctor, setConsultationDoctor] = useState();
+  const baseUrl = "https://gavohms.onrender.com";
+  const [departments, setDepartments] = useState();
+  const [patientID, setPatientID] = useState({});
+  const [avaialableConsultants, setAvaialableConsultants] = useState();
+  const [avaialabeGeneralDoctors, setAvaialabeGeneralDoctors] = useState();
+  const [nurses, setNurses] = useState();
+  const [additionalNurseDetail, setAdditionalNurseDetail] = useState();
+  const [patientsInChargeOf, setPatientsInChargeOf] = useState();
+  const [wardsInChargeOf, setWardsInChargeOf] = useState();
+  const [wards, setWards] = useState();
+  const [profileObj, setProfileObj] = useState();
+  const [bedsInWard, setBedsInWard] = useState();
+  const [userNotifications, setUserNotifications] = useState();
+  const [viewNotification, setViewNotification] = useState(false);
   const [notificationIsOpen, setNotificationIsOpen] = useState(false);
-
 
   const [PharmacistId, setPharmacistID] = useState();
   const [PharmacyAdmin, setPharmacyAdmin] = useState();
-
   const [allUserNotifications, setAllUserNotifications] = useState()
   const [pendingApptPayment, setPendingApptPayment] = useState()
   const [pendingConsultationPayment, setPendingConsultationPayment] = useState()
+
 
   const showLoggedInNotification = () => {
     toast.info("Logged in!", {
@@ -59,22 +59,22 @@ function HmsProvider(props) {
 
   const customAlertNotify = (info) => {
     toast.success(info),
-    {
-      position: toast.POSITION.TOP_RIGHT,
-      theme: "colored",
-      autoClose: 2000,
-      hideProgressBar: true,
-    };
+      {
+        position: toast.POSITION.TOP_RIGHT,
+        theme: "colored",
+        autoClose: 2000,
+        hideProgressBar: true,
+      };
   };
 
   const customAlertWarning = (info) => {
     toast.warn(info),
-    {
-      position: toast.POSITION.TOP_RIGHT,
-      theme: "colored",
-      autoClose: 2000,
-      hideProgressBar: true,
-    };
+      {
+        position: toast.POSITION.TOP_RIGHT,
+        theme: "colored",
+        autoClose: 2000,
+        hideProgressBar: true,
+      };
   };
 
   const handleGetDiagnosis = async () => {
@@ -249,15 +249,16 @@ function HmsProvider(props) {
     let response = await (await (axios.get(`${baseUrl}/notification?reciever=${currentEmpId?.id}&seen=false`))).data
     ////console.log(response)
     if (response?.code == "200") {
-      setUserNotifications(response?.data)
+      setUserNotifications(response?.data);
     }
 
-    response = await (await (axios.get(`${baseUrl}/notification?reciever=${currentEmpId?.id}`))).data
+    response = await (
+      await axios.get(`${baseUrl}/notification?reciever=${currentEmpId?.id}`)
+    ).data;
     if (response?.code == "200") {
-      setAllUserNotifications(response?.data)
+      setAllUserNotifications(response?.data);
     }
     ////console.log(response)
-
 
   }
   //remove notification
@@ -265,10 +266,11 @@ function HmsProvider(props) {
     let response = (await (axios.put(`${baseUrl}/notification/${id}`, { seen: true }))).data
     //console.log(response)
     if (response?.code == "200") {
-
-      handleGetNotifications()
+      handleGetNotifications();
     }
-  }
+
+  };
+
 
   const getPendingApptPayment = async () => {
     if (currentEmpId?.id) {
@@ -426,6 +428,9 @@ function HmsProvider(props) {
         setPharmacyAdmin,
         allUserNotifications,
         setBedsInWard,
+
+        checkLogedIn,
+        setCheckLoggedIn,
         getPendingApptPayment,
         getPendingConsultationPayment,
         pendingApptPayment,

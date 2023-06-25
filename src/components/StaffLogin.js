@@ -27,7 +27,8 @@ function StaffLogin() {
   const navigate = useNavigate();
   const { staffGoogleObj, setStaffGoogleObj, setIsLoggedIn, setCurrentEmpId, handleGetNotifications,
     currentEmpId, showLoggedInNotification, setViewNotification, setPharmacistID,
-    setPharmacyAdmin } =
+    setPharmacyAdmin,
+    setCheckLoggedIn } =
     useContext(HmsContext);
 
 
@@ -56,6 +57,7 @@ function StaffLogin() {
       setIsloading(false);
       setValidate(false);
       setIsLoggedIn(true);
+      setCheckLoggedIn(true)
       alert("logged in");
       setPharmacistID(response?.data?.data);
       setPharmacyAdmin(response?.data?.data);
