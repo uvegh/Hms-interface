@@ -45,6 +45,7 @@ import BedAllotment from "./components/nurse/BedAllotment";
 import SingleWard from "./components/nurse/SingleWard";
 import PatientLayout from "./components/patient/PatientLayout";
 import DashboardPatient from "./components/patient/DashboardPatient";
+import ProfilePatient from "./components/patient/ProfilePatient";
 
 export default function App() {
   return (
@@ -70,13 +71,11 @@ export default function App() {
               />
 
               <Route path="/doctor" element={<DoctorLayout />}>
-                <Route
-                  path="dashboard"
-                  element={
-                    // <DoctorProtected>
-                    <DoctorDashboard />
-                    // </DoctorProtected>
-                  }
+                <Route path="dashboard" element={
+                  // <DoctorProtected>
+                  <DoctorDashboard />
+                  // </DoctorProtected>
+                }
                 />
                 <Route
                   path="patient"
@@ -117,6 +116,7 @@ export default function App() {
 
               <Route path="/patient" element={<PatientLayout />}>
                 <Route path="dashboard" element=<DashboardPatient /> />
+                <Route path="profile" element=<ProfilePatient /> />
               </Route>
               <Route path="/admin" element={<AdminLayout />}></Route>
               <Route path="/super" element={<SuperAdminLayout />}></Route>

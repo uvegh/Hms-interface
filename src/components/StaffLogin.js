@@ -144,7 +144,6 @@ function StaffLogin() {
   });
 
 
-  const clientID = "357757074966 - ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com"
 
   //global google
   useEffect(() => {

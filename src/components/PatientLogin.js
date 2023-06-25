@@ -7,6 +7,7 @@ import googleIcon from '../img/google-icon-logo-png-transparent 1.png'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 import { HmsContext } from '../context/HmsContext'
+import SpinnerLoader from './SpinnerLoader'
 function PatientLogin() {
   const baseUrl = 'https://gavohms.onrender.com'
   const [isLoading, setIsloading] = useState(false)
@@ -17,7 +18,9 @@ function PatientLogin() {
     password: ''
   })
 
-  const { patientGoogleObj, setPatientGoogleObj, setCurrentEmpId } = useContext(HmsContext)
+  const { patientGoogleObj, setPatientGoogleObj,
+    setCurrentEmpId,
+    setIsLoggedIn } = useContext(HmsContext)
   const navigate = useNavigate()
   const handleLogin = async () => {
     setIsloading(true)
@@ -41,6 +44,7 @@ function PatientLogin() {
       setIsloading(false)
       setValidate(false)
       setCurrentEmpId(response?.data?.data)
+      setIsLoggedIn(true)
       navigate("/patient/dashboard", { replace: true })
       //console.log(response?.data?.data)
       alert('logged in')
@@ -82,46 +86,38 @@ function PatientLogin() {
         alert('failed to login ')
         return
       }
+
       alert('login successful')
+      setIsLoggedIn(true)
       setIsloading(false)
+      setCurrentEmpId(findUser?.data?.patients?.data)
     } else {
       setIsloading(false)
       setErrorMessage('invalid email')
     }
   }
 
+  google.accounts.id.renderButton(document.getElementById("signInGoogle"), {
+    size: "large",
+    theme: "outline"
+  });
+
+
+
+  //global google
   useEffect(() => {
     google.accounts.id.initialize({
       client_id:
-        '357757074966-ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com',
-      callback: handleCallbackResponse
-    })
-  }, [])
-  google.accounts.id.renderButton(document.getElementById('signInGoogle'), {
-    size: 'large'
-  })
+        "357757074966-ikdbg0dl0d764pni87ne7u3shvdr7n5s.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+  }, []);
+
 
   return (
     <>
       {isLoading && (
-        <div className='container-fluid overlay'>
-          <div className='loader m-auto'>
-            <div className='lds-spinner text-center m-auto'>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        </div>
+        <SpinnerLoader />
       )}
 
       <div className='containerbg pb-5 container-fluid'>

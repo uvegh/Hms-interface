@@ -8,6 +8,7 @@ import { TiTimes } from 'react-icons/ti'
 import axios from 'axios'
 import { AiFillPhone } from 'react-icons/ai'
 import { ToastContainer } from 'react-toastify'
+import SpinnerLoader from '../SpinnerLoader'
 
 
 
@@ -196,24 +197,7 @@ function DashboardRec() {
       <ToastContainer />
 
       {isLoading && (
-        <div className="container-fluid overlay">
-          <div className="loader m-auto">
-            <div className="lds-spinner text-center m-auto">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        </div>
+        <SpinnerLoader />
       )}
 
       {addPatient && (
@@ -681,11 +665,12 @@ function DashboardRec() {
 
 
 
-              <li className='sidebar_btn'>
-                <Link to='/receptionist/profile'> Profile </Link>
-              </li>
+
               <li className="sidebar_btn">
                 <Link to="/receptionist/appointment"> Appointment </Link>
+              </li>
+              <li className='sidebar_btn'>
+                <Link to='/receptionist/profile'> Profile </Link>
               </li>
               <li className='sidebar_btn'
                 onClick={() => {

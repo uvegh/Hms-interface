@@ -594,13 +594,13 @@ function DashboardNurse() {
                                 <FiUser className="icons" />
                                 <p className="counts">
 
-                                    {patientsInChargeOf?.length}
+                                    {!patientsInChargeOf?.length ? ("0") : patientsInChargeOf?.length}
                                 </p>
                                 <p>Patients Assigned</p>
                             </div>
                             <div className="tab">
                                 <BsFillHouseAddFill className="icons" />
-                                <p className="counts">{wardsInChargeOf?.length}</p>
+                                <p className="counts">{!wardsInChargeOf?.length ? ("0") : wardsInChargeOf?.length}</p>
                                 <p>Ward Assigned</p>
                             </div>
                             <div className="tab">

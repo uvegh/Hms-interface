@@ -17,13 +17,12 @@ import { TiTimes } from 'react-icons/ti'
 import Webcam from 'react-webcam'
 function Profile() {
     const { currentEmpId,
-
+        nurseObj,
         setIsLoggedIn,
         customAlertNotify,
         customAlertWarning,
-
+        setCurrentEmpId,
         reload,
-
         profileObj,
         removePfp } = useContext(HmsContext)
     const baseUrl = "https://gavohms.onrender.com"
@@ -35,7 +34,7 @@ function Profile() {
     const [viewFullPfp, setViewFullPfp] = useState(false)
     const [liveSelfie, setLiveSelfie] = useState(false)
     const [viewphoto, setViewPhoto] = useState(false)
-
+    const [viewCapturedImg, setViewCapturedImg] = useState()
     const navigate = useNavigate()
     const [loginData, setLoginData] = useState({
         emailOrPhone: currentEmpId?.email,
@@ -55,19 +54,99 @@ function Profile() {
         inputRef.current.click()
     }
     const [imageSrc, setImageSrc] = useState(null);
+    const [imgUpdateLoading, setImgUpdateLoading] = useState(false)
+    const [updateAvatarFile, setUpdateAvatarFile] = useState(null)
     const fileReader = new FileReader()
+    const date = new Date()
     const capture = () => {
         const imageSrc = webcamRef.current.getScreenshot();
-        setImageSrc(imageSrc);
-        console.log(imageSrc);
+        const file = dataURLtoFile(imageSrc, "image" + date.getTime() + ".jpg")
+        setViewCapturedImg(URL.createObjectURL(file))//convert file to url to display taken photot
+        setImageSrc(file);
+        console.log(file);
     };
 
-    const handleImgChange = (e) => {
-        const fileObj = e.target.files && e.target.files[0]
-        if (!fileObj) {
+    const imageData = new FormData()
+
+
+    //  function to convert data URL to a file
+    const dataURLtoFile = (dataUrl, filename) => {
+        const arr = dataUrl.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, { type: mime });
+    };
+    //update avatar through camera
+
+    const handleUpdateAvatarcamera = async () => {
+        setImgUpdateLoading(true)
+        imageData.append("avatar", imageSrc)
+        console.log(imageSrc)
+        if (imageSrc == "") {
+            setImgUpdateLoading(false)
             return
         }
-        console.log(fileObj);
+        try {
+            let response = await (await (axios.put(`${baseUrl}/employee/pfp/${currentEmpId?.id}`, imageData))).data
+            console.log(response)
+            if (response?.code == "200") {
+                setImgUpdateLoading(false)
+                setImageSrc(null)
+                customAlertNotify("Profile updated")
+                setTimeout(() => {
+                    setLiveSelfie(false)
+                }, 2000);
+                return
+            }
+            setTimeout(() => {
+                setLiveSelfie(false)
+            }, 2000);
+
+            setImgUpdateLoading(false)
+            customAlertWarning("Failed to update profile")
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    //update avatar through file
+    const handleUpdateAvatarFile = async (event) => {
+        // if (!updateAvatarFile) {
+        //     console.log(updateAvatarFile)
+        //     return
+        // }
+        const file = event.target.files[0]
+        console.log(file)
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        console.log(formData)
+
+        try {
+            let response = await axios.put(`${baseUrl}/employee/pfp/${currentEmpId?.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            console.log(response)
+            if (response?.data?.code == "200") {
+                customAlertNotify("Profile updated")
+
+                return
+            }
+
+            customAlertWarning("Failed to update profile")
+        }
+        catch (err) {
+            console.log(err)
+        }
+
     }
 
 
@@ -142,40 +221,10 @@ function Profile() {
     }
 
 
-    const getLiveVideo = () => {
-        //get access to camera of any user
-        navigator.mediaDevices.getUserMedia({
-            video: true
-        }).then((stream) => {
-            //attach stream to video ref and tag
-            let video = vidRef.current
-            video.srcObject = stream
-            video.play()//make video play
-        }).catch((err) => console.log(err))
-    }
 
-    const takePicture = () => {
-        let width = 100
-        let height = 50
 
-        let photo = photoRef.current
-        let video = vidRef.current
 
-        photo.width = width
-        photo.height = height
 
-        //get contex of image
-        let ctx = photo.getContext('2d')
-        //draw image
-        ctx.drawImage(video, 0, 0, photo.width, photo.height)//pass  video tag through ref and x,y height and width coordinates
-
-    }
-
-    const cancelImg = () => {
-        let photo = photoRef.current
-        let ctx = photo.getContext('2d')
-        ctx.clearRect(0, 0, photo.width, photo.height)//clear current photo
-    }
 
 
 
@@ -191,59 +240,27 @@ function Profile() {
     const webcamStyle = {
         width: '100%',
         maxWidth: '500px',
-        borderRadius: '46%',
+        borderRadius: '5%',
         height: '100%',
 
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-        marginLeft: '35%',
+        marginLeft: '32%',
         textAlign: 'center'
     };
 
     return (
         <>
             {liveSelfie && (
-                <div className="overlay">
+                <div className="overlay bg-white">
                     <div className="live-video">
 
-                        <div className="d-flex fs-3 text-white col-12 justify-content-end">
+                        <div className="d-flex fs-3 text-dark col-12 justify-content-end">
                             <span onClick={() => {
                                 setLiveSelfie(false)
+                                setImageSrc(null)
                             }}> <TiTimes /> </span>
                         </div>
-                        {/* <div className="text-center d-block">
 
-                            {
-                                viewphoto == false ? (
-                                    <>
-                                        <video className='container' ref={vidRef}></video> <br />
-                                        <button className='btn btn-primary fs-2  rounded-circle border-0 ' onClick={
-                                            () => {
-                                                setViewPhoto(true)
-                                                takePicture()
-
-                                            }
-
-                                        }>
-                                            <FiCamera />
-
-                                        </button>
-                                    </>
-
-                                ) : (
-                                    <>
-                                        <canvas ref={photoRef}>
-
-                                        </canvas>
-                                        <button className='btn btn-danger'
-                                            onClick={cancelImg}
-                                        > cancel</button>
-                                    </>
-
-                                )
-                            }
-
-
-                        </div> */}
                         <div>
                             {
                                 imageSrc == null ? (
@@ -253,10 +270,10 @@ function Profile() {
                                                 audio={false}
                                                 ref={webcamRef}
                                                 style={webcamStyle}
-
+                                                screenshotFormat='image/jpeg'
                                             /> <br />
                                             <div className='text-center'>
-                                                <button className='rounded btn btn-primary border-0 p-3' onClick={capture}><FiCamera /></button>
+                                                <button className='col-lg-2 col-md-4 col-sm-7 btn btn-primary border-0  fs-1' onClick={capture}><FiCamera /></button>
                                             </div>
                                         </section>
                                     </>
@@ -265,16 +282,38 @@ function Profile() {
 
 
                             {imageSrc && (<>
-                                <div className="m-auto text-center mt-2">
-                                    <img src={imageSrc} alt="Captured" /> <br />
-                                    <div className="m-auto text-center mt-2">
-                                        <button className='col-1 btn btn-primary bg-white border-2 text-dark '
+                                <div className="m-auto text-center mt-2 rounded">
+                                    <img className="rounded" src={viewCapturedImg} alt="Captured" /> <br />
+                                    <div className=' row m-auto col-lg-8'>
+
+
+
+                                        <button type="button" className="btn btn-primary m-auto border-0 col-lg-2 mt-3 fs-5"
                                             onClick={() => {
                                                 setImageSrc(null)
                                             }}
-                                        >Retake </button>
-                                        <button className='btn btn-primary border-0 col-1'>Use </button>
+                                        >Retake
+                                        </button>
+
+                                        {imgUpdateLoading == false ? (<button type="button" className="btn btn-primary border-0  m-auto col-lg-2 mt-3 fs-5"
+                                            onClick={handleUpdateAvatarcamera}
+
+                                        >Use Photo
+                                        </button>) : (
+
+                                            <button type="button" className="btn btn-primary border-0  m-auto col-lg-2 mt-3 fs-5">
+                                                <div className="text-center">
+                                                    <div className="spinner-border" role="status">
+                                                        <span className="visually-hidden">Loading...</span>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        )}
                                     </div>
+
+
+
+
                                 </div>
                             </>
 
@@ -321,18 +360,16 @@ function Profile() {
                                 </h2>
                             </div>
                         </div>
-                        <ul className='sidebar_link_btns'>
-                            <li className='sidebar_btn active'>
-                                <Link to='/receptionist/dashboard'> Dashboard </Link>
+                        <ul className="sidebar_link_btns">
+                            <li className="sidebar_btn active">
+                                <Link to="/receptionist/dashboard"> Dashboard </Link>
                             </li>
 
-
-
-                            <li className='sidebar_btn'>
-                                <Link to='/receptionist/profile'> Profile </Link>
-                            </li>
                             <li className="sidebar_btn">
                                 <Link to="/receptionist/appointment"> Appointment </Link>
+                            </li>
+                            <li className='sidebar_btn'>
+                                <Link to='/receptionist/profile'> Profile </Link>
                             </li>
                             <li className='sidebar_btn'
                                 onClick={() => {
@@ -367,7 +404,7 @@ function Profile() {
                                             setViewFullPfp(true)
                                         }}
 
-                                        className='user_view_icon border-1' src={`${baseUrl}/${profileObj?.avatar}`} alt="avatar" />
+                                        className='user_view_icon border-1' src={profileObj?.avatar} alt="avatar" />
 
                                     <div className="dropdown align-bottom pt-5">
                                         <Link className="btn bg-white border-0   fs-4 text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -380,9 +417,9 @@ function Profile() {
                                                     handleAddPfp()
                                                 }}
                                             >
-                                                <input type="file" hidden
+                                                <input type="file" name='avatar' hidden
                                                     ref={inputRef}
-                                                    onChange={handleImgChange}
+                                                    onChange={handleUpdateAvatarFile}
                                                 />
                                                 <Link className="dropdown-item" >
                                                     <img className='me-2' src={photoIcon} alt="" />
@@ -391,7 +428,7 @@ function Profile() {
                                             <li
                                                 onClick={() => {
                                                     setLiveSelfie(true)
-                                                    getLiveVideo()
+                                                    // getLiveVideo()
                                                 }}
                                             ><Link className="dropdown-item new-photo " >
                                                     <img className='me-2' src={camera} alt="" />
@@ -410,7 +447,7 @@ function Profile() {
                                 </section>
 
 
-                                <p className='text-uppercase'>#{currentEmpId?.id?.substring(18, 24)}/Nr </p>
+                                <p className='text-uppercase'>#{currentEmpId?.id?.substring(18, 24)}/REC </p>
                             </div>
 
 
