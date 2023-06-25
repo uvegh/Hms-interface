@@ -7,6 +7,8 @@ import { format } from "date-fns";
 import Drugs from "./Drugs";
 import { HmsContext } from "../../context/HmsContext";
 import { useContext } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PharmacyAdmin = () => {
   const baseUrl = "https://gavohms.onrender.com";
@@ -20,7 +22,7 @@ const PharmacyAdmin = () => {
   const [showDrugs, setShowDrugs] = useState(true);
   const [showPrescription, setShowPrescription] = useState(false);
   const [showCreateDrug, setShowCreateDrug] = useState(false);
-  const { PharmacyAdmin } = useContext(HmsContext);
+  const { PharmacyAdmin, checkLogedIn } = useContext(HmsContext);
   const [Pharmacy, setPharmacy] = useState();
   const [drugTrue, setDrugTrue] = useState(false);
   const [showView, setShowView] = useState(false);
@@ -54,6 +56,14 @@ const PharmacyAdmin = () => {
     }
   };
 
+  const showToastMessage = (msg)=>{
+    toast.success("Logged Inn Successful !",{
+      position:toast.POSITION.TOP_RIGHT,
+      className: 'toastMessage',
+      hideProgressBar: true,
+    })
+  }
+
   const getPrescriptions = async () => {
     const response = (await axios.get(`${baseUrl}/prescription`)).data;
     setPrescriptions(response?.data);
@@ -82,16 +92,26 @@ const PharmacyAdmin = () => {
       setSingleDrug(response?.data);
     }
   };
+
+  useEffect(()=>{
+    if(checkLogedIn === true){
+      showToastMessage()
+    }
+  },[])
+
   useEffect(() => {
     if (drugTrue === true) {
       getDrugs();
     }
+
     getDrugs();
     getPrescriptions();
     getPharmacy();
     getSingleDrug();
     getSinglePrescription();
   }, [drugTrue, drugID, singleDrug, prescribID]);
+
+ 
 
   return (
     <div>
@@ -186,6 +206,10 @@ const PharmacyAdmin = () => {
             >
               Create Drug
             </button>
+            {/* <button type="btn" onClick={()=>{
+              showToastMessage()
+            }}>Notify</button> */}
+            <ToastContainer/>
           </div>
           {showDrugs && (
             <div className="admin-drug">
@@ -338,10 +362,12 @@ const PharmacyAdmin = () => {
                         })
                         .catch((err) => console.log(err));
                     }
+                    getDrugs()
                   } catch (error) {
                     console.log(error);
                   }
                 }}
+
               >
                 Delete
               </button>
@@ -355,7 +381,7 @@ const PharmacyAdmin = () => {
               </button>
             </div>
           ) : (
-            <p className="loaders load">Loading</p>
+            <h1 className="loaders Loadam">Loading Please Wait...</h1>
           )}
         </div>
       )}

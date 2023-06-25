@@ -417,7 +417,78 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     padding: 20px;
+    position: relative;
+    top: 0;
 
+    .checkout {
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      position: absolute;
+      top: 20px;
+      left: 23%;
+      .checkoutMain {
+        width: 656px;
+        height: auto;
+        border-radius: 10px;
+        border: 1px solid #e9e9e9;
+        background: #fff;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        padding: 20px;
+        .topChecks {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .closeBtn {
+          button {
+            padding: 10px 15px;
+            border: none;
+            font-size: 20px;
+            font-weight: 500;
+            border-radius: 5px;
+            background: #2b415c;
+            color: #ffffff;
+          }
+        }
+        .bottomChecks {
+          width: 70%;
+          margin: auto;
+          padding: 20px 0px;
+
+          div input {
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid rgba(43, 65, 92, 0.64);
+            background: #fff;
+          }
+          div button {
+            width: 100%;
+            border-radius: 5px;
+            background: #2b415c;
+            color: #ffffff;
+          }
+          div button.Cp {
+            width: 100%;
+            border-radius: 5px;
+            color: #2b415c;
+            background-color: #ffffff;
+            border: 1px solid #2b415c;
+          }
+          div p {
+            color: #2b415c;
+            font-size: 18px;
+            font-weight: 600;
+          }
+          div input,
+          button {
+            margin: 10px auto;
+            padding: 10px;
+          }
+        }
+      }
+    }
     .dispenseTop {
       display: flex;
       justify-content: space-between;
@@ -982,4 +1053,9 @@
 .Loadam {
   color: #ffffff;
   text-align: center;
+}
+
+.toastMessage {
+  width: 34vw;
+  font-size: 1rem;
 }
