@@ -46,6 +46,7 @@ import SingleWard from "./components/nurse/SingleWard";
 import PatientLayout from "./components/patient/PatientLayout";
 import DashboardPatient from "./components/patient/DashboardPatient";
 import ProfilePatient from "./components/patient/ProfilePatient";
+import LandingPage from "./components/LandingPage";
 
 export default function App() {
   return (
@@ -57,6 +58,7 @@ export default function App() {
 
             <Routes>
               <Route path="*" element={<NotFound />} />
+              <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<PatientLogin />} />
               <Route path="/staffLogin" element={<StaffLogin />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />

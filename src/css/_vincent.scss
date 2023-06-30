@@ -782,6 +782,20 @@ select {
   transition: 'all 100s linear 2s ' !important;
 }
 
+.landingPage {
+  position: relative;
 
+  .home {
+    height: 50% !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
+  }
 
+  .organization_image {
+    width: 3rem;
+    height: 2rem;
+  }
+}

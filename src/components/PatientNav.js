@@ -161,7 +161,7 @@ function PatientNav(props) {
                                 <button
                                     className="btn btn-home btn-primary btn-lg border-0 me-3 "
                                     onClick={() => {
-                                        navigate("/login");
+                                        navigate("/");
                                     }}
                                 >
                                     Home
