@@ -22,7 +22,7 @@ const Dispense = ({ setDispenser, patientID }) => {
   });
   const [payStackResult, setPayStackResult] = useState();
 
-  const paystackUrl = `${testUrl}/api/checkout/paystack?email=${patientMail}&amount=${checkOuts.item_cost *100}&prescription_id=${checkOuts.prescription_id}&payment_status=${checkOuts.payment_status = "paid"}&payment_type=${checkOuts.payment_type = "card"}
+  const paystackUrl = `${baseUrl}/api/checkout/paystack?email=${patientMail}&amount=${checkOuts.item_cost *100}&prescription_id=${checkOuts.prescription_id}&payment_status=${checkOuts.payment_status = "paid"}&payment_type=${checkOuts.payment_type = "card"}
   `;
 
   const showCheckoutMessage = () => {
@@ -33,7 +33,7 @@ const Dispense = ({ setDispenser, patientID }) => {
     });
   };
   const getPatients = async () => {
-    const response = (await axios.get(`${testUrl}/prescription/${patientID}`))
+    const response = (await axios.get(`${baseUrl}/prescription/${patientID}`))
       .data;
     setPatient(response);
   };
@@ -42,7 +42,7 @@ const Dispense = ({ setDispenser, patientID }) => {
     checkOuts.payment_status = "paid";
     checkOuts.payment_type = "cash";
     let response = await axios
-      .post(`${testUrl}/api/checkout`, checkOuts)
+      .post(`${baseUrl}/api/checkout`, checkOuts)
       .then((res) => {
         console.log(res);
         showCheckoutMessage();

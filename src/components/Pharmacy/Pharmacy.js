@@ -25,7 +25,7 @@ const Pharmacy = () => {
   const getDrugs = async () => {
     let inInstock = [];
     let outStock = [];
-    let response = (await axios.get(`${testUrl}/drugs`)).data;
+    let response = (await axios.get(`${baseUrl}/drugs`)).data;
     setDrugs(response?.data);
     {
       response?.data
@@ -47,7 +47,7 @@ const Pharmacy = () => {
   const getPrescription = async () => {
     if (!Prescription) return alert("Enter Patients Card Number");
     let response = (
-      await axios.get(`${testUrl}/prescription?card_no=${Prescription}`)
+      await axios.get(`${baseUrl}/prescription?card_no=${Prescription}`)
     ).data;
     setPatientPres(response.data);
   };
