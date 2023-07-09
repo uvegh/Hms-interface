@@ -65,13 +65,13 @@ const PharmacyAdmin = () => {
   }
 
   const getPrescriptions = async () => {
-    const response = (await axios.get(`${baseUrl}/prescription`)).data;
+    const response = (await axios.get(`${testUrl}/prescription`)).data;
     setPrescriptions(response?.data);
   };
 
   const getSinglePrescription = async () => {
     if (prescribID) {
-      let response = (await axios.get(`${baseUrl}/prescription/${prescribID}`))
+      let response = (await axios.get(`${testUrl}/prescription/${prescribID}`))
         .data;
       setSinglePress(response?.data);
     }
@@ -80,7 +80,7 @@ const PharmacyAdmin = () => {
   const getPharmacy = async () => {
     if (PharmacyAdmin.id) {
       let response = (
-        await axios.get(`${baseUrl}/pharmacy?emp_id=${PharmacyAdmin.id}`)
+        await axios.get(`${testUrl}/pharmacy?emp_id=${PharmacyAdmin.id}`)
       ).data;
       setPharmacy(response?.data);
     }
