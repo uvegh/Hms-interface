@@ -7,8 +7,9 @@ import { format } from "date-fns";
 import Drugs from "./Drugs";
 import { HmsContext } from "../../context/HmsContext";
 import { useContext } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { GrFormClose } from "react-icons/gr";
 
 const PharmacyAdmin = () => {
   const baseUrl = "https://gavohms.onrender.com";
@@ -56,13 +57,13 @@ const PharmacyAdmin = () => {
     }
   };
 
-  const showToastMessage = (msg)=>{
-    toast.success("Logged Inn Successful !",{
-      position:toast.POSITION.TOP_RIGHT,
-      className: 'toastMessage',
+  const showToastMessage = (msg) => {
+    toast.success("Logged Inn Successful !", {
+      position: toast.POSITION.TOP_RIGHT,
+      className: "toastMessage",
       hideProgressBar: true,
-    })
-  }
+    });
+  };
 
   const getPrescriptions = async () => {
     const response = (await axios.get(`${testUrl}/prescription`)).data;
@@ -93,11 +94,11 @@ const PharmacyAdmin = () => {
     }
   };
 
-  useEffect(()=>{
-    if(checkLogedIn === true){
-      showToastMessage()
+  useEffect(() => {
+    if (checkLogedIn === true) {
+      showToastMessage();
     }
-  },[])
+  }, []);
 
   useEffect(() => {
     if (drugTrue === true) {
@@ -110,8 +111,6 @@ const PharmacyAdmin = () => {
     getSingleDrug();
     getSinglePrescription();
   }, [drugTrue, drugID, singleDrug, prescribID]);
-
- 
 
   return (
     <div>
@@ -209,7 +208,7 @@ const PharmacyAdmin = () => {
             {/* <button type="btn" onClick={()=>{
               showToastMessage()
             }}>Notify</button> */}
-            <ToastContainer/>
+            <ToastContainer />
           </div>
           {showDrugs && (
             <div className="admin-drug">
@@ -314,7 +313,16 @@ const PharmacyAdmin = () => {
         <div className="viewDrugs">
           {singleDrug ? (
             <div className="innerDrug" key={singleDrug._id}>
-              <h1>Item Details</h1>
+              <div className="itemDetails">
+                <h1>Item Details</h1>
+                <GrFormClose
+                  size={30}
+                  className="itemClose"
+                  onClick={() => {
+                    setShowView(false);
+                  }}
+                />
+              </div>
               <div className="firstDetails">
                 <div>
                   <span>Name</span>
@@ -362,12 +370,11 @@ const PharmacyAdmin = () => {
                         })
                         .catch((err) => console.log(err));
                     }
-                    getDrugs()
+                    getDrugs();
                   } catch (error) {
                     console.log(error);
                   }
                 }}
-
               >
                 Delete
               </button>
@@ -395,7 +402,8 @@ const PharmacyAdmin = () => {
                 <div>
                   <span>Patient Name</span>
                   <p>
-                    {singlePres?.patient_id?.first_name} <i>{singlePres?.patient_id?.last_name}</i>
+                    {singlePres?.patient_id?.first_name}{" "}
+                    <i>{singlePres?.patient_id?.last_name}</i>
                   </p>
                 </div>
                 <div>
@@ -426,28 +434,30 @@ const PharmacyAdmin = () => {
                 </div>
               </div>
               <div className="secondDetails">
-               {singlePres?.prescription ? (
-                 <table>
-                 <thead>
-                   <th>Frequency</th>
-                   <th>Name</th>
-                   <th>Strength</th>
-                   <th>Duration</th>
-                   <th>Price</th>
-                 </thead>
-                {singlePres?.prescription.map((preps)=> (
-                   <tbody>
-                   <tr>
-                     <td>{preps.frequency}</td>
-                     <td>{preps.name}</td>
-                     <td>{preps.strength}</td>
-                     <td>{preps.duration}</td>
-                     <td>{preps.price}</td>
-                   </tr>
-                 </tbody>
-                ))}
-               </table>
-               ):(<p>No Prescription Found</p>)}
+                {singlePres?.prescription ? (
+                  <table>
+                    <thead>
+                      <th>Frequency</th>
+                      <th>Name</th>
+                      <th>Strength</th>
+                      <th>Duration</th>
+                      <th>Price</th>
+                    </thead>
+                    {singlePres?.prescription.map((preps) => (
+                      <tbody>
+                        <tr>
+                          <td>{preps.frequency}</td>
+                          <td>{preps.name}</td>
+                          <td>{preps.strength}</td>
+                          <td>{preps.duration}</td>
+                          <td>{preps.price}</td>
+                        </tr>
+                      </tbody>
+                    ))}
+                  </table>
+                ) : (
+                  <p>No Prescription Found</p>
+                )}
               </div>
               <button>Delete</button>
               <button

@@ -13,6 +13,7 @@ const Pharmacy = () => {
   const testUrl = "http://localhost:3001";
 
   const [Prescription, setPrescription] = useState("");
+  console.log(Prescription);
   const [patientPres, setPatientPres] = useState();
   const [dispenser, setDispenser] = useState(false);
   const [patientID, setPatientID] = useState();
@@ -22,27 +23,27 @@ const Pharmacy = () => {
   const [showPatient, setShowPatient] = useState(true);
   // console.log(PharmacistId);
 
-  // const getDrugs = async () => {
-  //   let inInstock = [];
-  //   let outStock = [];
-  //   let response = (await axios.get(`${testUrl}/drugs`)).data;
-  //   setDrugs(response?.data);
-  //   {
-  //     response?.data
-  //       ? response?.data.map((drug) => {
-  //           if (drug.status === "available") {
-  //             inInstock.push(drug);
-  //             setInStock(inInstock);
-  //           } else if (drug.status === "not-available") {
-  //             outStock.push(drug);
-  //             setOutOffStock(outStock);
-  //           } else {
-  //             console.log("no drug found");
-  //           }
-  //         })
-  //       : console.log("no drugs found");
-  //   }
-  // };
+  const getDrugs = async () => {
+    let inInstock = [];
+    let outStock = [];
+    let response = (await axios.get(`${testUrl}/drugs`)).data;
+    setDrugs(response?.data);
+    {
+      response?.data
+        ? response?.data.map((drug) => {
+            if (drug.status === "available") {
+              inInstock.push(drug);
+              setInStock(inInstock);
+            } else if (drug.status === "not-available") {
+              outStock.push(drug);
+              setOutOffStock(outStock);
+            } else {
+              console.log("no drug found");
+            }
+          })
+        : console.log("no drugs found");
+    }
+  };
 
   const getPrescription = async () => {
     if (!Prescription) return alert("Enter Patients Card Number");

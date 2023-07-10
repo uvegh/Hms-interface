@@ -833,6 +833,17 @@
     margin-left: 35%;
     padding: 30px;
 
+    .itemDetails {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .itemClose {
+        cursor: pointer;
+        color: red !important;
+      }
+    }
+
     button {
       width: 207px;
       height: 40px;
