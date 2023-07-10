@@ -2377,6 +2377,15 @@ abbr {
   margin-left: 35%;
   padding: 30px;
 }
+.viewDrugs .innerDrug .itemDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.viewDrugs .innerDrug .itemDetails .itemClose {
+  cursor: pointer;
+  color: red !important;
+}
 .viewDrugs .innerDrug button {
   width: 207px;
   height: 40px;
